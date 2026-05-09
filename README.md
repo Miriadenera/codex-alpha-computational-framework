@@ -14,6 +14,76 @@ Rather than building a new observational infrastructure, the framework is design
 
 ---
 
+---
+
+# Installation and Usage
+
+## Clone the repository
+
+```bash
+git clone https://github.com/Miriadenera/codex-alpha-computational-framework.git
+```
+
+## Enter the project directory
+
+```bash
+cd codex-alpha-computational-framework
+```
+
+## Install required dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## Run the Gaia DR3 anomaly detection example
+
+```bash
+python -m examples.run_gaia_detection
+```
+
+---
+
+# What the framework currently does
+
+The current prototype pipeline:
+
+- Loads a real ESA Gaia DR3 dataset
+- Parses multidimensional astrophysical features
+- Applies unsupervised AI-based anomaly detection
+- Identifies statistically unusual astrophysical sources
+- Produces ranked anomaly outputs
+
+Generated output:
+
+```text
+datasets/gaia/gaia_dr3_anomaly_results.csv
+```
+
+---
+
+# Current Prototype Status
+
+Current implemented components:
+
+- Gaia DR3 dataset loader
+- ESA VOTable support
+- Unsupervised anomaly detection pipeline
+- Initial exploratory analysis workflow
+- CSV anomaly ranking generation
+
+Planned future extensions:
+
+- Topological analysis modules
+- Graph-based cosmological structures
+- Advanced visualization systems
+- AI-assisted cosmological interpretation
+- Distributed HPC computation
+- Emergent correlation analysis
+- Geometric coherence metrics
+
+---
+
 ## Core Objectives
 
 - Analysis of multidimensional cosmological datasets.
