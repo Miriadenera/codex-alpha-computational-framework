@@ -71,13 +71,14 @@ python -m visualization.plot_gaia_anomalies
 
 The visualization module generates a sky-position projection of the analyzed Gaia DR3 sources.
 
+This represents the first graphical exploratory layer of the Codex Alpha Computational Framework applied to real ESA Gaia DR3 observational data.
+
 The current prototype:
 
-- loads the anomaly detection results,
+- loads anomaly detection results,
 - separates normal and anomalous sources,
 - projects the dataset in RA/DEC space,
-- highlights statistically anomalous sources detected by the AI pipeline.
-
+- highlights statistically anomalous sources detected through the AI-assisted exploratory pipeline.
 Generated output:
 
 ```text
@@ -108,9 +109,6 @@ Generated output:
 ```text
 results/gaia_dr3_feature_contributions.csv
 ```
-
-The visualization represents the first graphical exploratory layer of the Codex Alpha Computational Framework applied to real ESA Gaia DR3 observational data.
-
 ---
 
 ## Generate anomaly clustering analysis
@@ -236,13 +234,15 @@ DOI publications available online through Zenodo.
 ## Repository Structure
 
 ```text
-datasets/        -> ESA Gaia DR3 datasets and loaders
-results/         -> Generated analysis outputs and reports
-examples/        -> End-to-end execution examples
-analysis/        -> Statistical and clustering analysis modules
-visualization/   -> Exploratory visualization modules
 ai/              -> AI-assisted anomaly detection modules
-```
+analysis/        -> Statistical analysis, feature contribution and anomaly clustering modules
+datasets/        -> ESA Gaia DR3 datasets and dataset loaders
+docs/            -> Technical documentation and architecture notes
+examples/        -> End-to-end execution examples
+prototypes/      -> Early experimental prototypes and future development modules
+results/         -> Generated analysis outputs, reports, CSV files and plots
+simulations/     -> Future computational simulations and cosmological modeling experiments
+visualization/   -> Exploratory visualization modules
 
 ---
 
