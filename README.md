@@ -82,6 +82,31 @@ Generated output:
 ```text
 results/gaia_dr3_anomaly_sky_plot.png
 ```
+---
+
+## Generate feature contribution analysis
+
+```bash
+python -m analysis.feature_contribution
+```
+
+The feature contribution module analyzes the detected anomalies and identifies which astrophysical parameter contributes most strongly to each anomalous source.
+
+The current prototype evaluates contributions from:
+
+- parallax,
+- proper motion,
+- radial velocity,
+- stellar magnitude,
+- stellar color.
+
+The module computes statistical feature deviations and generates an interpretability layer for the anomaly detection pipeline.
+
+Generated output:
+
+```text
+results/gaia_dr3_feature_contributions.csv
+```
 
 The visualization represents the first graphical exploratory layer of the Codex Alpha Computational Framework applied to real ESA Gaia DR3 observational data.
 
