@@ -62,6 +62,29 @@ datasets/gaia/gaia_dr3_anomaly_results.csv
 
 ---
 
+## Generate Gaia DR3 anomaly visualization
+
+```bash
+python -m visualization.plot_gaia_anomalies
+```
+
+The visualization module generates a sky-position projection of the analyzed Gaia DR3 sources.
+
+The current prototype:
+
+- loads the anomaly detection results,
+- separates normal and anomalous sources,
+- projects the dataset in RA/DEC space,
+- highlights statistically anomalous sources detected by the AI pipeline.
+
+Generated output:
+
+```text
+results/gaia_dr3_anomaly_sky_plot.png
+```
+
+The visualization represents the first graphical exploratory layer of the Codex Alpha Computational Framework applied to real ESA Gaia DR3 observational data.
+
 # Current Prototype Status
 
 Current implemented components:
