@@ -92,6 +92,85 @@ The visualization does not impose predefined cosmological structures and is inte
 
 ---
 
+---
+
+## gaia_dr3_anomaly_clusters.csv
+
+Anomaly clustering analysis generated from the detected Gaia DR3 anomalous sources.
+
+This file contains:
+
+- anomaly cluster assignments,
+- grouped anomaly families,
+- multidimensional astrophysical clustering results,
+- statistical anomaly distributions.
+
+The clustering module analyzes whether detected anomalous sources form statistically coherent groups within the multidimensional feature space.
+
+The current prototype identified multiple anomaly families characterized by different dominant astrophysical properties.
+
+Examples of dominant cluster features include:
+
+- parallax,
+- proper motion,
+- photometric magnitude distributions.
+
+This represents the first structural analysis layer of the Codex Alpha Computational Framework.
+
+The purpose of clustering is not to assign predefined physical meaning, but to identify whether anomalous sources share common statistical behaviors or emergent multidimensional structures.
+
+---
+
+# Current Exploratory Pipeline
+
+The current prototype pipeline performs the following sequence:
+
+```text
+ESA Gaia DR3 Dataset
+→ VOTable Parsing
+→ Multidimensional Feature Extraction
+→ Unsupervised AI Anomaly Detection
+→ Feature Contribution Analysis
+→ Anomaly Clustering
+→ Sky-Position Visualization
+→ Exploratory Statistical Interpretation
+```
+
+The framework is designed as a modular computational infrastructure intended for exploratory cosmological analysis without imposing predefined target structures.
+
+---
+
+# Current Operational Capabilities
+
+Current implemented capabilities include:
+
+- ESA Gaia DR3 dataset integration,
+- multidimensional astrophysical preprocessing,
+- unsupervised anomaly detection,
+- anomaly ranking,
+- feature contribution analysis,
+- anomaly family clustering,
+- RA/DEC anomaly visualization,
+- automatic CSV result generation,
+- exploratory statistical interpretation.
+
+---
+
+# Long-Term Framework Vision
+
+Future framework development may include:
+
+- large-scale cosmological survey integration,
+- graph-based astrophysical structure analysis,
+- topological cosmology modules,
+- AI-assisted emergent pattern detection,
+- distributed GPU/HPC computation,
+- multidimensional cosmological mapping,
+- autonomous exploratory analysis pipelines,
+- advanced visualization and interactive analysis systems.
+
+The long-term objective is to build a scalable computational infrastructure for exploratory analysis of large-scale cosmological datasets and emergent astrophysical structures.
+
 # Dataset Source
 
 The dataset used for this prototype was obtained from the ESA Gaia Archive:
