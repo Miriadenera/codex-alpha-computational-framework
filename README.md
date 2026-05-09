@@ -14,8 +14,6 @@ Rather than building a new observational infrastructure, the framework is design
 
 ---
 
----
-
 # Installation and Usage
 
 ## Clone the repository
@@ -48,11 +46,14 @@ python -m examples.run_gaia_detection
 
 The current prototype pipeline:
 
-- Loads a real ESA Gaia DR3 dataset
+- Loads real ESA Gaia DR3 datasets
 - Parses multidimensional astrophysical features
 - Applies unsupervised AI-based anomaly detection
-- Identifies statistically unusual astrophysical sources
-- Produces ranked anomaly outputs
+- Identifies statistically anomalous astrophysical sources
+- Generates anomaly rankings
+- Computes feature contribution analysis
+- Identifies anomaly families through multidimensional clustering
+- Produces exploratory visualizations and structured outputs
 
 Generated output:
 
@@ -110,6 +111,31 @@ results/gaia_dr3_feature_contributions.csv
 
 The visualization represents the first graphical exploratory layer of the Codex Alpha Computational Framework applied to real ESA Gaia DR3 observational data.
 
+---
+
+## Generate anomaly clustering analysis
+
+```bash
+python -m analysis.anomaly_clustering
+```
+
+The anomaly clustering module analyzes whether detected anomalous sources form statistically coherent multidimensional families.
+
+The current prototype:
+
+- groups anomalous astrophysical sources,
+- identifies anomaly families,
+- evaluates dominant cluster characteristics,
+- performs exploratory multidimensional clustering analysis.
+
+The current clustering layer identified multiple anomaly families associated with different dominant astrophysical features.
+
+Generated output:
+
+```text
+results/gaia_dr3_anomaly_clusters.csv
+```
+
 # Current Prototype Status
 
 Current implemented components:
@@ -117,8 +143,12 @@ Current implemented components:
 - Gaia DR3 dataset loader
 - ESA VOTable support
 - Unsupervised anomaly detection pipeline
-- Initial exploratory analysis workflow
-- CSV anomaly ranking generation
+- Feature contribution analysis
+- Multidimensional anomaly clustering
+- RA/DEC anomaly visualization
+- Exploratory statistical reporting
+- CSV structured result generation
+- Initial end-to-end cosmological analysis workflow
 
 Planned future extensions:
 
@@ -160,7 +190,7 @@ Current development focuses on:
 
 ## Development Status
 
-Current status: **Conceptual / Early Prototype Phase**
+Current status: **Operational Early Prototype Phase**
 
 The project is currently focused on:
 
@@ -206,11 +236,12 @@ DOI publications available online through Zenodo.
 ## Repository Structure
 
 ```text
-datasets/      -> Cosmological datasets and references
-prototypes/    -> Early framework prototypes
-simulations/   -> Computational simulations
-ai/            -> AI-assisted analysis modules
-docs/          -> Technical documentation
+datasets/        -> ESA Gaia DR3 datasets and loaders
+results/         -> Generated analysis outputs and reports
+examples/        -> End-to-end execution examples
+analysis/        -> Statistical and clustering analysis modules
+visualization/   -> Exploratory visualization modules
+ai/              -> AI-assisted anomaly detection modules
 ```
 
 ---
