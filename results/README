@@ -92,8 +92,6 @@ The visualization does not impose predefined cosmological structures and is inte
 
 ---
 
----
-
 ## gaia_dr3_anomaly_clusters.csv
 
 Anomaly clustering analysis generated from the detected Gaia DR3 anomalous sources.
@@ -181,3 +179,19 @@ The original Gaia DR3 sample file integrated into the repository is:
 
 ```text
 gaia_dr3_sample_1000.vot
+```
+---
+
+# Prototype Status
+
+The current repository represents the first operational prototype stage of the Codex Alpha Computational Framework.
+
+The framework is currently capable of:
+
+- processing real ESA Gaia DR3 datasets,
+- performing unsupervised multidimensional anomaly detection,
+- generating exploratory statistical analyses,
+- identifying anomaly families,
+- producing visual and structured outputs for further astrophysical investigation.
+
+This prototype establishes the computational foundation for future large-scale exploratory cosmological analysis.
