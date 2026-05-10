@@ -14,6 +14,7 @@ This script executes the complete early prototype workflow:
 8. Generate RA/DEC anomaly visualization
 9. Generate relational graph visualization
 10. Generate automatic pipeline report
+11. Export dashboard data package
 
 Run with:
 
@@ -131,6 +132,11 @@ def main() -> None:
         "Step 10: Generate automatic pipeline report",
     )
 
+    run_step(
+        [sys.executable, "-m", "export.export_dashboard_data"],
+        "Step 11: Export dashboard data package",
+    )
+
     print("\nFull pipeline completed successfully.")
 
     print("\nGenerated outputs:")
@@ -144,6 +150,17 @@ def main() -> None:
     print(" - results/gaia_dr3_anomaly_sky_plot.png")
     print(" - results/gaia_dr3_relational_graph.png")
     print(" - results/gaia_dr3_pipeline_report.md")
+
+    print("\nGenerated dashboard data package:")
+    print(" - dashboard/public/data/summary.json")
+    print(" - dashboard/public/data/anomalies.json")
+    print(" - dashboard/public/data/feature_contributions.json")
+    print(" - dashboard/public/data/clusters.json")
+    print(" - dashboard/public/data/emergent_structures.json")
+    print(" - dashboard/public/data/graph_nodes.json")
+    print(" - dashboard/public/data/graph_edges.json")
+    print(" - dashboard/public/data/graph_centrality.json")
+    print(" - dashboard/public/data/report.md")
 
 
 if __name__ == "__main__":
