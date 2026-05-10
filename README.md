@@ -147,6 +147,7 @@ Current implemented components:
 - Exploratory statistical reporting
 - CSV structured result generation
 - Initial end-to-end cosmological analysis workflow
+- Modular AI analysis architecture
 
 Planned future extensions:
 
@@ -183,6 +184,27 @@ Current development focuses on:
 - large-scale structure analysis,
 - AI-assisted pattern recognition,
 - scientific computing infrastructure.
+
+---
+## AI Architecture Direction
+
+The AI layer of the framework is designed as a modular exploratory analysis infrastructure.
+
+Rather than enforcing predefined cosmological assumptions, the AI modules are intended to assist the identification of:
+
+- statistically anomalous astrophysical sources,
+- emergent multidimensional structures,
+- non-trivial correlations,
+- anomaly families,
+- graph-based cosmological relationships.
+
+The current implementation uses unsupervised anomaly detection techniques, while future development may progressively integrate:
+
+- deep learning anomaly models,
+- graph neural networks,
+- adaptive exploratory pipelines,
+- autonomous analysis systems,
+- large-scale distributed AI-assisted cosmological analysis.
 
 ---
 
