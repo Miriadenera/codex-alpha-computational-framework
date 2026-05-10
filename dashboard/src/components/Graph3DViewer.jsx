@@ -39,7 +39,7 @@ function getSourceId(item) {
 
 function getNodeColor(node) {
   if (node.node_type === "background") {
-    return "#6f86a8";
+    return "#ff4d5e";
   }
 
   const rank = Number(node.structural_rank ?? 999);
@@ -62,21 +62,10 @@ function getNodeColor(node) {
 
 function getNodeSize(node) {
   if (node.node_type === "background") {
-    return 0.55;
+    return 2.6;
   }
 
-  const structuralScore = normalizeScore(node.structural_importance_score, 0.2);
-  const rank = Number(node.structural_rank ?? 999);
-
-  if (rank > 0 && rank <= 5) {
-    return 5.8 + structuralScore * 2.4;
-  }
-
-  if (rank > 0 && rank <= 15) {
-    return 4.8 + structuralScore * 2.0;
-  }
-
-  return 3.6 + structuralScore * 1.8;
+  return 2.9;
 }
 
 function createNodeObject(node) {
@@ -89,18 +78,18 @@ function createNodeObject(node) {
   const sphereMaterial = new THREE.MeshBasicMaterial({
     color,
     transparent: true,
-    opacity: node.node_type === "background" ? 0.48 : 0.92,
+    opacity: node.node_type === "background" ? 0.62 : 0.9,
   });
 
   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
   group.add(sphere);
 
   if (node.node_type !== "background") {
-    const glowGeometry = new THREE.SphereGeometry(radius * 1.85, 18, 18);
+    const glowGeometry = new THREE.SphereGeometry(radius * 1.65, 18, 18);
     const glowMaterial = new THREE.MeshBasicMaterial({
       color,
       transparent: true,
-      opacity: 0.09,
+      opacity: 0.08,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -165,9 +154,13 @@ function centerAndScaleNodes(inputNodes) {
     ...centeredNodes.map((node) => Math.abs(node.cz)),
   );
 
-  const scaleX = 130 / maxX;
-  const scaleY = 130 / maxY;
-  const scaleZ = 90 / maxZ;
+  /*
+    The scale intentionally keeps the Gaia field broad but not compressed.
+    X and Y are balanced, Z is slightly compressed to avoid a knife-like projection.
+  */
+  const scaleX = 120 / maxX;
+  const scaleY = 120 / maxY;
+  const scaleZ = 65 / maxZ;
 
   return centeredNodes.map((node) => ({
     ...node,
@@ -188,9 +181,10 @@ function Graph3DViewer({
   onNodeSelect,
 }) {
   const graphRef = useRef(null);
+  const containerRef = useRef(null);
 
   const [selectedNode, setSelectedNode] = useState(null);
-  const [showAllSources, setShowAllSources] = useState(false);
+  const [showAllSources, setShowAllSources] = useState(true);
   const [highCentralityOnly, setHighCentralityOnly] = useState(false);
   const [topStructuralOnly, setTopStructuralOnly] = useState(false);
   const [hideWeakLinks, setHideWeakLinks] = useState(false);
@@ -324,18 +318,28 @@ function Graph3DViewer({
       return;
     }
 
-    graphRef.current.d3Force("charge").strength(showAllSources ? -10 : -42);
-
-    graphRef.current.d3Force("link").distance((link) => {
-      const distance = normalizeScore(link.feature_distance, 1);
-      return 24 + distance * 8;
-    });
-
+    /*
+      When locked, nodes keep their computed spatial coordinates.
+      When unlocked, ForceGraph can relax the structure interactively.
+    */
     if (lockLayout) {
+      graphRef.current.d3Force("charge").strength(0);
       graphRef.current.d3Force("center", null);
+      graphRef.current.d3Force("link").strength(0);
+    } else {
+      graphRef.current.d3Force("charge").strength(showAllSources ? -6 : -35);
+
+      graphRef.current.d3Force("link").distance((link) => {
+        const distance = normalizeScore(link.feature_distance, 1);
+        return 24 + distance * 8;
+      });
+
+      graphRef.current.d3Force("link").strength(0.12);
     }
 
-    resetCamera();
+    window.setTimeout(() => {
+      resetCamera();
+    }, 80);
   }, [graphData, showAllSources, lockLayout]);
 
   function handleNodeClick(node) {
@@ -351,7 +355,7 @@ function Graph3DViewer({
       node.y !== undefined &&
       node.z !== undefined
     ) {
-      const distance = node.node_type === "background" ? 80 : 95;
+      const distance = node.node_type === "background" ? 75 : 90;
       const hypot = Math.hypot(node.x, node.y, node.z) || 1;
       const distRatio = 1 + distance / hypot;
 
@@ -361,8 +365,12 @@ function Graph3DViewer({
           y: node.y * distRatio,
           z: node.z * distRatio,
         },
-        node,
-        1000,
+        {
+          x: node.x,
+          y: node.y,
+          z: node.z,
+        },
+        900,
       );
     }
   }
@@ -376,14 +384,14 @@ function Graph3DViewer({
       {
         x: 0,
         y: 0,
-        z: showAllSources ? 360 : 285,
+        z: showAllSources ? 330 : 270,
       },
       {
         x: 0,
         y: 0,
         z: 0,
       },
-      900,
+      800,
     );
   }
 
@@ -392,11 +400,12 @@ function Graph3DViewer({
 
     window.setTimeout(() => {
       resetCamera();
-    }, 150);
+    }, 200);
   }
 
   return (
     <div
+      ref={containerRef}
       className={
         fullscreenMode
           ? "graph-viewer-wrapper graph-viewer-fullscreen"
@@ -418,7 +427,7 @@ function Graph3DViewer({
             <span className="legend-dot medium" />
             medium
             <span className="legend-dot low" />
-            peripheral
+            anomaly
             <span className="legend-dot background" />
             Gaia source
           </div>
@@ -442,14 +451,14 @@ function Graph3DViewer({
               (node.structural_rank ?? "N/A")
             }
             nodeThreeObject={createNodeObject}
-            linkColor={() => "rgba(125, 220, 255, 0.33)"}
+            linkColor={() => "rgba(125, 220, 255, 0.22)"}
             linkWidth={(link) =>
               Math.max(
-                0.12,
-                normalizeScore(link.similarity_weight, 0.2) * 0.28,
+                0.08,
+                normalizeScore(link.similarity_weight, 0.2) * 0.18,
               )
             }
-            linkOpacity={0.32}
+            linkOpacity={0.24}
             onNodeClick={handleNodeClick}
             enableNodeDrag={!lockLayout}
             showNavInfo={false}
