@@ -12,14 +12,16 @@ The framework is designed to investigate statistically anomalous sources, emerge
 
 Rather than building a new observational infrastructure, the project aims to provide a new interpretative computational layer operating on existing cosmological data.
 
-The current prototype already supports:
+The current operational prototype already supports:
 
 - real ESA Gaia DR3 dataset integration,
+- multidimensional astrophysical preprocessing,
 - unsupervised anomaly detection,
-- multidimensional feature analysis,
 - anomaly family clustering,
+- emergent local structure detection,
 - exploratory visualization,
-- modular AI-assisted analysis pipelines.
+- automated end-to-end execution pipelines,
+- modular AI-assisted analysis architecture.
 
 ---
 
@@ -58,8 +60,9 @@ The full pipeline automatically performs:
 3. AI-assisted unsupervised anomaly detection
 4. Feature contribution analysis
 5. Multidimensional anomaly clustering
-6. RA/DEC anomaly visualization
-7. Structured output generation
+6. Emergent structure detection
+7. RA/DEC anomaly visualization
+8. Structured result generation
 
 ---
 
@@ -71,6 +74,7 @@ The current operational prototype generates:
 results/gaia_dr3_anomaly_results.csv
 results/gaia_dr3_feature_contributions.csv
 results/gaia_dr3_anomaly_clusters.csv
+results/gaia_dr3_emergent_structures.csv
 results/gaia_dr3_anomaly_sky_plot.png
 ```
 
@@ -79,8 +83,9 @@ The generated outputs include:
 - ranked anomalous astrophysical sources,
 - feature contribution analysis,
 - anomaly family clustering,
+- emergent local structure candidates,
 - exploratory visualizations,
-- structured CSV analysis layers.
+- structured multidimensional analysis layers.
 
 ---
 
@@ -95,6 +100,7 @@ Current implemented capabilities include:
 - Statistical anomaly ranking
 - Feature contribution analysis
 - Multidimensional anomaly clustering
+- Emergent local structure detection
 - RA/DEC exploratory visualization
 - Modular AI architecture
 - Structured result generation
@@ -112,13 +118,15 @@ Rather than enforcing predefined cosmological assumptions, the AI modules are in
 - emergent multidimensional structures,
 - non-trivial correlations,
 - anomaly families,
+- local emergent structures,
 - graph-based cosmological relationships.
 
 Current implementation includes:
 
 - Isolation Forest-based anomaly detection,
 - feature interpretability layers,
-- multidimensional clustering analysis.
+- multidimensional clustering analysis,
+- local emergent structure detection.
 
 Future AI development may progressively integrate:
 
@@ -130,11 +138,33 @@ Future AI development may progressively integrate:
 
 ---
 
+# Emergent Structure Detection
+
+The framework now includes an initial emergent structure detection layer.
+
+This module analyzes whether statistically anomalous astrophysical sources exhibit local multidimensional grouping behavior inside the analyzed feature space.
+
+The current implementation:
+
+- computes nearest-neighbor relationships,
+- evaluates local multidimensional density,
+- identifies candidate emergent structures,
+- ranks statistically coherent local anomaly groups.
+
+This represents the first transition from isolated anomaly analysis toward exploratory relational cosmological analysis.
+
+The current system does NOT assign predefined physical meaning to detected structures.
+
+Instead, the framework identifies statistically interesting local configurations that may deserve additional investigation.
+
+---
+
 # Core Objectives
 
 - Analysis of multidimensional cosmological datasets
 - Detection of emergent non-trivial correlations
 - Exploratory anomaly detection
+- Emergent structure identification
 - Topological and geometric analysis of large-scale structures
 - Reduction of interpretative and retroactive selection bias
 - Development of scalable AI-assisted scientific analysis pipelines
@@ -169,14 +199,22 @@ Operational Early Prototype Phase
 
 The framework currently supports complete end-to-end execution on real ESA Gaia DR3 observational datasets.
 
+The current operational pipeline includes:
+
+- anomaly detection,
+- feature analysis,
+- multidimensional clustering,
+- emergent local structure detection,
+- exploratory visualization.
+
 Ongoing development focuses on:
 
-- pipeline scalability,
-- modular AI expansion,
 - graph-based cosmological analysis,
 - exploratory topology modules,
-- automated reporting systems,
-- distributed computation workflows.
+- autonomous AI-assisted workflows,
+- distributed computation systems,
+- scalable large-volume dataset analysis,
+- advanced scientific visualization.
 
 ---
 
@@ -193,7 +231,8 @@ Potential future directions include:
 - topological gravitational structure analysis,
 - emergent pattern discovery,
 - large-scale cosmological survey integration,
-- advanced visualization systems.
+- advanced visualization systems,
+- multidimensional relational cosmology frameworks.
 
 ---
 
@@ -217,7 +256,7 @@ DOI publications available online through Zenodo.
 
 ```text
 ai/              -> AI-assisted cosmological analysis modules
-analysis/        -> Statistical and clustering analysis modules
+analysis/        -> Statistical and structure analysis modules
 datasets/        -> ESA Gaia DR3 datasets and dataset loaders
 docs/            -> Technical documentation and architecture notes
 examples/        -> End-to-end execution examples
