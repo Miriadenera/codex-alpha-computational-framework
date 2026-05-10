@@ -1,19 +1,22 @@
-# Unsupervised Anomaly Detection
+# Anomaly Detection
 
-This module contains the first neutral computational layer of the Codex Alpha Computational Framework.
+This module contains AI-assisted anomaly detection components.
 
-Its purpose is to detect non-trivial anomalies and emergent patterns in astrophysical and cosmological datasets without imposing a predefined theoretical structure.
+Current implementation:
 
-At this stage, the framework does not search directly for Codex Alpha-specific signatures. Instead, it identifies statistically unusual structures that can later be analyzed through physical, topological, geometric, or informational metrics.
+- unsupervised multidimensional anomaly detection,
+- model-agnostic analysis,
+- Isolation Forest-based ranking of statistically unusual astrophysical sources.
 
-## Initial Method
+The goal is to detect rare or non-trivial sources without imposing predefined theoretical structures.
 
-The first implementation uses Isolation Forest for model-agnostic anomaly detection on numerical dataset features.
+Input:
 
-## Planned Extensions
+- cleaned astrophysical datasets,
+- multidimensional numerical features.
 
-- Autoencoder-based anomaly detection
-- Graph-based anomaly detection
-- Topological feature extraction
-- Clustering of emergent structures
-- AI-assisted interpretation layer
+Output:
+
+- anomaly scores,
+- anomaly labels,
+- anomaly rankings.
