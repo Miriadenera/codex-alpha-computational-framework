@@ -8,7 +8,8 @@ This script executes the complete early prototype workflow:
 2. Run AI-assisted unsupervised anomaly detection
 3. Generate feature contribution analysis
 4. Generate anomaly clustering
-5. Generate RA/DEC visualization
+5. Generate emergent structure detection analysis
+6. Generate RA/DEC visualization
 
 Run with:
 
@@ -97,8 +98,13 @@ def main() -> None:
     )
 
     run_step(
+        [sys.executable, "-m", "analysis.emergent_structure_detection"],
+        "Step 5: Generate emergent structure detection analysis",
+    )
+
+    run_step(
         [sys.executable, "-m", "visualization.plot_gaia_anomalies"],
-        "Step 5: Generate RA/DEC anomaly visualization",
+        "Step 6: Generate RA/DEC anomaly visualization",
     )
 
     print("\nFull pipeline completed successfully.")
@@ -107,6 +113,7 @@ def main() -> None:
     print(" - results/gaia_dr3_anomaly_results.csv")
     print(" - results/gaia_dr3_feature_contributions.csv")
     print(" - results/gaia_dr3_anomaly_clusters.csv")
+    print(" - results/gaia_dr3_emergent_structures.csv")
     print(" - results/gaia_dr3_anomaly_sky_plot.png")
 
 
