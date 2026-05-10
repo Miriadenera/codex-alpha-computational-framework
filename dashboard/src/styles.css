@@ -178,14 +178,14 @@ h1 {
 }
 
 .graph-panel {
-  min-height: 680px;
+  min-height: 720px;
   overflow: hidden;
   position: relative;
 }
 
 .graph-3d-shell {
   position: relative;
-  min-height: 590px;
+  min-height: 640px;
   border: 1px solid rgba(125, 220, 255, 0.12);
   border-radius: 20px;
   overflow: hidden;
@@ -197,7 +197,7 @@ h1 {
 
 .graph-3d-toolbar {
   position: absolute;
-  z-index: 5;
+  z-index: 8;
   top: 14px;
   left: 14px;
   right: 14px;
@@ -258,8 +258,66 @@ h1 {
   color: #6b5cff;
 }
 
+.legend-dot.background {
+  background: #29415c;
+  color: #29415c;
+}
+
+.graph-controls {
+  position: absolute;
+  z-index: 9;
+  top: 92px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(125, 220, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.66);
+  backdrop-filter: blur(14px);
+}
+
+.graph-controls button,
+.graph-controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(125, 220, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.8);
+  color: #dff7ff;
+  padding: 8px 11px;
+  font-size: 0.78rem;
+}
+
+.graph-controls button {
+  cursor: pointer;
+}
+
+.graph-controls button:hover {
+  border-color: rgba(125, 220, 255, 0.45);
+  background: rgba(14, 165, 233, 0.16);
+}
+
+.graph-controls input[type="checkbox"] {
+  accent-color: #7ddcff;
+}
+
+.range-control input[type="range"] {
+  width: 120px;
+  accent-color: #7ddcff;
+}
+
+.range-control span {
+  color: #7ddcff;
+  font-weight: 800;
+}
+
 .graph-3d-canvas {
-  height: 590px;
+  height: 640px;
   width: 100%;
 }
 
@@ -269,7 +327,7 @@ h1 {
 
 .selected-node-panel {
   position: absolute;
-  z-index: 6;
+  z-index: 10;
   left: 14px;
   bottom: 14px;
   right: 14px;
@@ -298,7 +356,7 @@ h1 {
 
 .selected-node-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
   gap: 10px;
   margin-top: 12px;
 }
@@ -506,6 +564,14 @@ h1 {
     flex-direction: column;
   }
 
+  .graph-controls {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin: 0 14px 14px;
+  }
+
   .graph-3d-canvas {
     height: 520px;
   }
@@ -530,5 +596,11 @@ h1 {
 
   h1 {
     font-size: 2.4rem;
+  }
+
+  .graph-controls button,
+  .graph-controls label {
+    width: 100%;
+    justify-content: center;
   }
 }
