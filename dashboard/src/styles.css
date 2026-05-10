@@ -147,9 +147,21 @@ h1 {
   font-size: 0.85rem;
 }
 
+.viewer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.75fr) minmax(0, 1.25fr);
+  gap: 22px;
+}
+
 .main-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.8fr);
+  grid-template-columns: 1fr;
   gap: 22px;
 }
 
@@ -193,6 +205,9 @@ h1 {
   position: fixed;
   inset: 0;
   z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   padding: 18px;
   background:
     radial-gradient(circle at 12% 10%, rgba(0, 180, 255, 0.12), transparent 34%),
@@ -201,23 +216,24 @@ h1 {
 }
 
 .graph-viewer-fullscreen .graph-3d-shell {
-  min-height: calc(100vh - 112px);
-  height: calc(100vh - 112px);
+  flex: 1;
+  min-height: 0;
+  height: auto;
 }
 
 .graph-viewer-fullscreen .graph-3d-canvas {
-  height: calc(100vh - 112px);
+  height: 100%;
 }
 
 .graph-viewer-fullscreen .selected-node-panel {
-  max-width: 1100px;
+  max-width: 1200px;
   left: 18px;
   right: 18px;
 }
 
 .graph-3d-shell {
   position: relative;
-  min-height: 760px;
+  min-height: 780px;
   border: 1px solid rgba(125, 220, 255, 0.12);
   border-radius: 20px;
   overflow: hidden;
@@ -286,17 +302,17 @@ h1 {
 }
 
 .legend-dot.low {
-  background: #6b5cff;
-  color: #6b5cff;
+  background: #8c70ff;
+  color: #8c70ff;
 }
 
 .legend-dot.background {
-  background: #5b708f;
-  color: #5b708f;
+  background: #ff4d5e;
+  color: #ff4d5e;
 }
 
 .graph-3d-canvas {
-  height: 760px;
+  height: 780px;
   width: 100%;
   background: #000000;
 }
@@ -320,7 +336,8 @@ h1 {
 }
 
 .graph-viewer-fullscreen .graph-controls {
-  background: rgba(2, 6, 23, 0.82);
+  flex-shrink: 0;
+  background: rgba(2, 6, 23, 0.86);
 }
 
 .graph-controls button,
@@ -414,58 +431,15 @@ h1 {
   letter-spacing: 0.08em;
 }
 
-.graph-placeholder {
-  min-height: 520px;
-  overflow: hidden;
-  position: relative;
-}
-
-.orbital-preview {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: 360px;
-}
-
-.core-glow {
-  width: 86px;
-  height: 86px;
-  border-radius: 50%;
-  background: #7ddcff;
-  box-shadow:
-    0 0 40px rgba(125, 220, 255, 0.9),
-    0 0 120px rgba(125, 220, 255, 0.35);
-}
-
-.orbit {
-  position: absolute;
-  border: 1px solid rgba(125, 220, 255, 0.26);
-  border-radius: 50%;
-  box-shadow: 0 0 24px rgba(125, 220, 255, 0.12);
-}
-
-.orbit-a {
-  width: 240px;
-  height: 120px;
-  transform: rotate(20deg);
-}
-
-.orbit-b {
-  width: 330px;
-  height: 160px;
-  transform: rotate(-28deg);
-}
-
-.orbit-c {
-  width: 430px;
-  height: 210px;
-  transform: rotate(66deg);
-}
-
 .node-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.compact-node-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .node-row {
@@ -524,6 +498,10 @@ h1 {
   gap: 10px;
 }
 
+.details-list-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .details-list p {
   display: flex;
   align-items: flex-start;
@@ -549,6 +527,14 @@ h1 {
   word-break: break-all;
 }
 
+.empty-selection {
+  padding: 18px;
+  border: 1px dashed rgba(125, 220, 255, 0.18);
+  border-radius: 16px;
+  color: #8fb9c8;
+  background: rgba(15, 23, 42, 0.4);
+}
+
 .report-panel {
   margin-top: 22px;
 }
@@ -571,11 +557,16 @@ h1 {
 }
 
 @media (max-width: 1180px) {
-  .main-grid {
+  .analysis-grid {
     grid-template-columns: 1fr;
   }
 
-  .selected-node-grid {
+  .compact-node-list {
+    grid-template-columns: 1fr;
+  }
+
+  .selected-node-grid,
+  .details-list-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -599,20 +590,11 @@ h1 {
   }
 
   .graph-3d-canvas {
-    height: 620px;
+    height: 640px;
   }
 
   .graph-3d-shell {
-    min-height: 620px;
-  }
-
-  .graph-viewer-fullscreen .graph-3d-shell {
-    height: calc(100vh - 132px);
-    min-height: calc(100vh - 132px);
-  }
-
-  .graph-viewer-fullscreen .graph-3d-canvas {
-    height: calc(100vh - 132px);
+    min-height: 640px;
   }
 }
 
@@ -625,7 +607,8 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .selected-node-grid {
+  .selected-node-grid,
+  .details-list-grid {
     grid-template-columns: 1fr;
   }
 
@@ -641,14 +624,5 @@ h1 {
 
   .graph-viewer-fullscreen {
     padding: 10px;
-  }
-
-  .graph-viewer-fullscreen .graph-3d-shell {
-    height: calc(100vh - 210px);
-    min-height: calc(100vh - 210px);
-  }
-
-  .graph-viewer-fullscreen .graph-3d-canvas {
-    height: calc(100vh - 210px);
   }
 }
