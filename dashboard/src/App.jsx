@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Graph3DViewer from "./components/Graph3DViewer.jsx";
 
 const DATA_BASE = "/data";
@@ -21,6 +21,16 @@ async function loadText(path) {
   }
 
   return response.text();
+}
+
+function formatNumber(value, digits = 6) {
+  const number = Number(value);
+
+  if (Number.isNaN(number)) {
+    return "N/A";
+  }
+
+  return number.toFixed(digits);
 }
 
 function MetricCard({ label, value, subtitle }) {
@@ -69,7 +79,9 @@ function App() {
     loadDashboardData();
   }, []);
 
-  const topCentralSources = centrality.slice(0, 5);
+  const topCentralSources = useMemo(() => {
+    return centrality.slice(0, 5);
+  }, [centrality]);
 
   return (
     <main className="app-shell">
@@ -161,7 +173,7 @@ function App() {
                       <small>rank {source.structural_rank}</small>
                     </div>
                     <span>
-                      {Number(source.structural_importance_score).toFixed(4)}
+                      {formatNumber(source.structural_importance_score, 4)}
                     </span>
                   </button>
                 ))}
@@ -181,6 +193,11 @@ function App() {
                     </p>
 
                     <p>
+                      <span>Type</span>
+                      <strong>{selectedNode.node_type ?? "centrality"}</strong>
+                    </p>
+
+                    <p>
                       <span>Structural rank</span>
                       <strong>{selectedNode.structural_rank ?? "N/A"}</strong>
                     </p>
@@ -188,18 +205,33 @@ function App() {
                     <p>
                       <span>Structural importance</span>
                       <strong>
-                        {Number(selectedNode.structural_importance_score ?? 0).toFixed(6)}
+                        {formatNumber(selectedNode.structural_importance_score, 6)}
                       </strong>
                     </p>
 
                     <p>
                       <span>Anomaly score</span>
-                      <strong>{Number(selectedNode.anomaly_score ?? 0).toFixed(6)}</strong>
+                      <strong>{formatNumber(selectedNode.anomaly_score, 6)}</strong>
+                    </p>
+
+                    <p>
+                      <span>RA</span>
+                      <strong>{formatNumber(selectedNode.ra, 6)}</strong>
+                    </p>
+
+                    <p>
+                      <span>DEC</span>
+                      <strong>{formatNumber(selectedNode.dec, 6)}</strong>
+                    </p>
+
+                    <p>
+                      <span>Parallax</span>
+                      <strong>{formatNumber(selectedNode.parallax, 6)}</strong>
                     </p>
 
                     <p>
                       <span>Radial velocity</span>
-                      <strong>{selectedNode.radial_velocity ?? "N/A"}</strong>
+                      <strong>{formatNumber(selectedNode.radial_velocity, 6)}</strong>
                     </p>
                   </div>
                 </div>
