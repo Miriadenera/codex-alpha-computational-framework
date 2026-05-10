@@ -189,6 +189,32 @@ h1 {
   gap: 14px;
 }
 
+.graph-viewer-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(0, 180, 255, 0.12), transparent 34%),
+    radial-gradient(circle at 90% 20%, rgba(120, 80, 255, 0.1), transparent 28%),
+    #000000;
+}
+
+.graph-viewer-fullscreen .graph-3d-shell {
+  min-height: calc(100vh - 112px);
+  height: calc(100vh - 112px);
+}
+
+.graph-viewer-fullscreen .graph-3d-canvas {
+  height: calc(100vh - 112px);
+}
+
+.graph-viewer-fullscreen .selected-node-panel {
+  max-width: 1100px;
+  left: 18px;
+  right: 18px;
+}
+
 .graph-3d-shell {
   position: relative;
   min-height: 760px;
@@ -291,6 +317,10 @@ h1 {
   border-radius: 18px;
   background: rgba(2, 6, 23, 0.66);
   backdrop-filter: blur(14px);
+}
+
+.graph-viewer-fullscreen .graph-controls {
+  background: rgba(2, 6, 23, 0.82);
 }
 
 .graph-controls button,
@@ -575,6 +605,15 @@ h1 {
   .graph-3d-shell {
     min-height: 620px;
   }
+
+  .graph-viewer-fullscreen .graph-3d-shell {
+    height: calc(100vh - 132px);
+    min-height: calc(100vh - 132px);
+  }
+
+  .graph-viewer-fullscreen .graph-3d-canvas {
+    height: calc(100vh - 132px);
+  }
 }
 
 @media (max-width: 640px) {
@@ -598,5 +637,18 @@ h1 {
   .graph-controls label {
     width: 100%;
     justify-content: center;
+  }
+
+  .graph-viewer-fullscreen {
+    padding: 10px;
+  }
+
+  .graph-viewer-fullscreen .graph-3d-shell {
+    height: calc(100vh - 210px);
+    min-height: calc(100vh - 210px);
+  }
+
+  .graph-viewer-fullscreen .graph-3d-canvas {
+    height: calc(100vh - 210px);
   }
 }
