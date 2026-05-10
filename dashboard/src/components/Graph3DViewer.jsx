@@ -46,54 +46,67 @@ function getNodeColor(node) {
   const score = normalizeScore(node.structural_importance_score);
 
   if (rank > 0 && rank <= 5) {
-    return "#f7ef74";
+    return "#fff06a";
   }
 
   if (score >= 0.45) {
-    return "#7defff";
+    return "#72f2ff";
   }
 
   if (score >= 0.35) {
-    return "#84a4ff";
+    return "#86a7ff";
   }
 
-  return "#8c70ff";
+  return "#9a7cff";
 }
 
-function getNodeSize(node) {
+function getNodeSize(node, gaiaSize, anomalySize) {
   if (node.node_type === "background") {
-    return 3.2;
+    return gaiaSize;
   }
 
-  return 4.2;
+  return anomalySize;
 }
 
-function createNodeObject(node) {
+function createNodeObject(node, controls) {
   const group = new THREE.Group();
 
-  const radius = getNodeSize(node) / 10;
+  const radius = getNodeSize(
+    node,
+    controls.gaiaSize,
+    controls.anomalySize,
+  ) / 10;
+
   const color = getNodeColor(node);
 
-  const sphereGeometry = new THREE.SphereGeometry(radius, 20, 20);
+  const sphereGeometry = new THREE.SphereGeometry(radius, 22, 22);
   const sphereMaterial = new THREE.MeshBasicMaterial({
     color,
     transparent: true,
-    opacity: node.node_type === "background" ? 0.82 : 0.96,
+    opacity:
+      node.node_type === "background"
+        ? controls.gaiaBrightness
+        : controls.anomalyBrightness,
   });
 
   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
   group.add(sphere);
 
   const glowGeometry = new THREE.SphereGeometry(
-    node.node_type === "background" ? radius * 1.35 : radius * 1.75,
-    20,
-    20,
+    node.node_type === "background"
+      ? radius * 1.28
+      : radius * controls.anomalyGlow,
+    22,
+    22,
   );
 
   const glowMaterial = new THREE.MeshBasicMaterial({
     color,
     transparent: true,
-    opacity: node.node_type === "background" ? 0.08 : 0.12,
+    opacity:
+      node.node_type === "background"
+        ? controls.gaiaGlowOpacity
+        : controls.anomalyGlowOpacity,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
   });
@@ -194,6 +207,25 @@ function Graph3DViewer({
   const [offsetX, setOffsetX] = useState(-70);
   const [offsetY, setOffsetY] = useState(0);
   const [offsetZ, setOffsetZ] = useState(0);
+
+  const [gaiaBrightness, setGaiaBrightness] = useState(0.85);
+  const [anomalyBrightness, setAnomalyBrightness] = useState(1.0);
+  const [anomalyGlow, setAnomalyGlow] = useState(2.2);
+  const [linkIntensity, setLinkIntensity] = useState(0.72);
+  const [linkThickness, setLinkThickness] = useState(0.55);
+
+  const visualControls = useMemo(
+    () => ({
+      gaiaSize: 3.3,
+      anomalySize: 4.5,
+      gaiaBrightness,
+      anomalyBrightness,
+      anomalyGlow,
+      gaiaGlowOpacity: 0.08,
+      anomalyGlowOpacity: 0.12,
+    }),
+    [gaiaBrightness, anomalyBrightness, anomalyGlow],
+  );
 
   const graphData = useMemo(() => {
     const centralityMap = buildCentralityMap(centrality);
@@ -411,6 +443,29 @@ function Graph3DViewer({
     }, 100);
   }
 
+  function boostAnomalies() {
+    setAnomalyBrightness(1);
+    setAnomalyGlow(3.2);
+    setLinkIntensity(0.9);
+    setLinkThickness(0.75);
+  }
+
+  function softView() {
+    setGaiaBrightness(0.55);
+    setAnomalyBrightness(0.95);
+    setAnomalyGlow(1.8);
+    setLinkIntensity(0.38);
+    setLinkThickness(0.28);
+  }
+
+  function balancedView() {
+    setGaiaBrightness(0.85);
+    setAnomalyBrightness(1.0);
+    setAnomalyGlow(2.2);
+    setLinkIntensity(0.72);
+    setLinkThickness(0.55);
+  }
+
   function toggleFullscreenMode() {
     setFullscreenMode((current) => !current);
 
@@ -466,15 +521,17 @@ function Graph3DViewer({
               "\nRank: " +
               (node.structural_rank ?? "N/A")
             }
-            nodeThreeObject={createNodeObject}
-            linkColor={() => "rgba(125, 220, 255, 0.58)"}
+            nodeThreeObject={(node) => createNodeObject(node, visualControls)}
+            linkColor={() =>
+              "rgba(125, 220, 255, " + String(linkIntensity) + ")"
+            }
             linkWidth={(link) =>
               Math.max(
-                0.25,
-                normalizeScore(link.similarity_weight, 0.2) * 0.42,
+                0.2,
+                normalizeScore(link.similarity_weight, 0.2) * linkThickness,
               )
             }
-            linkOpacity={0.62}
+            linkOpacity={linkIntensity}
             onNodeClick={handleNodeClick}
             enableNodeDrag={!lockLayout}
             showNavInfo={false}
@@ -529,6 +586,18 @@ function Graph3DViewer({
 
         <button type="button" onClick={recenterField}>
           Recenter field
+        </button>
+
+        <button type="button" onClick={balancedView}>
+          Balanced
+        </button>
+
+        <button type="button" onClick={boostAnomalies}>
+          Boost anomalies
+        </button>
+
+        <button type="button" onClick={softView}>
+          Soft view
         </button>
 
         <button type="button" onClick={toggleFullscreenMode}>
@@ -591,6 +660,73 @@ function Graph3DViewer({
             onChange={(event) => setAnomalyThreshold(Number(event.target.value))}
           />
           <span>{anomalyThreshold.toFixed(2)}</span>
+        </label>
+
+        <label className="range-control">
+          Gaia brightness
+          <input
+            type="range"
+            min="0.1"
+            max="1"
+            step="0.01"
+            value={gaiaBrightness}
+            onChange={(event) => setGaiaBrightness(Number(event.target.value))}
+          />
+          <span>{gaiaBrightness.toFixed(2)}</span>
+        </label>
+
+        <label className="range-control">
+          Anomaly brightness
+          <input
+            type="range"
+            min="0.1"
+            max="1"
+            step="0.01"
+            value={anomalyBrightness}
+            onChange={(event) =>
+              setAnomalyBrightness(Number(event.target.value))
+            }
+          />
+          <span>{anomalyBrightness.toFixed(2)}</span>
+        </label>
+
+        <label className="range-control">
+          Anomaly glow
+          <input
+            type="range"
+            min="1"
+            max="5"
+            step="0.1"
+            value={anomalyGlow}
+            onChange={(event) => setAnomalyGlow(Number(event.target.value))}
+          />
+          <span>{anomalyGlow.toFixed(1)}</span>
+        </label>
+
+        <label className="range-control">
+          Link intensity
+          <input
+            type="range"
+            min="0.05"
+            max="1"
+            step="0.01"
+            value={linkIntensity}
+            onChange={(event) => setLinkIntensity(Number(event.target.value))}
+          />
+          <span>{linkIntensity.toFixed(2)}</span>
+        </label>
+
+        <label className="range-control">
+          Link thickness
+          <input
+            type="range"
+            min="0.05"
+            max="1.2"
+            step="0.01"
+            value={linkThickness}
+            onChange={(event) => setLinkThickness(Number(event.target.value))}
+          />
+          <span>{linkThickness.toFixed(2)}</span>
         </label>
 
         <label className="range-control">
