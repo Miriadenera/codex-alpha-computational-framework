@@ -62,10 +62,10 @@ function getNodeColor(node) {
 
 function getNodeSize(node) {
   if (node.node_type === "background") {
-    return 2.6;
+    return 3.2;
   }
 
-  return 2.9;
+  return 4.2;
 }
 
 function createNodeObject(node) {
@@ -74,29 +74,32 @@ function createNodeObject(node) {
   const radius = getNodeSize(node) / 10;
   const color = getNodeColor(node);
 
-  const sphereGeometry = new THREE.SphereGeometry(radius, 18, 18);
+  const sphereGeometry = new THREE.SphereGeometry(radius, 20, 20);
   const sphereMaterial = new THREE.MeshBasicMaterial({
     color,
     transparent: true,
-    opacity: node.node_type === "background" ? 0.62 : 0.9,
+    opacity: node.node_type === "background" ? 0.82 : 0.96,
   });
 
   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
   group.add(sphere);
 
-  if (node.node_type !== "background") {
-    const glowGeometry = new THREE.SphereGeometry(radius * 1.65, 18, 18);
-    const glowMaterial = new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 0.08,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
+  const glowGeometry = new THREE.SphereGeometry(
+    node.node_type === "background" ? radius * 1.35 : radius * 1.75,
+    20,
+    20,
+  );
 
-    const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-    group.add(glow);
-  }
+  const glowMaterial = new THREE.MeshBasicMaterial({
+    color,
+    transparent: true,
+    opacity: node.node_type === "background" ? 0.08 : 0.12,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+
+  const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+  group.add(glow);
 
   return group;
 }
@@ -113,7 +116,7 @@ function getRawCoordinates(source) {
   };
 }
 
-function centerAndScaleNodes(inputNodes) {
+function centerAndScaleNodes(inputNodes, offsets) {
   if (!inputNodes.length) {
     return [];
   }
@@ -154,22 +157,18 @@ function centerAndScaleNodes(inputNodes) {
     ...centeredNodes.map((node) => Math.abs(node.cz)),
   );
 
-  /*
-    The scale intentionally keeps the Gaia field broad but not compressed.
-    X and Y are balanced, Z is slightly compressed to avoid a knife-like projection.
-  */
   const scaleX = 120 / maxX;
   const scaleY = 120 / maxY;
   const scaleZ = 65 / maxZ;
 
   return centeredNodes.map((node) => ({
     ...node,
-    fx: node.cx * scaleX,
-    fy: node.cy * scaleY,
-    fz: node.cz * scaleZ,
-    x: node.cx * scaleX,
-    y: node.cy * scaleY,
-    z: node.cz * scaleZ,
+    fx: node.cx * scaleX + offsets.x,
+    fy: node.cy * scaleY + offsets.y,
+    fz: node.cz * scaleZ + offsets.z,
+    x: node.cx * scaleX + offsets.x,
+    y: node.cy * scaleY + offsets.y,
+    z: node.cz * scaleZ + offsets.z,
   }));
 }
 
@@ -191,6 +190,10 @@ function Graph3DViewer({
   const [lockLayout, setLockLayout] = useState(true);
   const [fullscreenMode, setFullscreenMode] = useState(false);
   const [anomalyThreshold, setAnomalyThreshold] = useState(0);
+
+  const [offsetX, setOffsetX] = useState(-70);
+  const [offsetY, setOffsetY] = useState(0);
+  const [offsetZ, setOffsetZ] = useState(0);
 
   const graphData = useMemo(() => {
     const centralityMap = buildCentralityMap(centrality);
@@ -271,10 +274,14 @@ function Graph3DViewer({
         });
     }
 
-    const allVisibleNodes = centerAndScaleNodes([
-      ...backgroundNodes,
-      ...anomalyNodes,
-    ]);
+    const allVisibleNodes = centerAndScaleNodes(
+      [...backgroundNodes, ...anomalyNodes],
+      {
+        x: offsetX,
+        y: offsetY,
+        z: offsetZ,
+      },
+    );
 
     let graphLinks = edges
       .map((edge) => ({
@@ -311,6 +318,9 @@ function Graph3DViewer({
     topStructuralOnly,
     hideWeakLinks,
     anomalyThreshold,
+    offsetX,
+    offsetY,
+    offsetZ,
   ]);
 
   useEffect(() => {
@@ -318,16 +328,12 @@ function Graph3DViewer({
       return;
     }
 
-    /*
-      When locked, nodes keep their computed spatial coordinates.
-      When unlocked, ForceGraph can relax the structure interactively.
-    */
     if (lockLayout) {
       graphRef.current.d3Force("charge").strength(0);
       graphRef.current.d3Force("center", null);
       graphRef.current.d3Force("link").strength(0);
     } else {
-      graphRef.current.d3Force("charge").strength(showAllSources ? -6 : -35);
+      graphRef.current.d3Force("charge").strength(showAllSources ? -8 : -35);
 
       graphRef.current.d3Force("link").distance((link) => {
         const distance = normalizeScore(link.feature_distance, 1);
@@ -395,6 +401,16 @@ function Graph3DViewer({
     );
   }
 
+  function recenterField() {
+    setOffsetX(-70);
+    setOffsetY(0);
+    setOffsetZ(0);
+
+    window.setTimeout(() => {
+      resetCamera();
+    }, 100);
+  }
+
   function toggleFullscreenMode() {
     setFullscreenMode((current) => !current);
 
@@ -451,14 +467,14 @@ function Graph3DViewer({
               (node.structural_rank ?? "N/A")
             }
             nodeThreeObject={createNodeObject}
-            linkColor={() => "rgba(125, 220, 255, 0.22)"}
+            linkColor={() => "rgba(125, 220, 255, 0.58)"}
             linkWidth={(link) =>
               Math.max(
-                0.08,
-                normalizeScore(link.similarity_weight, 0.2) * 0.18,
+                0.25,
+                normalizeScore(link.similarity_weight, 0.2) * 0.42,
               )
             }
-            linkOpacity={0.24}
+            linkOpacity={0.62}
             onNodeClick={handleNodeClick}
             enableNodeDrag={!lockLayout}
             showNavInfo={false}
@@ -509,6 +525,10 @@ function Graph3DViewer({
       <div className="graph-controls">
         <button type="button" onClick={resetCamera}>
           Reset view
+        </button>
+
+        <button type="button" onClick={recenterField}>
+          Recenter field
         </button>
 
         <button type="button" onClick={toggleFullscreenMode}>
@@ -571,6 +591,45 @@ function Graph3DViewer({
             onChange={(event) => setAnomalyThreshold(Number(event.target.value))}
           />
           <span>{anomalyThreshold.toFixed(2)}</span>
+        </label>
+
+        <label className="range-control">
+          Shift X
+          <input
+            type="range"
+            min="-220"
+            max="220"
+            step="1"
+            value={offsetX}
+            onChange={(event) => setOffsetX(Number(event.target.value))}
+          />
+          <span>{offsetX}</span>
+        </label>
+
+        <label className="range-control">
+          Shift Y
+          <input
+            type="range"
+            min="-220"
+            max="220"
+            step="1"
+            value={offsetY}
+            onChange={(event) => setOffsetY(Number(event.target.value))}
+          />
+          <span>{offsetY}</span>
+        </label>
+
+        <label className="range-control">
+          Shift Z
+          <input
+            type="range"
+            min="-220"
+            max="220"
+            step="1"
+            value={offsetZ}
+            onChange={(event) => setOffsetZ(Number(event.target.value))}
+          />
+          <span>{offsetZ}</span>
         </label>
       </div>
     </div>
