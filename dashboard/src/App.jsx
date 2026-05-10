@@ -80,7 +80,7 @@ function App() {
   }, []);
 
   const topCentralSources = useMemo(() => {
-    return centrality.slice(0, 5);
+    return centrality.slice(0, 10);
   }, [centrality]);
 
   return (
@@ -138,7 +138,7 @@ function App() {
             />
           </section>
 
-          <section className="main-grid">
+          <section className="viewer-stack">
             <div className="panel graph-panel">
               <div className="panel-header">
                 <h2>3D Relational Graph Viewer</h2>
@@ -154,39 +154,47 @@ function App() {
               />
             </div>
 
-            <aside className="panel">
-              <div className="panel-header">
-                <h2>Top Structural Nodes</h2>
-                <span>Graph centrality</span>
-              </div>
+            <section className="analysis-grid">
+              <aside className="panel">
+                <div className="panel-header">
+                  <h2>Top Structural Nodes</h2>
+                  <span>Graph centrality</span>
+                </div>
 
-              <div className="node-list">
-                {topCentralSources.map((source) => (
-                  <button
-                    className="node-row node-button"
-                    key={source.SOURCE_ID}
-                    type="button"
-                    onClick={() => setSelectedNode(source)}
-                  >
-                    <div>
-                      <strong>{source.SOURCE_ID}</strong>
-                      <small>rank {source.structural_rank}</small>
-                    </div>
-                    <span>
-                      {formatNumber(source.structural_importance_score, 4)}
-                    </span>
-                  </button>
-                ))}
-              </div>
+                <div className="node-list compact-node-list">
+                  {topCentralSources.map((source) => (
+                    <button
+                      className="node-row node-button"
+                      key={source.SOURCE_ID}
+                      type="button"
+                      onClick={() => setSelectedNode(source)}
+                    >
+                      <div>
+                        <strong>{source.SOURCE_ID}</strong>
+                        <small>rank {source.structural_rank}</small>
+                      </div>
+                      <span>
+                        {formatNumber(source.structural_importance_score, 4)}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </aside>
 
-              {selectedNode && (
-                <div className="details-card">
-                  <div className="panel-header">
-                    <h2>Selected Source</h2>
-                    <span>Inspection</span>
+              <aside className="panel">
+                <div className="panel-header">
+                  <h2>Selected Source</h2>
+                  <span>Inspection</span>
+                </div>
+
+                {!selectedNode && (
+                  <div className="empty-selection">
+                    Select a node in the 3D viewer or from the structural ranking.
                   </div>
+                )}
 
-                  <div className="details-list">
+                {selectedNode && (
+                  <div className="details-list details-list-grid">
                     <p>
                       <span>SOURCE_ID</span>
                       <strong>{selectedNode.source_id ?? selectedNode.SOURCE_ID}</strong>
@@ -234,9 +242,9 @@ function App() {
                       <strong>{formatNumber(selectedNode.radial_velocity, 6)}</strong>
                     </p>
                   </div>
-                </div>
-              )}
-            </aside>
+                )}
+              </aside>
+            </section>
           </section>
 
           <section className="panel report-panel">
