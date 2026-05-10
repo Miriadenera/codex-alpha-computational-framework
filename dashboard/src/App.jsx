@@ -7,7 +7,7 @@ async function loadJson(path) {
   const response = await fetch(path);
 
   if (!response.ok) {
-    throw new Error(`Unable to load ${path}`);
+    throw new Error("Unable to load " + path);
   }
 
   return response.json();
@@ -17,7 +17,7 @@ async function loadText(path) {
   const response = await fetch(path);
 
   if (!response.ok) {
-    throw new Error(`Unable to load ${path}`);
+    throw new Error("Unable to load " + path);
   }
 
   return response.text();
@@ -37,6 +37,7 @@ function MetricCard({ label, value, subtitle }) {
 
 function App() {
   const [summary, setSummary] = useState(null);
+  const [allSources, setAllSources] = useState([]);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [centrality, setCentrality] = useState([]);
@@ -47,15 +48,15 @@ function App() {
   useEffect(() => {
     async function loadDashboardData() {
       try {
-        const summaryData = await loadJson(`${DATA_BASE}/summary.json`);
-        const nodesData = await loadJson(`${DATA_BASE}/graph_nodes.json`);
-        const edgesData = await loadJson(`${DATA_BASE}/graph_edges.json`);
-        const centralityData = await loadJson(
-          `${DATA_BASE}/graph_centrality.json`,
-        );
-        const reportText = await loadText(`${DATA_BASE}/report.md`);
+        const summaryData = await loadJson(DATA_BASE + "/summary.json");
+        const allSourcesData = await loadJson(DATA_BASE + "/anomalies.json");
+        const nodesData = await loadJson(DATA_BASE + "/graph_nodes.json");
+        const edgesData = await loadJson(DATA_BASE + "/graph_edges.json");
+        const centralityData = await loadJson(DATA_BASE + "/graph_centrality.json");
+        const reportText = await loadText(DATA_BASE + "/report.md");
 
         setSummary(summaryData);
+        setAllSources(allSourcesData);
         setNodes(nodesData);
         setEdges(edgesData);
         setCentrality(centralityData);
@@ -77,8 +78,7 @@ function App() {
           <div className="eyebrow">Local Scientific Interface</div>
           <h1>Codex Alpha Computational Framework</h1>
           <p>
-            Local dashboard for exploratory analysis of multidimensional Gaia
-            DR3 outputs.
+            Local dashboard for exploratory analysis of multidimensional Gaia DR3 outputs.
           </p>
         </div>
 
@@ -93,8 +93,7 @@ function App() {
           <strong>Dashboard data not available.</strong>
           <p>{error}</p>
           <p>
-            Run <code>python -m pipeline.run_full_pipeline</code> from the
-            repository root.
+            Run <code>python -m pipeline.run_full_pipeline</code> from the repository root.
           </p>
         </section>
       )}
@@ -122,8 +121,8 @@ function App() {
 
             <MetricCard
               label="Graph"
-              value={`${summary?.graph_nodes ?? "..."} nodes`}
-              subtitle={`${summary?.graph_edges ?? "..."} edges`}
+              value={(summary?.graph_nodes ?? "...") + " nodes"}
+              subtitle={(summary?.graph_edges ?? "...") + " edges"}
             />
           </section>
 
@@ -135,6 +134,7 @@ function App() {
               </div>
 
               <Graph3DViewer
+                allSources={allSources}
                 nodes={nodes}
                 edges={edges}
                 centrality={centrality}
@@ -177,9 +177,7 @@ function App() {
                   <div className="details-list">
                     <p>
                       <span>SOURCE_ID</span>
-                      <strong>
-                        {selectedNode.source_id ?? selectedNode.SOURCE_ID}
-                      </strong>
+                      <strong>{selectedNode.source_id ?? selectedNode.SOURCE_ID}</strong>
                     </p>
 
                     <p>
@@ -190,17 +188,13 @@ function App() {
                     <p>
                       <span>Structural importance</span>
                       <strong>
-                        {Number(
-                          selectedNode.structural_importance_score ?? 0,
-                        ).toFixed(6)}
+                        {Number(selectedNode.structural_importance_score ?? 0).toFixed(6)}
                       </strong>
                     </p>
 
                     <p>
                       <span>Anomaly score</span>
-                      <strong>
-                        {Number(selectedNode.anomaly_score ?? 0).toFixed(6)}
-                      </strong>
+                      <strong>{Number(selectedNode.anomaly_score ?? 0).toFixed(6)}</strong>
                     </p>
 
                     <p>
