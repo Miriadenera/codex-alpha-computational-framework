@@ -234,7 +234,14 @@ DOI publications available online through Zenodo.
 ## Repository Structure
 
 ```text
-ai/              -> AI-assisted anomaly detection modules
+ai/              -> AI-assisted cosmological analysis modules
+│
+├── anomaly_detection/   -> Unsupervised anomaly detection systems
+├── ranking/             -> AI-assisted anomaly prioritization modules
+├── pattern_discovery/   -> Emergent pattern and correlation analysis
+├── interpretability/    -> AI explainability and feature interpretation
+├── autonomous/          -> Future autonomous exploratory pipelines
+└── graph_models/        -> Graph-based cosmological analysis modules
 analysis/        -> Statistical analysis, feature contribution and anomaly clustering modules
 datasets/        -> ESA Gaia DR3 datasets and dataset loaders
 docs/            -> Technical documentation and architecture notes
