@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Graph3DViewer from "./components/Graph3DViewer.jsx";
 
 const DATA_BASE = "/data";
 
@@ -36,18 +37,27 @@ function MetricCard({ label, value, subtitle }) {
 
 function App() {
   const [summary, setSummary] = useState(null);
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
   const [centrality, setCentrality] = useState([]);
   const [report, setReport] = useState("");
+  const [selectedNode, setSelectedNode] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     async function loadDashboardData() {
       try {
         const summaryData = await loadJson(`${DATA_BASE}/summary.json`);
-        const centralityData = await loadJson(`${DATA_BASE}/graph_centrality.json`);
+        const nodesData = await loadJson(`${DATA_BASE}/graph_nodes.json`);
+        const edgesData = await loadJson(`${DATA_BASE}/graph_edges.json`);
+        const centralityData = await loadJson(
+          `${DATA_BASE}/graph_centrality.json`,
+        );
         const reportText = await loadText(`${DATA_BASE}/report.md`);
 
         setSummary(summaryData);
+        setNodes(nodesData);
+        setEdges(edgesData);
         setCentrality(centralityData);
         setReport(reportText);
       } catch (err) {
@@ -67,7 +77,8 @@ function App() {
           <div className="eyebrow">Local Scientific Interface</div>
           <h1>Codex Alpha Computational Framework</h1>
           <p>
-            Local dashboard for exploratory analysis of multidimensional Gaia DR3 outputs.
+            Local dashboard for exploratory analysis of multidimensional Gaia
+            DR3 outputs.
           </p>
         </div>
 
@@ -82,7 +93,8 @@ function App() {
           <strong>Dashboard data not available.</strong>
           <p>{error}</p>
           <p>
-            Run <code>python -m pipeline.run_full_pipeline</code> from the repository root.
+            Run <code>python -m pipeline.run_full_pipeline</code> from the
+            repository root.
           </p>
         </section>
       )}
@@ -116,22 +128,18 @@ function App() {
           </section>
 
           <section className="main-grid">
-            <div className="panel graph-placeholder">
+            <div className="panel graph-panel">
               <div className="panel-header">
                 <h2>3D Relational Graph Viewer</h2>
-                <span>Prototype UI</span>
+                <span>Interactive local graph</span>
               </div>
 
-              <div className="orbital-preview">
-                <div className="core-glow" />
-                <div className="orbit orbit-a" />
-                <div className="orbit orbit-b" />
-                <div className="orbit orbit-c" />
-              </div>
-
-              <p>
-                Interactive 3D graph rendering will be connected to local graph nodes and edges.
-              </p>
+              <Graph3DViewer
+                nodes={nodes}
+                edges={edges}
+                centrality={centrality}
+                onNodeSelect={setSelectedNode}
+              />
             </div>
 
             <aside className="panel">
@@ -142,7 +150,12 @@ function App() {
 
               <div className="node-list">
                 {topCentralSources.map((source) => (
-                  <div className="node-row" key={source.SOURCE_ID}>
+                  <button
+                    className="node-row node-button"
+                    key={source.SOURCE_ID}
+                    type="button"
+                    onClick={() => setSelectedNode(source)}
+                  >
                     <div>
                       <strong>{source.SOURCE_ID}</strong>
                       <small>rank {source.structural_rank}</small>
@@ -150,9 +163,53 @@ function App() {
                     <span>
                       {Number(source.structural_importance_score).toFixed(4)}
                     </span>
-                  </div>
+                  </button>
                 ))}
               </div>
+
+              {selectedNode && (
+                <div className="details-card">
+                  <div className="panel-header">
+                    <h2>Selected Source</h2>
+                    <span>Inspection</span>
+                  </div>
+
+                  <div className="details-list">
+                    <p>
+                      <span>SOURCE_ID</span>
+                      <strong>
+                        {selectedNode.source_id ?? selectedNode.SOURCE_ID}
+                      </strong>
+                    </p>
+
+                    <p>
+                      <span>Structural rank</span>
+                      <strong>{selectedNode.structural_rank ?? "N/A"}</strong>
+                    </p>
+
+                    <p>
+                      <span>Structural importance</span>
+                      <strong>
+                        {Number(
+                          selectedNode.structural_importance_score ?? 0,
+                        ).toFixed(6)}
+                      </strong>
+                    </p>
+
+                    <p>
+                      <span>Anomaly score</span>
+                      <strong>
+                        {Number(selectedNode.anomaly_score ?? 0).toFixed(6)}
+                      </strong>
+                    </p>
+
+                    <p>
+                      <span>Radial velocity</span>
+                      <strong>{selectedNode.radial_velocity ?? "N/A"}</strong>
+                    </p>
+                  </div>
+                </div>
+              )}
             </aside>
           </section>
 
