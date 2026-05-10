@@ -24,7 +24,9 @@ function buildCentralityMap(centrality = []) {
       betweenness_centrality: normalizeScore(item.betweenness_centrality),
       closeness_centrality: normalizeScore(item.closeness_centrality),
       weighted_degree: normalizeScore(item.weighted_degree),
-      structural_importance_score: normalizeScore(item.structural_importance_score),
+      structural_importance_score: normalizeScore(
+        item.structural_importance_score,
+      ),
     });
   });
 
@@ -37,12 +39,13 @@ function getSourceId(item) {
 
 function getNodeColor(node) {
   if (node.node_type === "background") {
-    return "#29415c";
+    return "#5b708f";
   }
 
+  const rank = Number(node.structural_rank ?? 999);
   const score = normalizeScore(node.structural_importance_score);
 
-  if (score >= 0.55) {
+  if (rank > 0 && rank <= 5) {
     return "#fff06a";
   }
 
@@ -59,13 +62,18 @@ function getNodeColor(node) {
 
 function getNodeSize(node) {
   if (node.node_type === "background") {
-    return 1.1;
+    return 0.95;
   }
 
   const anomalyScore = normalizeScore(node.anomaly_score, 0.5);
   const structuralScore = normalizeScore(node.structural_importance_score, 0.2);
+  const rank = Number(node.structural_rank ?? 999);
 
-  return 3.5 + anomalyScore * 4 + structuralScore * 7;
+  if (rank > 0 && rank <= 5) {
+    return 8.5 + structuralScore * 5;
+  }
+
+  return 4.2 + anomalyScore * 4 + structuralScore * 6;
 }
 
 function createNodeObject(node) {
@@ -78,18 +86,18 @@ function createNodeObject(node) {
   const sphereMaterial = new THREE.MeshBasicMaterial({
     color,
     transparent: true,
-    opacity: node.node_type === "background" ? 0.38 : 0.96,
+    opacity: node.node_type === "background" ? 0.5 : 0.98,
   });
 
   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
   group.add(sphere);
 
   if (node.node_type !== "background") {
-    const glowGeometry = new THREE.SphereGeometry(radius * 2.2, 24, 24);
+    const glowGeometry = new THREE.SphereGeometry(radius * 2.35, 24, 24);
     const glowMaterial = new THREE.MeshBasicMaterial({
       color,
       transparent: true,
-      opacity: 0.16,
+      opacity: 0.18,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -101,16 +109,64 @@ function createNodeObject(node) {
   return group;
 }
 
-function createSpatialPosition(source) {
+function getRawCoordinates(source) {
   const ra = normalizeScore(source.ra);
   const dec = normalizeScore(source.dec);
   const parallax = normalizeScore(source.parallax);
 
   return {
-    fx: (ra - 45) * 42,
-    fy: (dec - 2) * 70,
-    fz: (parallax - 7) * 3.2,
+    rawX: ra,
+    rawY: dec,
+    rawZ: parallax,
   };
+}
+
+function centerAndScaleNodes(inputNodes) {
+  if (!inputNodes.length) {
+    return [];
+  }
+
+  const rawNodes = inputNodes.map((node) => {
+    const raw = getRawCoordinates(node);
+
+    return {
+      ...node,
+      ...raw,
+    };
+  });
+
+  const centerX =
+    rawNodes.reduce((sum, node) => sum + node.rawX, 0) / rawNodes.length;
+  const centerY =
+    rawNodes.reduce((sum, node) => sum + node.rawY, 0) / rawNodes.length;
+  const centerZ =
+    rawNodes.reduce((sum, node) => sum + node.rawZ, 0) / rawNodes.length;
+
+  const centeredNodes = rawNodes.map((node) => ({
+    ...node,
+    cx: node.rawX - centerX,
+    cy: node.rawY - centerY,
+    cz: node.rawZ - centerZ,
+  }));
+
+  const maxExtent = Math.max(
+    1,
+    ...centeredNodes.map((node) => Math.abs(node.cx)),
+    ...centeredNodes.map((node) => Math.abs(node.cy)),
+    ...centeredNodes.map((node) => Math.abs(node.cz)),
+  );
+
+  const scale = 115 / maxExtent;
+
+  return centeredNodes.map((node) => ({
+    ...node,
+    fx: node.cx * scale,
+    fy: node.cy * scale,
+    fz: node.cz * scale,
+    x: node.cx * scale,
+    y: node.cy * scale,
+    z: node.cz * scale,
+  }));
 }
 
 function Graph3DViewer({
@@ -132,10 +188,9 @@ function Graph3DViewer({
   const graphData = useMemo(() => {
     const centralityMap = buildCentralityMap(centrality);
 
-    let graphNodes = nodes.map((node) => {
+    let anomalyNodes = nodes.map((node) => {
       const sourceId = getSourceId(node);
       const centralityData = centralityMap.get(sourceId) ?? {};
-      const position = createSpatialPosition(node);
 
       return {
         id: "graph-" + String(node.node_id),
@@ -153,39 +208,44 @@ function Graph3DViewer({
         anomaly_rank: node.anomaly_rank,
         anomaly_cluster: node.anomaly_cluster,
         ...centralityData,
-        ...position,
       };
     });
 
     if (highCentralityOnly) {
-      graphNodes = graphNodes.filter(
+      anomalyNodes = anomalyNodes.filter(
         (node) => normalizeScore(node.structural_importance_score) >= 0.4,
       );
     }
 
     if (topStructuralOnly) {
-      graphNodes = graphNodes.filter(
-        (node) => Number(node.structural_rank) > 0 && Number(node.structural_rank) <= 10,
+      anomalyNodes = anomalyNodes.filter(
+        (node) =>
+          Number(node.structural_rank) > 0 &&
+          Number(node.structural_rank) <= 10,
       );
     }
 
     if (anomalyThreshold > 0) {
-      graphNodes = graphNodes.filter(
+      anomalyNodes = anomalyNodes.filter(
         (node) => normalizeScore(node.anomaly_score) >= anomalyThreshold,
       );
     }
 
-    const graphSourceIds = new Set(graphNodes.map((node) => node.source_id));
-    const graphNodeIds = new Set(graphNodes.map((node) => node.graph_node_id));
+    const anomalySourceIds = new Set(
+      anomalyNodes.map((node) => node.source_id),
+    );
+
+    const anomalyGraphNodeIds = new Set(
+      anomalyNodes.map((node) => node.graph_node_id),
+    );
 
     let backgroundNodes = [];
 
     if (showAllSources) {
       backgroundNodes = allSources
-        .filter((source) => !graphSourceIds.has(getSourceId(source)))
+        .filter((source) => !anomalySourceIds.has(getSourceId(source)))
         .map((source) => {
           const sourceId = getSourceId(source);
-          const position = createSpatialPosition(source);
 
           return {
             id: "source-" + sourceId,
@@ -195,13 +255,19 @@ function Graph3DViewer({
             ra: source.ra,
             dec: source.dec,
             parallax: source.parallax,
+            pmra: source.pmra,
+            pmdec: source.pmdec,
             radial_velocity: source.radial_velocity,
             anomaly_score: normalizeScore(source.anomaly_score),
             anomaly_label: source.anomaly_label,
-            ...position,
           };
         });
     }
+
+    const allVisibleNodes = centerAndScaleNodes([
+      ...backgroundNodes,
+      ...anomalyNodes,
+    ]);
 
     let graphLinks = edges
       .map((edge) => ({
@@ -214,7 +280,8 @@ function Graph3DViewer({
       }))
       .filter(
         (edge) =>
-          graphNodeIds.has(edge.source_node) && graphNodeIds.has(edge.target_node),
+          anomalyGraphNodeIds.has(edge.source_node) &&
+          anomalyGraphNodeIds.has(edge.target_node),
       );
 
     if (hideWeakLinks) {
@@ -224,7 +291,7 @@ function Graph3DViewer({
     }
 
     return {
-      nodes: [...backgroundNodes, ...graphNodes],
+      nodes: allVisibleNodes,
       links: graphLinks,
     };
   }, [
@@ -244,12 +311,16 @@ function Graph3DViewer({
       return;
     }
 
-    graphRef.current.d3Force("charge").strength(showAllSources ? -35 : -120);
+    graphRef.current.d3Force("charge").strength(showAllSources ? -18 : -65);
 
     graphRef.current.d3Force("link").distance((link) => {
       const distance = normalizeScore(link.feature_distance, 1);
-      return 35 + distance * 18;
+      return 22 + distance * 10;
     });
+
+    graphRef.current.d3Force("center", null);
+
+    resetCamera();
   }, [graphData, showAllSources]);
 
   function handleNodeClick(node) {
@@ -259,7 +330,12 @@ function Graph3DViewer({
       onNodeSelect(node);
     }
 
-    if (graphRef.current && node.x !== undefined && node.y !== undefined && node.z !== undefined) {
+    if (
+      graphRef.current &&
+      node.x !== undefined &&
+      node.y !== undefined &&
+      node.z !== undefined
+    ) {
       const distance = 95;
       const hypot = Math.hypot(node.x, node.y, node.z) || 1;
       const distRatio = 1 + distance / hypot;
@@ -285,7 +361,7 @@ function Graph3DViewer({
       {
         x: 0,
         y: 0,
-        z: 260,
+        z: 310,
       },
       {
         x: 0,
@@ -297,25 +373,96 @@ function Graph3DViewer({
   }
 
   return (
-    <div className="graph-3d-shell">
-      <div className="graph-3d-toolbar">
-        <div>
-          <strong>Interactive Relational Graph</strong>
-          <span>
-            {graphData.nodes.length} nodes / {graphData.links.length} edges
-          </span>
+    <div className="graph-viewer-wrapper">
+      <div className="graph-3d-shell">
+        <div className="graph-3d-toolbar">
+          <div>
+            <strong>Interactive Relational Graph</strong>
+            <span>
+              {graphData.nodes.length} nodes / {graphData.links.length} edges
+            </span>
+          </div>
+
+          <div className="graph-legend">
+            <span className="legend-dot high" />
+            high centrality
+            <span className="legend-dot medium" />
+            medium
+            <span className="legend-dot low" />
+            peripheral
+            <span className="legend-dot background" />
+            Gaia source
+          </div>
         </div>
 
-        <div className="graph-legend">
-          <span className="legend-dot high" />
-          high centrality
-          <span className="legend-dot medium" />
-          medium
-          <span className="legend-dot low" />
-          peripheral
-          <span className="legend-dot background" />
-          Gaia source
+        <div className="graph-3d-canvas">
+          <ForceGraph3D
+            ref={graphRef}
+            graphData={graphData}
+            backgroundColor="#000000"
+            nodeLabel={(node) =>
+              "SOURCE_ID: " +
+              node.source_id +
+              "\nType: " +
+              node.node_type +
+              "\nAnomaly score: " +
+              Number(node.anomaly_score ?? 0).toFixed(6) +
+              "\nStructural score: " +
+              Number(node.structural_importance_score ?? 0).toFixed(6) +
+              "\nRank: " +
+              (node.structural_rank ?? "N/A")
+            }
+            nodeThreeObject={createNodeObject}
+            linkColor={() => "rgba(125, 220, 255, 0.5)"}
+            linkWidth={(link) =>
+              Math.max(0.25, normalizeScore(link.similarity_weight, 0.2) * 0.55)
+            }
+            linkOpacity={0.46}
+            onNodeClick={handleNodeClick}
+            enableNodeDrag={true}
+            showNavInfo={false}
+            cooldownTicks={80}
+            warmupTicks={40}
+          />
         </div>
+
+        {selectedNode && (
+          <div className="selected-node-panel">
+            <div>
+              <span>Selected source</span>
+              <strong>{selectedNode.source_id}</strong>
+            </div>
+
+            <div className="selected-node-grid">
+              <p>
+                <span>Type</span>
+                {selectedNode.node_type}
+              </p>
+
+              <p>
+                <span>Anomaly</span>
+                {Number(selectedNode.anomaly_score ?? 0).toFixed(6)}
+              </p>
+
+              <p>
+                <span>Structural</span>
+                {Number(selectedNode.structural_importance_score ?? 0).toFixed(
+                  6,
+                )}
+              </p>
+
+              <p>
+                <span>Rank</span>
+                {selectedNode.structural_rank ?? "N/A"}
+              </p>
+
+              <p>
+                <span>Radial velocity</span>
+                {selectedNode.radial_velocity ?? "N/A"}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="graph-controls">
@@ -372,71 +519,6 @@ function Graph3DViewer({
           <span>{anomalyThreshold.toFixed(2)}</span>
         </label>
       </div>
-
-      <div className="graph-3d-canvas">
-        <ForceGraph3D
-          ref={graphRef}
-          graphData={graphData}
-          backgroundColor="#020617"
-          nodeLabel={(node) =>
-            "SOURCE_ID: " +
-            node.source_id +
-            "\nType: " +
-            node.node_type +
-            "\nAnomaly score: " +
-            Number(node.anomaly_score ?? 0).toFixed(6) +
-            "\nStructural score: " +
-            Number(node.structural_importance_score ?? 0).toFixed(6) +
-            "\nRank: " +
-            (node.structural_rank ?? "N/A")
-          }
-          nodeThreeObject={createNodeObject}
-          linkColor={() => "rgba(125, 220, 255, 0.42)"}
-          linkWidth={(link) =>
-            Math.max(0.35, normalizeScore(link.similarity_weight, 0.2) * 0.75)
-          }
-          linkOpacity={0.58}
-          onNodeClick={handleNodeClick}
-          enableNodeDrag={true}
-          showNavInfo={false}
-        />
-      </div>
-
-      {selectedNode && (
-        <div className="selected-node-panel">
-          <div>
-            <span>Selected source</span>
-            <strong>{selectedNode.source_id}</strong>
-          </div>
-
-          <div className="selected-node-grid">
-            <p>
-              <span>Type</span>
-              {selectedNode.node_type}
-            </p>
-
-            <p>
-              <span>Anomaly</span>
-              {Number(selectedNode.anomaly_score ?? 0).toFixed(6)}
-            </p>
-
-            <p>
-              <span>Structural</span>
-              {Number(selectedNode.structural_importance_score ?? 0).toFixed(6)}
-            </p>
-
-            <p>
-              <span>Rank</span>
-              {selectedNode.structural_rank ?? "N/A"}
-            </p>
-
-            <p>
-              <span>Radial velocity</span>
-              {selectedNode.radial_velocity ?? "N/A"}
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
