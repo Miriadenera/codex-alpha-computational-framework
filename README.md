@@ -6,11 +6,20 @@ AI-assisted computational framework for exploratory analysis of large-scale cosm
 
 ## Overview
 
-The Codex Alpha Computational Framework is an early-stage computational cosmology initiative focused on the development of AI-assisted tools for the analysis of complex astrophysical and cosmological datasets.
+The Codex Alpha Computational Framework is an operational early-stage computational cosmology initiative focused on the development of AI-assisted tools for exploratory analysis of complex astrophysical and cosmological datasets.
 
-The project aims to explore emergent correlations, topological coherence patterns and large-scale gravitational structures through scalable computational infrastructure, statistical analysis and future AI integration.
+The framework is designed to investigate statistically anomalous sources, emergent multidimensional structures and non-trivial correlations within large-scale observational datasets through scalable computational infrastructure, statistical analysis and modular AI-assisted workflows.
 
-Rather than building a new observational infrastructure, the framework is designed as a new interpretative computational layer operating on existing cosmological data.
+Rather than building a new observational infrastructure, the project aims to provide a new interpretative computational layer operating on existing cosmological data.
+
+The current prototype already supports:
+
+- real ESA Gaia DR3 dataset integration,
+- unsupervised anomaly detection,
+- multidimensional feature analysis,
+- anomaly family clustering,
+- exploratory visualization,
+- modular AI-assisted analysis pipelines.
 
 ---
 
@@ -34,159 +43,66 @@ cd codex-alpha-computational-framework
 pip install -r requirements.txt
 ```
 
-## Run the Gaia DR3 anomaly detection example
+---
+
+# Execute the Full Gaia DR3 Analysis Pipeline
 
 ```bash
-python -m examples.run_gaia_detection
+python -m pipeline.run_full_pipeline
 ```
+
+The full pipeline automatically performs:
+
+1. ESA Gaia DR3 dataset loading
+2. Multidimensional feature extraction
+3. AI-assisted unsupervised anomaly detection
+4. Feature contribution analysis
+5. Multidimensional anomaly clustering
+6. RA/DEC anomaly visualization
+7. Structured output generation
 
 ---
 
-# What the framework currently does
+# Current Pipeline Outputs
 
-The current prototype pipeline:
-
-- Loads real ESA Gaia DR3 datasets
-- Parses multidimensional astrophysical features
-- Applies unsupervised AI-based anomaly detection
-- Identifies statistically anomalous astrophysical sources
-- Generates anomaly rankings
-- Computes feature contribution analysis
-- Identifies anomaly families through multidimensional clustering
-- Produces exploratory visualizations and structured outputs
-
-Generated output:
+The current operational prototype generates:
 
 ```text
-datasets/gaia/gaia_dr3_anomaly_results.csv
-```
-
----
-
-## Generate Gaia DR3 anomaly visualization
-
-```bash
-python -m visualization.plot_gaia_anomalies
-```
-
-The visualization module generates a sky-position projection of the analyzed Gaia DR3 sources.
-
-This represents the first graphical exploratory layer of the Codex Alpha Computational Framework applied to real ESA Gaia DR3 observational data.
-
-The current prototype:
-
-- loads anomaly detection results,
-- separates normal and anomalous sources,
-- projects the dataset in RA/DEC space,
-- highlights statistically anomalous sources detected through the AI-assisted exploratory pipeline.
-Generated output:
-
-```text
+results/gaia_dr3_anomaly_results.csv
+results/gaia_dr3_feature_contributions.csv
+results/gaia_dr3_anomaly_clusters.csv
 results/gaia_dr3_anomaly_sky_plot.png
 ```
+
+The generated outputs include:
+
+- ranked anomalous astrophysical sources,
+- feature contribution analysis,
+- anomaly family clustering,
+- exploratory visualizations,
+- structured CSV analysis layers.
+
 ---
 
-## Generate feature contribution analysis
+# Current Operational Capabilities
 
-```bash
-python -m analysis.feature_contribution
-```
+Current implemented capabilities include:
 
-The feature contribution module analyzes the detected anomalies and identifies which astrophysical parameter contributes most strongly to each anomalous source.
-
-The current prototype evaluates contributions from:
-
-- parallax,
-- proper motion,
-- radial velocity,
-- stellar magnitude,
-- stellar color.
-
-The module computes statistical feature deviations and generates an interpretability layer for the anomaly detection pipeline.
-
-Generated output:
-
-```text
-results/gaia_dr3_feature_contributions.csv
-```
----
-
-## Generate anomaly clustering analysis
-
-```bash
-python -m analysis.anomaly_clustering
-```
-
-The anomaly clustering module analyzes whether detected anomalous sources form statistically coherent multidimensional families.
-
-The current prototype:
-
-- groups anomalous astrophysical sources,
-- identifies anomaly families,
-- evaluates dominant cluster characteristics,
-- performs exploratory multidimensional clustering analysis.
-
-The current clustering layer identified multiple anomaly families associated with different dominant astrophysical features.
-
-Generated output:
-
-```text
-results/gaia_dr3_anomaly_clusters.csv
-```
-
-# Current Prototype Status
-
-Current implemented components:
-
-- Gaia DR3 dataset loader
+- ESA Gaia DR3 dataset integration
 - ESA VOTable support
-- Unsupervised anomaly detection pipeline
+- Multidimensional astrophysical preprocessing
+- Unsupervised AI-assisted anomaly detection
+- Statistical anomaly ranking
 - Feature contribution analysis
 - Multidimensional anomaly clustering
-- RA/DEC anomaly visualization
-- Exploratory statistical reporting
-- CSV structured result generation
-- Initial end-to-end cosmological analysis workflow
-- Modular AI analysis architecture
-
-Planned future extensions:
-
-- Topological analysis modules
-- Graph-based cosmological structures
-- Advanced visualization systems
-- AI-assisted cosmological interpretation
-- Distributed HPC computation
-- Emergent correlation analysis
-- Geometric coherence metrics
+- RA/DEC exploratory visualization
+- Modular AI architecture
+- Structured result generation
+- End-to-end automated pipeline execution
 
 ---
 
-## Core Objectives
-
-- Analysis of multidimensional cosmological datasets.
-- Detection of emergent non-trivial correlations.
-- Topological and geometric mapping of large-scale structures.
-- Reduction of interpretative and retroactive selection bias.
-- Development of exploratory AI-assisted analysis tools.
-- Integration with scalable HPC and cloud infrastructure.
-
----
-
-## Research Direction
-
-The framework originates from the broader theoretical research project **Codex Alpha**, but its operational direction is computational and data-oriented.
-
-Current development focuses on:
-
-- exploratory correlation analysis,
-- cosmological topology,
-- anomaly detection,
-- large-scale structure analysis,
-- AI-assisted pattern recognition,
-- scientific computing infrastructure.
-
----
-## AI Architecture Direction
+# AI Architecture
 
 The AI layer of the framework is designed as a modular exploratory analysis infrastructure.
 
@@ -198,52 +114,96 @@ Rather than enforcing predefined cosmological assumptions, the AI modules are in
 - anomaly families,
 - graph-based cosmological relationships.
 
-The current implementation uses unsupervised anomaly detection techniques, while future development may progressively integrate:
+Current implementation includes:
+
+- Isolation Forest-based anomaly detection,
+- feature interpretability layers,
+- multidimensional clustering analysis.
+
+Future AI development may progressively integrate:
 
 - deep learning anomaly models,
 - graph neural networks,
 - adaptive exploratory pipelines,
 - autonomous analysis systems,
-- large-scale distributed AI-assisted cosmological analysis.
+- distributed AI-assisted cosmological analysis.
 
 ---
 
-## Development Status
+# Core Objectives
 
-Current status: **Operational Early Prototype Phase**
-
-The project is currently focused on:
-
-- defining software architecture,
-- evaluating public cosmological datasets,
-- developing exploratory topological metrics,
-- planning computational pipelines,
-- preparing the first operational prototype.
+- Analysis of multidimensional cosmological datasets
+- Detection of emergent non-trivial correlations
+- Exploratory anomaly detection
+- Topological and geometric analysis of large-scale structures
+- Reduction of interpretative and retroactive selection bias
+- Development of scalable AI-assisted scientific analysis pipelines
+- Integration with HPC and distributed computational infrastructure
 
 ---
 
-## Long-Term Vision
+# Research Direction
 
-The long-term objective is to evolve the framework into a scalable computational platform capable of assisting cosmological and astrophysical research through advanced exploratory analysis of high-dimensional observational datasets.
+The framework originates from the broader theoretical research project **Codex Alpha**, but its operational direction is computational and data-oriented.
+
+Current development focuses on:
+
+- exploratory cosmological analysis,
+- anomaly detection,
+- multidimensional astrophysical statistics,
+- emergent structure identification,
+- AI-assisted pattern recognition,
+- scalable scientific computing infrastructure.
+
+The framework is intentionally designed to avoid imposing predefined cosmological target structures during exploratory analysis.
+
+---
+
+# Development Status
+
+Current status:
+
+```text
+Operational Early Prototype Phase
+```
+
+The framework currently supports complete end-to-end execution on real ESA Gaia DR3 observational datasets.
+
+Ongoing development focuses on:
+
+- pipeline scalability,
+- modular AI expansion,
+- graph-based cosmological analysis,
+- exploratory topology modules,
+- automated reporting systems,
+- distributed computation workflows.
+
+---
+
+# Long-Term Vision
+
+The long-term objective is to evolve the framework into a scalable computational infrastructure capable of assisting cosmological and astrophysical research through advanced exploratory analysis of large-scale high-dimensional observational datasets.
 
 Potential future directions include:
 
 - distributed HPC infrastructure,
 - AI-assisted cosmological analysis,
-- automated anomaly detection,
-- topological gravitational mapping,
-- scientific visualization systems,
-- large-scale cosmological data integration.
+- autonomous exploratory pipelines,
+- graph-based cosmological mapping,
+- topological gravitational structure analysis,
+- emergent pattern discovery,
+- large-scale cosmological survey integration,
+- advanced visualization systems.
 
 ---
 
-## Website
+# Website
 
 https://www.codexalpha.org/computational-framework
 
 ---
 
-## Related Research
+# Related Research
 
 Codex Alpha Research:
 
@@ -253,30 +213,27 @@ DOI publications available online through Zenodo.
 
 ---
 
-## Repository Structure
+# Repository Structure
 
 ```text
 ai/              -> AI-assisted cosmological analysis modules
-│
-├── anomaly_detection/   -> Unsupervised anomaly detection systems
-├── ranking/             -> AI-assisted anomaly prioritization modules
-├── pattern_discovery/   -> Emergent pattern and correlation analysis
-├── interpretability/    -> AI explainability and feature interpretation
-├── autonomous/          -> Future autonomous exploratory pipelines
-└── graph_models/        -> Graph-based cosmological analysis modules
-analysis/        -> Statistical analysis, feature contribution and anomaly clustering modules
+analysis/        -> Statistical and clustering analysis modules
 datasets/        -> ESA Gaia DR3 datasets and dataset loaders
 docs/            -> Technical documentation and architecture notes
 examples/        -> End-to-end execution examples
-prototypes/      -> Early experimental prototypes and future development modules
-results/         -> Generated analysis outputs, reports, CSV files and plots
-simulations/     -> Future computational simulations and cosmological modeling experiments
+pipeline/        -> Full automated analysis pipelines
+prototypes/      -> Experimental prototype modules
+results/         -> Generated outputs, reports and visualizations
+simulations/     -> Future computational simulations
 visualization/   -> Exploratory visualization modules
+```
 
 ---
 
-## Disclaimer
+# Disclaimer
 
-This repository currently represents an early-stage research and prototyping initiative.
+This repository represents an operational early-stage research and prototyping initiative.
 
-The framework is under active conceptual and computational development.
+The framework is under active computational and architectural development.
+
+Current outputs represent exploratory statistical and AI-assisted analysis layers and do not constitute claims of new physical discoveries.
