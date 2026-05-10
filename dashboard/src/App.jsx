@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Activity, Database, Network, FileText, Orbit } from "lucide-react";
 
 const DATA_BASE = "/data";
 
@@ -23,12 +22,9 @@ async function loadText(path) {
   return response.text();
 }
 
-function MetricCard({ icon: Icon, label, value, subtitle }) {
+function MetricCard({ label, value, subtitle }) {
   return (
     <div className="metric-card">
-      <div className="metric-icon">
-        <Icon size={22} />
-      </div>
       <div>
         <div className="metric-label">{label}</div>
         <div className="metric-value">{value}</div>
@@ -40,8 +36,6 @@ function MetricCard({ icon: Icon, label, value, subtitle }) {
 
 function App() {
   const [summary, setSummary] = useState(null);
-  const [nodes, setNodes] = useState([]);
-  const [edges, setEdges] = useState([]);
   const [centrality, setCentrality] = useState([]);
   const [report, setReport] = useState("");
   const [error, setError] = useState(null);
@@ -49,23 +43,11 @@ function App() {
   useEffect(() => {
     async function loadDashboardData() {
       try {
-        const [
-          summaryData,
-          nodesData,
-          edgesData,
-          centralityData,
-          reportText,
-        ] = await Promise.all([
-          loadJson(`${DATA_BASE}/summary.json`),
-          loadJson(`${DATA_BASE}/graph_nodes.json`),
-          loadJson(`${DATA_BASE}/graph_edges.json`),
-          loadJson(`${DATA_BASE}/graph_centrality.json`),
-          loadText(`${DATA_BASE}/report.md`),
-        ]);
+        const summaryData = await loadJson(`${DATA_BASE}/summary.json`);
+        const centralityData = await loadJson(`${DATA_BASE}/graph_centrality.json`);
+        const reportText = await loadText(`${DATA_BASE}/report.md`);
 
         setSummary(summaryData);
-        setNodes(nodesData);
-        setEdges(edgesData);
         setCentrality(centralityData);
         setReport(reportText);
       } catch (err) {
@@ -85,8 +67,7 @@ function App() {
           <div className="eyebrow">Local Scientific Interface</div>
           <h1>Codex Alpha Computational Framework</h1>
           <p>
-            AI-assisted exploratory analysis of multidimensional astrophysical
-            datasets.
+            Local dashboard for exploratory analysis of multidimensional Gaia DR3 outputs.
           </p>
         </div>
 
@@ -101,8 +82,7 @@ function App() {
           <strong>Dashboard data not available.</strong>
           <p>{error}</p>
           <p>
-            Run <code>python -m pipeline.run_full_pipeline</code> from the
-            repository root to generate dashboard data.
+            Run <code>python -m pipeline.run_full_pipeline</code> from the repository root.
           </p>
         </section>
       )}
@@ -111,28 +91,24 @@ function App() {
         <>
           <section className="metrics-grid">
             <MetricCard
-              icon={Database}
               label="Dataset"
               value={summary?.dataset ?? "Loading"}
               subtitle="Local exported package"
             />
 
             <MetricCard
-              icon={Activity}
               label="Sources"
               value={summary?.total_sources ?? "..."}
               subtitle="Total analyzed"
             />
 
             <MetricCard
-              icon={Orbit}
               label="Anomalies"
               value={summary?.anomalous_sources ?? "..."}
               subtitle="Detected sources"
             />
 
             <MetricCard
-              icon={Network}
               label="Graph"
               value={`${summary?.graph_nodes ?? "..."} nodes`}
               subtitle={`${summary?.graph_edges ?? "..."} edges`}
@@ -143,7 +119,7 @@ function App() {
             <div className="panel graph-placeholder">
               <div className="panel-header">
                 <h2>3D Relational Graph Viewer</h2>
-                <span>Coming next</span>
+                <span>Prototype UI</span>
               </div>
 
               <div className="orbital-preview">
@@ -154,9 +130,7 @@ function App() {
               </div>
 
               <p>
-                The next dashboard layer will render the Gaia DR3 relational
-                graph interactively in 3D using local exported graph nodes and
-                edges.
+                Interactive 3D graph rendering will be connected to local graph nodes and edges.
               </p>
             </div>
 
@@ -184,10 +158,7 @@ function App() {
 
           <section className="panel report-panel">
             <div className="panel-header">
-              <h2>
-                <FileText size={20} />
-                Automatic Pipeline Report
-              </h2>
+              <h2>Automatic Pipeline Report</h2>
               <span>Markdown export</span>
             </div>
 
