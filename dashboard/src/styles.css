@@ -234,13 +234,13 @@ h1 {
 .graph-3d-shell {
   position: relative;
   min-height: 780px;
-  border: 1px solid rgba(125, 220, 255, 0.12);
+  border: 1px solid rgba(125, 220, 255, 0.14);
   border-radius: 20px;
   overflow: hidden;
   background: #000000;
   box-shadow:
-    inset 0 0 80px rgba(0, 191, 255, 0.05),
-    0 0 36px rgba(0, 191, 255, 0.08);
+    inset 0 0 90px rgba(0, 191, 255, 0.075),
+    0 0 42px rgba(0, 191, 255, 0.12);
 }
 
 .graph-3d-toolbar {
@@ -254,9 +254,9 @@ h1 {
   align-items: flex-start;
   gap: 14px;
   padding: 12px 14px;
-  border: 1px solid rgba(125, 220, 255, 0.14);
+  border: 1px solid rgba(125, 220, 255, 0.16);
   border-radius: 16px;
-  background: rgba(2, 6, 23, 0.72);
+  background: rgba(2, 6, 23, 0.68);
   backdrop-filter: blur(14px);
 }
 
@@ -329,15 +329,15 @@ h1 {
   flex-wrap: wrap;
   gap: 10px;
   padding: 14px;
-  border: 1px solid rgba(125, 220, 255, 0.12);
+  border: 1px solid rgba(125, 220, 255, 0.14);
   border-radius: 18px;
-  background: rgba(2, 6, 23, 0.66);
+  background: rgba(2, 6, 23, 0.7);
   backdrop-filter: blur(14px);
 }
 
 .graph-viewer-fullscreen .graph-controls {
   flex-shrink: 0;
-  background: rgba(2, 6, 23, 0.86);
+  background: rgba(2, 6, 23, 0.9);
 }
 
 .graph-controls button,
@@ -345,9 +345,9 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  border: 1px solid rgba(125, 220, 255, 0.16);
+  border: 1px solid rgba(125, 220, 255, 0.18);
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(15, 23, 42, 0.84);
   color: #dff7ff;
   padding: 8px 11px;
   font-size: 0.78rem;
@@ -358,22 +358,28 @@ h1 {
 }
 
 .graph-controls button:hover {
-  border-color: rgba(125, 220, 255, 0.45);
-  background: rgba(14, 165, 233, 0.16);
+  border-color: rgba(125, 220, 255, 0.48);
+  background: rgba(14, 165, 233, 0.18);
 }
 
 .graph-controls input[type="checkbox"] {
   accent-color: #7ddcff;
 }
 
+.range-control {
+  min-width: 245px;
+}
+
 .range-control input[type="range"] {
-  width: 140px;
+  width: 145px;
   accent-color: #7ddcff;
 }
 
 .range-control span {
+  min-width: 42px;
   color: #7ddcff;
   font-weight: 800;
+  text-align: right;
 }
 
 .selected-node-panel {
@@ -385,7 +391,7 @@ h1 {
   padding: 14px;
   border: 1px solid rgba(125, 220, 255, 0.18);
   border-radius: 18px;
-  background: rgba(2, 6, 23, 0.8);
+  background: rgba(2, 6, 23, 0.82);
   backdrop-filter: blur(16px);
   box-shadow: 0 0 28px rgba(0, 191, 255, 0.08);
 }
@@ -417,7 +423,7 @@ h1 {
   padding: 10px;
   border: 1px solid rgba(125, 220, 255, 0.1);
   border-radius: 12px;
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(15, 23, 42, 0.72);
   color: #dff7ff;
   font-weight: 700;
 }
@@ -595,6 +601,15 @@ h1 {
 
   .graph-3d-shell {
     min-height: 640px;
+  }
+
+  .range-control {
+    min-width: 100%;
+  }
+
+  .range-control input[type="range"] {
+    flex: 1;
+    width: auto;
   }
 }
 
