@@ -253,7 +253,7 @@ function App() {
               <span>Markdown export</span>
             </div>
 
-            <pre>{report.slice(0, 5000)}</pre>
+            <pre>{report}</pre>
           </section>
         </>
       )}
