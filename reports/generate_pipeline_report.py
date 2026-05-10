@@ -5,7 +5,7 @@ Pipeline Report Generator
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, UTC
 from pathlib import Path
 
 import pandas as pd
@@ -27,6 +27,7 @@ REPORT_OUTPUT = RESULTS_DIR / "gaia_dr3_pipeline_report.md"
 def load_csv(path: Path) -> pd.DataFrame:
     if not path.exists():
         raise FileNotFoundError(f"Required pipeline output not found: {path}")
+
     return pd.read_csv(path)
 
 
@@ -35,16 +36,33 @@ def dataframe_to_markdown_table(
     columns: list[str],
     max_rows: int = 10,
 ) -> str:
+    """
+    Convert selected dataframe columns to a Markdown table
+    without scientific notation.
+    """
+
     available_columns = [col for col in columns if col in df.columns]
 
     if not available_columns:
         return "_No matching columns available._"
 
-    subset = df[available_columns].head(max_rows)
+    subset = df[available_columns].head(max_rows).copy()
+
+    for column in subset.columns:
+
+        if "SOURCE_ID" in column:
+            subset[column] = subset[column].astype(str)
+
+        elif subset[column].dtype.kind in {"f"}:
+            subset[column] = subset[column].map(lambda x: f"{x:.6f}")
+
     return subset.to_markdown(index=False)
 
 
-def generate_pipeline_report(output_path: Path = REPORT_OUTPUT) -> None:
+def generate_pipeline_report(
+    output_path: Path = REPORT_OUTPUT,
+) -> None:
+
     anomalies = load_csv(ANOMALY_RESULTS)
     feature_contributions = load_csv(FEATURE_CONTRIBUTIONS)
     clusters = load_csv(ANOMALY_CLUSTERS)
@@ -53,7 +71,10 @@ def generate_pipeline_report(output_path: Path = REPORT_OUTPUT) -> None:
     graph_edges = load_csv(GRAPH_EDGES)
     graph_centrality = load_csv(GRAPH_CENTRALITY)
 
-    anomaly_count = len(anomalies[anomalies["anomaly_label"] == -1])
+    anomaly_count = len(
+        anomalies[anomalies["anomaly_label"] == -1]
+    )
+
     total_count = len(anomalies)
 
     cluster_summary = (
@@ -64,7 +85,10 @@ def generate_pipeline_report(output_path: Path = REPORT_OUTPUT) -> None:
             max_anomaly_score=("anomaly_score", "max"),
         )
         .reset_index()
-        .sort_values(by="mean_anomaly_score", ascending=False)
+        .sort_values(
+            by="mean_anomaly_score",
+            ascending=False,
+        )
     )
 
     top_anomalies_table = dataframe_to_markdown_table(
@@ -119,7 +143,7 @@ def generate_pipeline_report(output_path: Path = REPORT_OUTPUT) -> None:
     report = f"""
 # Gaia DR3 Full Pipeline Report
 
-Generated on: {datetime.utcnow().isoformat()} UTC
+Generated on: {datetime.now(UTC).isoformat()}
 
 ---
 
@@ -200,6 +224,7 @@ The relational graph represents anomalous Gaia DR3 sources as nodes and multidim
 - results/gaia_dr3_graph_centrality.csv
 - results/gaia_dr3_anomaly_sky_plot.png
 - results/gaia_dr3_relational_graph.png
+- results/gaia_dr3_pipeline_report.md
 
 ---
 
@@ -214,10 +239,19 @@ Higher structural importance scores indicate sources that occupy more relevant p
 These values are exploratory computational indicators and require additional astrophysical validation before any physical interpretation.
 """
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(report.strip() + "\n", encoding="utf-8")
+    output_path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
 
-    print(f"Pipeline report generated: {output_path}")
+    output_path.write_text(
+        report.strip() + "\n",
+        encoding="utf-8",
+    )
+
+    print(
+        f"Pipeline report generated: {output_path}"
+    )
 
 
 if __name__ == "__main__":
