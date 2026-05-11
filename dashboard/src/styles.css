@@ -546,14 +546,21 @@ h1 {
 }
 
 .report-panel pre {
-  max-height: 420px;
+  max-height: 620px;
   overflow: auto;
-  white-space: pre-wrap;
+  white-space: pre;
   line-height: 1.55;
   color: #cdefff;
   background: rgba(0, 0, 0, 0.24);
   border-radius: 18px;
   padding: 18px;
+  font-size: 0.78rem;
+  font-family:
+    "Cascadia Mono",
+    "Consolas",
+    "Courier New",
+    monospace;
+  tab-size: 2;
 }
 
 .error-box {
