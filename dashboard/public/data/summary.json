@@ -1,0 +1,12 @@
+{
+  "project": "Codex Alpha Computational Framework",
+  "dataset": "ESA Gaia DR3 sample",
+  "total_sources": 1000,
+  "anomalous_sources": 50,
+  "anomaly_ratio": 0.05,
+  "cluster_count": 3,
+  "graph_nodes": 50,
+  "graph_edges": 250,
+  "has_report": true,
+  "description": "Local dashboard data package generated from the Codex Alpha Computational Framework pipeline outputs."
+}

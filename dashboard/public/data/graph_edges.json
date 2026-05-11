@@ -1,0 +1,2002 @@
+[
+  {
+    "source_node": 0,
+    "target_node": 2,
+    "source_id": "613978460597248",
+    "target_id": "695170522295168",
+    "feature_distance": 0.9812122999064204,
+    "similarity_weight": 1.0191474363849211
+  },
+  {
+    "source_node": 0,
+    "target_node": 1,
+    "source_id": "613978460597248",
+    "target_id": "673008491088640",
+    "feature_distance": 1.4854893673800988,
+    "similarity_weight": 0.6731788338296818
+  },
+  {
+    "source_node": 0,
+    "target_node": 3,
+    "source_id": "613978460597248",
+    "target_id": "1066152617449600",
+    "feature_distance": 1.6642030822483755,
+    "similarity_weight": 0.6008882032884933
+  },
+  {
+    "source_node": 0,
+    "target_node": 4,
+    "source_id": "613978460597248",
+    "target_id": "250246270117248",
+    "feature_distance": 1.735626934300564,
+    "similarity_weight": 0.5761606830573941
+  },
+  {
+    "source_node": 0,
+    "target_node": 26,
+    "source_id": "613978460597248",
+    "target_id": "774472798501120",
+    "feature_distance": 1.895129537253868,
+    "similarity_weight": 0.5276684154522332
+  },
+  {
+    "source_node": 1,
+    "target_node": 4,
+    "source_id": "673008491088640",
+    "target_id": "250246270117248",
+    "feature_distance": 1.3037359481070945,
+    "similarity_weight": 0.7670264837378625
+  },
+  {
+    "source_node": 1,
+    "target_node": 2,
+    "source_id": "673008491088640",
+    "target_id": "695170522295168",
+    "feature_distance": 1.391572361272266,
+    "similarity_weight": 0.7186115705007364
+  },
+  {
+    "source_node": 1,
+    "target_node": 0,
+    "source_id": "673008491088640",
+    "target_id": "613978460597248",
+    "feature_distance": 1.4854893673800988,
+    "similarity_weight": 0.6731788338296818
+  },
+  {
+    "source_node": 1,
+    "target_node": 3,
+    "source_id": "673008491088640",
+    "target_id": "1066152617449600",
+    "feature_distance": 1.7974728779238949,
+    "similarity_weight": 0.556336628096696
+  },
+  {
+    "source_node": 1,
+    "target_node": 5,
+    "source_id": "673008491088640",
+    "target_id": "1301929142132608",
+    "feature_distance": 2.0116450214869257,
+    "similarity_weight": 0.4971055973187276
+  },
+  {
+    "source_node": 2,
+    "target_node": 0,
+    "source_id": "695170522295168",
+    "target_id": "613978460597248",
+    "feature_distance": 0.9812122999064204,
+    "similarity_weight": 1.0191474363849211
+  },
+  {
+    "source_node": 2,
+    "target_node": 1,
+    "source_id": "695170522295168",
+    "target_id": "673008491088640",
+    "feature_distance": 1.391572361272266,
+    "similarity_weight": 0.7186115705007364
+  },
+  {
+    "source_node": 2,
+    "target_node": 3,
+    "source_id": "695170522295168",
+    "target_id": "1066152617449600",
+    "feature_distance": 1.664654691151235,
+    "similarity_weight": 0.6007251866198289
+  },
+  {
+    "source_node": 2,
+    "target_node": 4,
+    "source_id": "695170522295168",
+    "target_id": "250246270117248",
+    "feature_distance": 1.9228898064224635,
+    "similarity_weight": 0.5200506012666322
+  },
+  {
+    "source_node": 2,
+    "target_node": 26,
+    "source_id": "695170522295168",
+    "target_id": "774472798501120",
+    "feature_distance": 2.077686246860233,
+    "similarity_weight": 0.4813046250417755
+  },
+  {
+    "source_node": 3,
+    "target_node": 19,
+    "source_id": "1066152617449600",
+    "target_id": "1753553543188992",
+    "feature_distance": 1.2487988136939117,
+    "similarity_weight": 0.8007694986842816
+  },
+  {
+    "source_node": 3,
+    "target_node": 0,
+    "source_id": "1066152617449600",
+    "target_id": "613978460597248",
+    "feature_distance": 1.6642030822483755,
+    "similarity_weight": 0.6008882032884933
+  },
+  {
+    "source_node": 3,
+    "target_node": 2,
+    "source_id": "1066152617449600",
+    "target_id": "695170522295168",
+    "feature_distance": 1.664654691151235,
+    "similarity_weight": 0.6007251866198289
+  },
+  {
+    "source_node": 3,
+    "target_node": 1,
+    "source_id": "1066152617449600",
+    "target_id": "673008491088640",
+    "feature_distance": 1.7974728779238949,
+    "similarity_weight": 0.556336628096696
+  },
+  {
+    "source_node": 3,
+    "target_node": 5,
+    "source_id": "1066152617449600",
+    "target_id": "1301929142132608",
+    "feature_distance": 2.046724244161495,
+    "similarity_weight": 0.4885856034842607
+  },
+  {
+    "source_node": 4,
+    "target_node": 1,
+    "source_id": "250246270117248",
+    "target_id": "673008491088640",
+    "feature_distance": 1.3037359481070945,
+    "similarity_weight": 0.7670264837378625
+  },
+  {
+    "source_node": 4,
+    "target_node": 5,
+    "source_id": "250246270117248",
+    "target_id": "1301929142132608",
+    "feature_distance": 1.5634892675071357,
+    "similarity_weight": 0.6395950524136211
+  },
+  {
+    "source_node": 4,
+    "target_node": 0,
+    "source_id": "250246270117248",
+    "target_id": "613978460597248",
+    "feature_distance": 1.735626934300564,
+    "similarity_weight": 0.5761606830573941
+  },
+  {
+    "source_node": 4,
+    "target_node": 2,
+    "source_id": "250246270117248",
+    "target_id": "695170522295168",
+    "feature_distance": 1.9228898064224635,
+    "similarity_weight": 0.5200506012666322
+  },
+  {
+    "source_node": 4,
+    "target_node": 14,
+    "source_id": "250246270117248",
+    "target_id": "384317969303168",
+    "feature_distance": 1.9557327749114477,
+    "similarity_weight": 0.5113172989826112
+  },
+  {
+    "source_node": 5,
+    "target_node": 14,
+    "source_id": "1301929142132608",
+    "target_id": "384317969303168",
+    "feature_distance": 1.506141277547572,
+    "similarity_weight": 0.6639483393135746
+  },
+  {
+    "source_node": 5,
+    "target_node": 4,
+    "source_id": "1301929142132608",
+    "target_id": "250246270117248",
+    "feature_distance": 1.5634892675071357,
+    "similarity_weight": 0.6395950524136211
+  },
+  {
+    "source_node": 5,
+    "target_node": 24,
+    "source_id": "1301929142132608",
+    "target_id": "1604569717638528",
+    "feature_distance": 1.7375105298863645,
+    "similarity_weight": 0.5755360803855536
+  },
+  {
+    "source_node": 5,
+    "target_node": 34,
+    "source_id": "1301929142132608",
+    "target_id": "1435244927007872",
+    "feature_distance": 2.008338712373628,
+    "similarity_weight": 0.4979239775832514
+  },
+  {
+    "source_node": 5,
+    "target_node": 1,
+    "source_id": "1301929142132608",
+    "target_id": "673008491088640",
+    "feature_distance": 2.0116450214869257,
+    "similarity_weight": 0.4971055973187276
+  },
+  {
+    "source_node": 6,
+    "target_node": 11,
+    "source_id": "675379313032192",
+    "target_id": "896106271727872",
+    "feature_distance": 1.0657708696119967,
+    "similarity_weight": 0.9382879833853224
+  },
+  {
+    "source_node": 6,
+    "target_node": 12,
+    "source_id": "675379313032192",
+    "target_id": "188020783957632",
+    "feature_distance": 1.657867416319537,
+    "similarity_weight": 0.6031845430796844
+  },
+  {
+    "source_node": 6,
+    "target_node": 31,
+    "source_id": "675379313032192",
+    "target_id": "596798591393792",
+    "feature_distance": 2.0373499180800367,
+    "similarity_weight": 0.4908337007429199
+  },
+  {
+    "source_node": 6,
+    "target_node": 16,
+    "source_id": "675379313032192",
+    "target_id": "339993906853248",
+    "feature_distance": 2.185837595115369,
+    "similarity_weight": 0.4574905300532002
+  },
+  {
+    "source_node": 6,
+    "target_node": 43,
+    "source_id": "675379313032192",
+    "target_id": "1036706321717888",
+    "feature_distance": 2.284574855229599,
+    "similarity_weight": 0.4377182028903416
+  },
+  {
+    "source_node": 7,
+    "target_node": 21,
+    "source_id": "1411674146537728",
+    "target_id": "1425830358704768",
+    "feature_distance": 1.463568938153334,
+    "similarity_weight": 0.6832612895304214
+  },
+  {
+    "source_node": 7,
+    "target_node": 15,
+    "source_id": "1411674146537728",
+    "target_id": "1261796967786112",
+    "feature_distance": 1.6416863529076815,
+    "similarity_weight": 0.6091297513853579
+  },
+  {
+    "source_node": 7,
+    "target_node": 38,
+    "source_id": "1411674146537728",
+    "target_id": "1497229894979968",
+    "feature_distance": 1.925864891972772,
+    "similarity_weight": 0.5192472245418651
+  },
+  {
+    "source_node": 7,
+    "target_node": 18,
+    "source_id": "1411674146537728",
+    "target_id": "347278171374336",
+    "feature_distance": 2.020191385864984,
+    "similarity_weight": 0.4950026056919037
+  },
+  {
+    "source_node": 7,
+    "target_node": 32,
+    "source_id": "1411674146537728",
+    "target_id": "1611029348487680",
+    "feature_distance": 2.3356407007877054,
+    "similarity_weight": 0.4281480450577511
+  },
+  {
+    "source_node": 8,
+    "target_node": 9,
+    "source_id": "44358422235136",
+    "target_id": "86693915665280",
+    "feature_distance": 1.3860483473193423,
+    "similarity_weight": 0.7214755545384167
+  },
+  {
+    "source_node": 8,
+    "target_node": 25,
+    "source_id": "44358422235136",
+    "target_id": "115727894578176",
+    "feature_distance": 1.6971398625695857,
+    "similarity_weight": 0.589226628903373
+  },
+  {
+    "source_node": 8,
+    "target_node": 4,
+    "source_id": "44358422235136",
+    "target_id": "250246270117248",
+    "feature_distance": 2.0209472511052207,
+    "similarity_weight": 0.4948174671321196
+  },
+  {
+    "source_node": 8,
+    "target_node": 13,
+    "source_id": "44358422235136",
+    "target_id": "332469124171904",
+    "feature_distance": 2.1702013891644127,
+    "similarity_weight": 0.4607867292834822
+  },
+  {
+    "source_node": 8,
+    "target_node": 10,
+    "source_id": "44358422235136",
+    "target_id": "75458281197696",
+    "feature_distance": 2.2227999043908206,
+    "similarity_weight": 0.4498830497626864
+  },
+  {
+    "source_node": 9,
+    "target_node": 8,
+    "source_id": "86693915665280",
+    "target_id": "44358422235136",
+    "feature_distance": 1.3860483473193423,
+    "similarity_weight": 0.7214755545384167
+  },
+  {
+    "source_node": 9,
+    "target_node": 44,
+    "source_id": "86693915665280",
+    "target_id": "92603790642688",
+    "feature_distance": 1.7756179367112472,
+    "similarity_weight": 0.5631842184764198
+  },
+  {
+    "source_node": 9,
+    "target_node": 13,
+    "source_id": "86693915665280",
+    "target_id": "332469124171904",
+    "feature_distance": 1.987113240448472,
+    "similarity_weight": 0.5032425830818814
+  },
+  {
+    "source_node": 9,
+    "target_node": 10,
+    "source_id": "86693915665280",
+    "target_id": "75458281197696",
+    "feature_distance": 2.039122697090964,
+    "similarity_weight": 0.4904069781706227
+  },
+  {
+    "source_node": 9,
+    "target_node": 4,
+    "source_id": "86693915665280",
+    "target_id": "250246270117248",
+    "feature_distance": 2.3198809867610786,
+    "similarity_weight": 0.4310565954487723
+  },
+  {
+    "source_node": 10,
+    "target_node": 22,
+    "source_id": "75458281197696",
+    "target_id": "120190364960512",
+    "feature_distance": 1.7771991625858503,
+    "similarity_weight": 0.5626831370685674
+  },
+  {
+    "source_node": 10,
+    "target_node": 13,
+    "source_id": "75458281197696",
+    "target_id": "332469124171904",
+    "feature_distance": 1.9239838328676768,
+    "similarity_weight": 0.5197548871858196
+  },
+  {
+    "source_node": 10,
+    "target_node": 9,
+    "source_id": "75458281197696",
+    "target_id": "86693915665280",
+    "feature_distance": 2.039122697090964,
+    "similarity_weight": 0.4904069781706227
+  },
+  {
+    "source_node": 10,
+    "target_node": 14,
+    "source_id": "75458281197696",
+    "target_id": "384317969303168",
+    "feature_distance": 2.08647904348764,
+    "similarity_weight": 0.4792763210925797
+  },
+  {
+    "source_node": 10,
+    "target_node": 8,
+    "source_id": "75458281197696",
+    "target_id": "44358422235136",
+    "feature_distance": 2.2227999043908206,
+    "similarity_weight": 0.4498830497626864
+  },
+  {
+    "source_node": 11,
+    "target_node": 6,
+    "source_id": "896106271727872",
+    "target_id": "675379313032192",
+    "feature_distance": 1.0657708696119967,
+    "similarity_weight": 0.9382879833853224
+  },
+  {
+    "source_node": 11,
+    "target_node": 12,
+    "source_id": "896106271727872",
+    "target_id": "188020783957632",
+    "feature_distance": 1.852097070529296,
+    "similarity_weight": 0.539928503700769
+  },
+  {
+    "source_node": 11,
+    "target_node": 32,
+    "source_id": "896106271727872",
+    "target_id": "1611029348487680",
+    "feature_distance": 2.357535175402456,
+    "similarity_weight": 0.4241718259108755
+  },
+  {
+    "source_node": 11,
+    "target_node": 43,
+    "source_id": "896106271727872",
+    "target_id": "1036706321717888",
+    "feature_distance": 2.389082559516576,
+    "similarity_weight": 0.4185707170378945
+  },
+  {
+    "source_node": 11,
+    "target_node": 16,
+    "source_id": "896106271727872",
+    "target_id": "339993906853248",
+    "feature_distance": 2.4234494726028664,
+    "similarity_weight": 0.4126349698248727
+  },
+  {
+    "source_node": 12,
+    "target_node": 6,
+    "source_id": "188020783957632",
+    "target_id": "675379313032192",
+    "feature_distance": 1.657867416319537,
+    "similarity_weight": 0.6031845430796844
+  },
+  {
+    "source_node": 12,
+    "target_node": 11,
+    "source_id": "188020783957632",
+    "target_id": "896106271727872",
+    "feature_distance": 1.852097070529296,
+    "similarity_weight": 0.539928503700769
+  },
+  {
+    "source_node": 12,
+    "target_node": 18,
+    "source_id": "188020783957632",
+    "target_id": "347278171374336",
+    "feature_distance": 1.911091980521707,
+    "similarity_weight": 0.5232610518968782
+  },
+  {
+    "source_node": 12,
+    "target_node": 16,
+    "source_id": "188020783957632",
+    "target_id": "339993906853248",
+    "feature_distance": 2.148167535761695,
+    "similarity_weight": 0.4655130399989755
+  },
+  {
+    "source_node": 12,
+    "target_node": 25,
+    "source_id": "188020783957632",
+    "target_id": "115727894578176",
+    "feature_distance": 2.5240100938406265,
+    "similarity_weight": 0.3961949290297675
+  },
+  {
+    "source_node": 13,
+    "target_node": 10,
+    "source_id": "332469124171904",
+    "target_id": "75458281197696",
+    "feature_distance": 1.9239838328676768,
+    "similarity_weight": 0.5197548871858196
+  },
+  {
+    "source_node": 13,
+    "target_node": 28,
+    "source_id": "332469124171904",
+    "target_id": "1195551392247936",
+    "feature_distance": 1.9356294209376228,
+    "similarity_weight": 0.5166278158321654
+  },
+  {
+    "source_node": 13,
+    "target_node": 9,
+    "source_id": "332469124171904",
+    "target_id": "86693915665280",
+    "feature_distance": 1.987113240448472,
+    "similarity_weight": 0.5032425830818814
+  },
+  {
+    "source_node": 13,
+    "target_node": 4,
+    "source_id": "332469124171904",
+    "target_id": "250246270117248",
+    "feature_distance": 2.117491240106408,
+    "similarity_weight": 0.4722569713909541
+  },
+  {
+    "source_node": 13,
+    "target_node": 0,
+    "source_id": "332469124171904",
+    "target_id": "613978460597248",
+    "feature_distance": 2.1597137957177357,
+    "similarity_weight": 0.4630243146023929
+  },
+  {
+    "source_node": 14,
+    "target_node": 5,
+    "source_id": "384317969303168",
+    "target_id": "1301929142132608",
+    "feature_distance": 1.506141277547572,
+    "similarity_weight": 0.6639483393135746
+  },
+  {
+    "source_node": 14,
+    "target_node": 4,
+    "source_id": "384317969303168",
+    "target_id": "250246270117248",
+    "feature_distance": 1.9557327749114477,
+    "similarity_weight": 0.5113172989826112
+  },
+  {
+    "source_node": 14,
+    "target_node": 10,
+    "source_id": "384317969303168",
+    "target_id": "75458281197696",
+    "feature_distance": 2.08647904348764,
+    "similarity_weight": 0.4792763210925797
+  },
+  {
+    "source_node": 14,
+    "target_node": 34,
+    "source_id": "384317969303168",
+    "target_id": "1435244927007872",
+    "feature_distance": 2.2338297128280065,
+    "similarity_weight": 0.4476616969758013
+  },
+  {
+    "source_node": 14,
+    "target_node": 13,
+    "source_id": "384317969303168",
+    "target_id": "332469124171904",
+    "feature_distance": 2.3467346061203216,
+    "similarity_weight": 0.4261240267184699
+  },
+  {
+    "source_node": 15,
+    "target_node": 21,
+    "source_id": "1261796967786112",
+    "target_id": "1425830358704768",
+    "feature_distance": 0.8549366017602789,
+    "similarity_weight": 1.169677374836768
+  },
+  {
+    "source_node": 15,
+    "target_node": 7,
+    "source_id": "1261796967786112",
+    "target_id": "1411674146537728",
+    "feature_distance": 1.6416863529076815,
+    "similarity_weight": 0.6091297513853579
+  },
+  {
+    "source_node": 15,
+    "target_node": 32,
+    "source_id": "1261796967786112",
+    "target_id": "1611029348487680",
+    "feature_distance": 2.35224380248465,
+    "similarity_weight": 0.4251260005205606
+  },
+  {
+    "source_node": 15,
+    "target_node": 23,
+    "source_id": "1261796967786112",
+    "target_id": "535294659636864",
+    "feature_distance": 2.448755710744283,
+    "similarity_weight": 0.4083706658087376
+  },
+  {
+    "source_node": 15,
+    "target_node": 18,
+    "source_id": "1261796967786112",
+    "target_id": "347278171374336",
+    "feature_distance": 2.9138086464325377,
+    "similarity_weight": 0.3431934355826648
+  },
+  {
+    "source_node": 16,
+    "target_node": 18,
+    "source_id": "339993906853248",
+    "target_id": "347278171374336",
+    "feature_distance": 1.7998869697479354,
+    "similarity_weight": 0.5555904436262956
+  },
+  {
+    "source_node": 16,
+    "target_node": 29,
+    "source_id": "339993906853248",
+    "target_id": "1166173815955456",
+    "feature_distance": 1.9438702364168765,
+    "similarity_weight": 0.5144376313116349
+  },
+  {
+    "source_node": 16,
+    "target_node": 12,
+    "source_id": "339993906853248",
+    "target_id": "188020783957632",
+    "feature_distance": 2.148167535761695,
+    "similarity_weight": 0.4655130399989755
+  },
+  {
+    "source_node": 16,
+    "target_node": 6,
+    "source_id": "339993906853248",
+    "target_id": "675379313032192",
+    "feature_distance": 2.185837595115369,
+    "similarity_weight": 0.4574905300532002
+  },
+  {
+    "source_node": 16,
+    "target_node": 35,
+    "source_id": "339993906853248",
+    "target_id": "384661566686720",
+    "feature_distance": 2.252488445608451,
+    "similarity_weight": 0.4439534426687956
+  },
+  {
+    "source_node": 17,
+    "target_node": 20,
+    "source_id": "1155453577587072",
+    "target_id": "452212812313984",
+    "feature_distance": 1.344787028316206,
+    "similarity_weight": 0.7436121697659042
+  },
+  {
+    "source_node": 17,
+    "target_node": 23,
+    "source_id": "1155453577587072",
+    "target_id": "535294659636864",
+    "feature_distance": 1.892123102272512,
+    "similarity_weight": 0.5285068391155064
+  },
+  {
+    "source_node": 17,
+    "target_node": 27,
+    "source_id": "1155453577587072",
+    "target_id": "290653322568704",
+    "feature_distance": 2.3228764905198447,
+    "similarity_weight": 0.430500719293851
+  },
+  {
+    "source_node": 17,
+    "target_node": 30,
+    "source_id": "1155453577587072",
+    "target_id": "77863462880768",
+    "feature_distance": 2.35607239778563,
+    "similarity_weight": 0.4244351748016878
+  },
+  {
+    "source_node": 17,
+    "target_node": 33,
+    "source_id": "1155453577587072",
+    "target_id": "123424475948672",
+    "feature_distance": 2.424280163916962,
+    "similarity_weight": 0.4124935784583023
+  },
+  {
+    "source_node": 18,
+    "target_node": 16,
+    "source_id": "347278171374336",
+    "target_id": "339993906853248",
+    "feature_distance": 1.7998869697479354,
+    "similarity_weight": 0.5555904436262956
+  },
+  {
+    "source_node": 18,
+    "target_node": 12,
+    "source_id": "347278171374336",
+    "target_id": "188020783957632",
+    "feature_distance": 1.911091980521707,
+    "similarity_weight": 0.5232610518968782
+  },
+  {
+    "source_node": 18,
+    "target_node": 7,
+    "source_id": "347278171374336",
+    "target_id": "1411674146537728",
+    "feature_distance": 2.020191385864984,
+    "similarity_weight": 0.4950026056919037
+  },
+  {
+    "source_node": 18,
+    "target_node": 6,
+    "source_id": "347278171374336",
+    "target_id": "675379313032192",
+    "feature_distance": 2.3031448099553096,
+    "similarity_weight": 0.4341889383928793
+  },
+  {
+    "source_node": 18,
+    "target_node": 35,
+    "source_id": "347278171374336",
+    "target_id": "384661566686720",
+    "feature_distance": 2.511152176632788,
+    "similarity_weight": 0.3982235761356784
+  },
+  {
+    "source_node": 19,
+    "target_node": 3,
+    "source_id": "1753553543188992",
+    "target_id": "1066152617449600",
+    "feature_distance": 1.2487988136939117,
+    "similarity_weight": 0.8007694986842816
+  },
+  {
+    "source_node": 19,
+    "target_node": 2,
+    "source_id": "1753553543188992",
+    "target_id": "695170522295168",
+    "feature_distance": 2.2642167769888144,
+    "similarity_weight": 0.4416538249175328
+  },
+  {
+    "source_node": 19,
+    "target_node": 28,
+    "source_id": "1753553543188992",
+    "target_id": "1195551392247936",
+    "feature_distance": 2.315982597888719,
+    "similarity_weight": 0.4317821735410195
+  },
+  {
+    "source_node": 19,
+    "target_node": 0,
+    "source_id": "1753553543188992",
+    "target_id": "613978460597248",
+    "feature_distance": 2.322457726254724,
+    "similarity_weight": 0.430578343233056
+  },
+  {
+    "source_node": 19,
+    "target_node": 5,
+    "source_id": "1753553543188992",
+    "target_id": "1301929142132608",
+    "feature_distance": 2.493276457383247,
+    "similarity_weight": 0.4010786678061054
+  },
+  {
+    "source_node": 20,
+    "target_node": 17,
+    "source_id": "452212812313984",
+    "target_id": "1155453577587072",
+    "feature_distance": 1.344787028316206,
+    "similarity_weight": 0.7436121697659042
+  },
+  {
+    "source_node": 20,
+    "target_node": 23,
+    "source_id": "452212812313984",
+    "target_id": "535294659636864",
+    "feature_distance": 1.9608193068091364,
+    "similarity_weight": 0.5099908984611139
+  },
+  {
+    "source_node": 20,
+    "target_node": 33,
+    "source_id": "452212812313984",
+    "target_id": "123424475948672",
+    "feature_distance": 2.226754623948695,
+    "similarity_weight": 0.4490840567903503
+  },
+  {
+    "source_node": 20,
+    "target_node": 27,
+    "source_id": "452212812313984",
+    "target_id": "290653322568704",
+    "feature_distance": 2.373996295134238,
+    "similarity_weight": 0.4212306489480151
+  },
+  {
+    "source_node": 20,
+    "target_node": 30,
+    "source_id": "452212812313984",
+    "target_id": "77863462880768",
+    "feature_distance": 2.7395677575565505,
+    "similarity_weight": 0.3650210867175432
+  },
+  {
+    "source_node": 21,
+    "target_node": 15,
+    "source_id": "1425830358704768",
+    "target_id": "1261796967786112",
+    "feature_distance": 0.8549366017602789,
+    "similarity_weight": 1.169677374836768
+  },
+  {
+    "source_node": 21,
+    "target_node": 7,
+    "source_id": "1425830358704768",
+    "target_id": "1411674146537728",
+    "feature_distance": 1.463568938153334,
+    "similarity_weight": 0.6832612895304214
+  },
+  {
+    "source_node": 21,
+    "target_node": 32,
+    "source_id": "1425830358704768",
+    "target_id": "1611029348487680",
+    "feature_distance": 2.61402837697572,
+    "similarity_weight": 0.3825513176549979
+  },
+  {
+    "source_node": 21,
+    "target_node": 23,
+    "source_id": "1425830358704768",
+    "target_id": "535294659636864",
+    "feature_distance": 2.7939137412812967,
+    "similarity_weight": 0.3579208567623992
+  },
+  {
+    "source_node": 21,
+    "target_node": 37,
+    "source_id": "1425830358704768",
+    "target_id": "1213006138643456",
+    "feature_distance": 2.9345553743166666,
+    "similarity_weight": 0.3407671256612483
+  },
+  {
+    "source_node": 22,
+    "target_node": 10,
+    "source_id": "120190364960512",
+    "target_id": "75458281197696",
+    "feature_distance": 1.7771991625858503,
+    "similarity_weight": 0.5626831370685674
+  },
+  {
+    "source_node": 22,
+    "target_node": 25,
+    "source_id": "120190364960512",
+    "target_id": "115727894578176",
+    "feature_distance": 1.988045588211922,
+    "similarity_weight": 0.5030065738577514
+  },
+  {
+    "source_node": 22,
+    "target_node": 13,
+    "source_id": "120190364960512",
+    "target_id": "332469124171904",
+    "feature_distance": 2.3343944370815164,
+    "similarity_weight": 0.4283766205550857
+  },
+  {
+    "source_node": 22,
+    "target_node": 8,
+    "source_id": "120190364960512",
+    "target_id": "44358422235136",
+    "feature_distance": 2.425816040363505,
+    "similarity_weight": 0.4122324130768544
+  },
+  {
+    "source_node": 22,
+    "target_node": 14,
+    "source_id": "120190364960512",
+    "target_id": "384317969303168",
+    "feature_distance": 2.5281287851659444,
+    "similarity_weight": 0.3955494695789262
+  },
+  {
+    "source_node": 23,
+    "target_node": 17,
+    "source_id": "535294659636864",
+    "target_id": "1155453577587072",
+    "feature_distance": 1.892123102272512,
+    "similarity_weight": 0.5285068391155064
+  },
+  {
+    "source_node": 23,
+    "target_node": 20,
+    "source_id": "535294659636864",
+    "target_id": "452212812313984",
+    "feature_distance": 1.9608193068091364,
+    "similarity_weight": 0.5099908984611139
+  },
+  {
+    "source_node": 23,
+    "target_node": 46,
+    "source_id": "535294659636864",
+    "target_id": "1292480214037760",
+    "feature_distance": 2.2790807522347056,
+    "similarity_weight": 0.4387733953783918
+  },
+  {
+    "source_node": 23,
+    "target_node": 15,
+    "source_id": "535294659636864",
+    "target_id": "1261796967786112",
+    "feature_distance": 2.448755710744283,
+    "similarity_weight": 0.4083706658087376
+  },
+  {
+    "source_node": 23,
+    "target_node": 32,
+    "source_id": "535294659636864",
+    "target_id": "1611029348487680",
+    "feature_distance": 2.5177459864315925,
+    "similarity_weight": 0.3971806549940747
+  },
+  {
+    "source_node": 24,
+    "target_node": 5,
+    "source_id": "1604569717638528",
+    "target_id": "1301929142132608",
+    "feature_distance": 1.7375105298863645,
+    "similarity_weight": 0.5755360803855536
+  },
+  {
+    "source_node": 24,
+    "target_node": 34,
+    "source_id": "1604569717638528",
+    "target_id": "1435244927007872",
+    "feature_distance": 1.7424053072189265,
+    "similarity_weight": 0.573919280351331
+  },
+  {
+    "source_node": 24,
+    "target_node": 14,
+    "source_id": "1604569717638528",
+    "target_id": "384317969303168",
+    "feature_distance": 2.439709030797772,
+    "similarity_weight": 0.4098849442191863
+  },
+  {
+    "source_node": 24,
+    "target_node": 3,
+    "source_id": "1604569717638528",
+    "target_id": "1066152617449600",
+    "feature_distance": 2.54281476969452,
+    "similarity_weight": 0.3932649801777505
+  },
+  {
+    "source_node": 24,
+    "target_node": 19,
+    "source_id": "1604569717638528",
+    "target_id": "1753553543188992",
+    "feature_distance": 2.668409589966575,
+    "similarity_weight": 0.3747550615016907
+  },
+  {
+    "source_node": 25,
+    "target_node": 8,
+    "source_id": "115727894578176",
+    "target_id": "44358422235136",
+    "feature_distance": 1.6971398625695857,
+    "similarity_weight": 0.589226628903373
+  },
+  {
+    "source_node": 25,
+    "target_node": 22,
+    "source_id": "115727894578176",
+    "target_id": "120190364960512",
+    "feature_distance": 1.988045588211922,
+    "similarity_weight": 0.5030065738577514
+  },
+  {
+    "source_node": 25,
+    "target_node": 9,
+    "source_id": "115727894578176",
+    "target_id": "86693915665280",
+    "feature_distance": 2.4398760837577167,
+    "similarity_weight": 0.4098568802967501
+  },
+  {
+    "source_node": 25,
+    "target_node": 12,
+    "source_id": "115727894578176",
+    "target_id": "188020783957632",
+    "feature_distance": 2.5240100938406265,
+    "similarity_weight": 0.3961949290297675
+  },
+  {
+    "source_node": 25,
+    "target_node": 10,
+    "source_id": "115727894578176",
+    "target_id": "75458281197696",
+    "feature_distance": 2.529793954611529,
+    "similarity_weight": 0.3952891096829121
+  },
+  {
+    "source_node": 26,
+    "target_node": 0,
+    "source_id": "774472798501120",
+    "target_id": "613978460597248",
+    "feature_distance": 1.895129537253868,
+    "similarity_weight": 0.5276684154522332
+  },
+  {
+    "source_node": 26,
+    "target_node": 2,
+    "source_id": "774472798501120",
+    "target_id": "695170522295168",
+    "feature_distance": 2.077686246860233,
+    "similarity_weight": 0.4813046250417755
+  },
+  {
+    "source_node": 26,
+    "target_node": 3,
+    "source_id": "774472798501120",
+    "target_id": "1066152617449600",
+    "feature_distance": 2.229566655129549,
+    "similarity_weight": 0.4485176514901934
+  },
+  {
+    "source_node": 26,
+    "target_node": 1,
+    "source_id": "774472798501120",
+    "target_id": "673008491088640",
+    "feature_distance": 2.3164952509347057,
+    "similarity_weight": 0.431686617788691
+  },
+  {
+    "source_node": 26,
+    "target_node": 4,
+    "source_id": "774472798501120",
+    "target_id": "250246270117248",
+    "feature_distance": 2.7119730713407373,
+    "similarity_weight": 0.368735224758428
+  },
+  {
+    "source_node": 27,
+    "target_node": 33,
+    "source_id": "290653322568704",
+    "target_id": "123424475948672",
+    "feature_distance": 1.951582036912154,
+    "similarity_weight": 0.5124047983049254
+  },
+  {
+    "source_node": 27,
+    "target_node": 30,
+    "source_id": "290653322568704",
+    "target_id": "77863462880768",
+    "feature_distance": 2.155106524333281,
+    "similarity_weight": 0.4640141861706362
+  },
+  {
+    "source_node": 27,
+    "target_node": 17,
+    "source_id": "290653322568704",
+    "target_id": "1155453577587072",
+    "feature_distance": 2.3228764905198447,
+    "similarity_weight": 0.430500719293851
+  },
+  {
+    "source_node": 27,
+    "target_node": 20,
+    "source_id": "290653322568704",
+    "target_id": "452212812313984",
+    "feature_distance": 2.373996295134238,
+    "similarity_weight": 0.4212306489480151
+  },
+  {
+    "source_node": 27,
+    "target_node": 31,
+    "source_id": "290653322568704",
+    "target_id": "596798591393792",
+    "feature_distance": 2.4335571947426797,
+    "similarity_weight": 0.4109211002560092
+  },
+  {
+    "source_node": 28,
+    "target_node": 13,
+    "source_id": "1195551392247936",
+    "target_id": "332469124171904",
+    "feature_distance": 1.9356294209376228,
+    "similarity_weight": 0.5166278158321654
+  },
+  {
+    "source_node": 28,
+    "target_node": 5,
+    "source_id": "1195551392247936",
+    "target_id": "1301929142132608",
+    "feature_distance": 2.1487384180165328,
+    "similarity_weight": 0.4653893613177071
+  },
+  {
+    "source_node": 28,
+    "target_node": 19,
+    "source_id": "1195551392247936",
+    "target_id": "1753553543188992",
+    "feature_distance": 2.315982597888719,
+    "similarity_weight": 0.4317821735410195
+  },
+  {
+    "source_node": 28,
+    "target_node": 14,
+    "source_id": "1195551392247936",
+    "target_id": "384317969303168",
+    "feature_distance": 2.6436744799811125,
+    "similarity_weight": 0.3782613962392095
+  },
+  {
+    "source_node": 28,
+    "target_node": 4,
+    "source_id": "1195551392247936",
+    "target_id": "250246270117248",
+    "feature_distance": 2.645539138903615,
+    "similarity_weight": 0.377994785748681
+  },
+  {
+    "source_node": 29,
+    "target_node": 40,
+    "source_id": "1166173815955456",
+    "target_id": "1240631368988288",
+    "feature_distance": 1.6024503811077473,
+    "similarity_weight": 0.6240442835478578
+  },
+  {
+    "source_node": 29,
+    "target_node": 16,
+    "source_id": "1166173815955456",
+    "target_id": "339993906853248",
+    "feature_distance": 1.9438702364168765,
+    "similarity_weight": 0.5144376313116349
+  },
+  {
+    "source_node": 29,
+    "target_node": 12,
+    "source_id": "1166173815955456",
+    "target_id": "188020783957632",
+    "feature_distance": 2.663244122958628,
+    "similarity_weight": 0.3754819137228446
+  },
+  {
+    "source_node": 29,
+    "target_node": 11,
+    "source_id": "1166173815955456",
+    "target_id": "896106271727872",
+    "feature_distance": 2.6947704596019846,
+    "similarity_weight": 0.3710891205729367
+  },
+  {
+    "source_node": 29,
+    "target_node": 32,
+    "source_id": "1166173815955456",
+    "target_id": "1611029348487680",
+    "feature_distance": 2.7989094645460537,
+    "similarity_weight": 0.3572820102495989
+  },
+  {
+    "source_node": 30,
+    "target_node": 27,
+    "source_id": "77863462880768",
+    "target_id": "290653322568704",
+    "feature_distance": 2.155106524333281,
+    "similarity_weight": 0.4640141861706362
+  },
+  {
+    "source_node": 30,
+    "target_node": 39,
+    "source_id": "77863462880768",
+    "target_id": "320683733915264",
+    "feature_distance": 2.210073491867113,
+    "similarity_weight": 0.4524736411162182
+  },
+  {
+    "source_node": 30,
+    "target_node": 17,
+    "source_id": "77863462880768",
+    "target_id": "1155453577587072",
+    "feature_distance": 2.35607239778563,
+    "similarity_weight": 0.4244351748016878
+  },
+  {
+    "source_node": 30,
+    "target_node": 36,
+    "source_id": "77863462880768",
+    "target_id": "154829276705920",
+    "feature_distance": 2.520645657733851,
+    "similarity_weight": 0.3967237508895393
+  },
+  {
+    "source_node": 30,
+    "target_node": 37,
+    "source_id": "77863462880768",
+    "target_id": "1213006138643456",
+    "feature_distance": 2.537101636137565,
+    "similarity_weight": 0.3941505479149769
+  },
+  {
+    "source_node": 31,
+    "target_node": 6,
+    "source_id": "596798591393792",
+    "target_id": "675379313032192",
+    "feature_distance": 2.0373499180800367,
+    "similarity_weight": 0.4908337007429199
+  },
+  {
+    "source_node": 31,
+    "target_node": 36,
+    "source_id": "596798591393792",
+    "target_id": "154829276705920",
+    "feature_distance": 2.116315700642576,
+    "similarity_weight": 0.47251929364598
+  },
+  {
+    "source_node": 31,
+    "target_node": 27,
+    "source_id": "596798591393792",
+    "target_id": "290653322568704",
+    "feature_distance": 2.4335571947426797,
+    "similarity_weight": 0.4109211002560092
+  },
+  {
+    "source_node": 31,
+    "target_node": 11,
+    "source_id": "596798591393792",
+    "target_id": "896106271727872",
+    "feature_distance": 2.636285304366869,
+    "similarity_weight": 0.3793216152831306
+  },
+  {
+    "source_node": 31,
+    "target_node": 35,
+    "source_id": "596798591393792",
+    "target_id": "384661566686720",
+    "feature_distance": 2.697098745538632,
+    "similarity_weight": 0.370768775764612
+  },
+  {
+    "source_node": 32,
+    "target_node": 7,
+    "source_id": "1611029348487680",
+    "target_id": "1411674146537728",
+    "feature_distance": 2.3356407007877054,
+    "similarity_weight": 0.4281480450577511
+  },
+  {
+    "source_node": 32,
+    "target_node": 15,
+    "source_id": "1611029348487680",
+    "target_id": "1261796967786112",
+    "feature_distance": 2.35224380248465,
+    "similarity_weight": 0.4251260005205606
+  },
+  {
+    "source_node": 32,
+    "target_node": 11,
+    "source_id": "1611029348487680",
+    "target_id": "896106271727872",
+    "feature_distance": 2.357535175402456,
+    "similarity_weight": 0.4241718259108755
+  },
+  {
+    "source_node": 32,
+    "target_node": 37,
+    "source_id": "1611029348487680",
+    "target_id": "1213006138643456",
+    "feature_distance": 2.50510322459827,
+    "similarity_weight": 0.3991851474144206
+  },
+  {
+    "source_node": 32,
+    "target_node": 23,
+    "source_id": "1611029348487680",
+    "target_id": "535294659636864",
+    "feature_distance": 2.5177459864315925,
+    "similarity_weight": 0.3971806549940747
+  },
+  {
+    "source_node": 33,
+    "target_node": 27,
+    "source_id": "123424475948672",
+    "target_id": "290653322568704",
+    "feature_distance": 1.951582036912154,
+    "similarity_weight": 0.5124047983049254
+  },
+  {
+    "source_node": 33,
+    "target_node": 20,
+    "source_id": "123424475948672",
+    "target_id": "452212812313984",
+    "feature_distance": 2.226754623948695,
+    "similarity_weight": 0.4490840567903503
+  },
+  {
+    "source_node": 33,
+    "target_node": 17,
+    "source_id": "123424475948672",
+    "target_id": "1155453577587072",
+    "feature_distance": 2.424280163916962,
+    "similarity_weight": 0.4124935784583023
+  },
+  {
+    "source_node": 33,
+    "target_node": 30,
+    "source_id": "123424475948672",
+    "target_id": "77863462880768",
+    "feature_distance": 2.752898530078256,
+    "similarity_weight": 0.3632534904841589
+  },
+  {
+    "source_node": 33,
+    "target_node": 36,
+    "source_id": "123424475948672",
+    "target_id": "154829276705920",
+    "feature_distance": 2.992329568095333,
+    "similarity_weight": 0.3341877882242036
+  },
+  {
+    "source_node": 34,
+    "target_node": 24,
+    "source_id": "1435244927007872",
+    "target_id": "1604569717638528",
+    "feature_distance": 1.7424053072189265,
+    "similarity_weight": 0.573919280351331
+  },
+  {
+    "source_node": 34,
+    "target_node": 5,
+    "source_id": "1435244927007872",
+    "target_id": "1301929142132608",
+    "feature_distance": 2.008338712373628,
+    "similarity_weight": 0.4979239775832514
+  },
+  {
+    "source_node": 34,
+    "target_node": 14,
+    "source_id": "1435244927007872",
+    "target_id": "384317969303168",
+    "feature_distance": 2.2338297128280065,
+    "similarity_weight": 0.4476616969758013
+  },
+  {
+    "source_node": 34,
+    "target_node": 28,
+    "source_id": "1435244927007872",
+    "target_id": "1195551392247936",
+    "feature_distance": 3.1758785596995787,
+    "similarity_weight": 0.3148735007343227
+  },
+  {
+    "source_node": 34,
+    "target_node": 4,
+    "source_id": "1435244927007872",
+    "target_id": "250246270117248",
+    "feature_distance": 3.286547609922952,
+    "similarity_weight": 0.3042706568377201
+  },
+  {
+    "source_node": 35,
+    "target_node": 16,
+    "source_id": "384661566686720",
+    "target_id": "339993906853248",
+    "feature_distance": 2.252488445608451,
+    "similarity_weight": 0.4439534426687956
+  },
+  {
+    "source_node": 35,
+    "target_node": 18,
+    "source_id": "384661566686720",
+    "target_id": "347278171374336",
+    "feature_distance": 2.511152176632788,
+    "similarity_weight": 0.3982235761356784
+  },
+  {
+    "source_node": 35,
+    "target_node": 27,
+    "source_id": "384661566686720",
+    "target_id": "290653322568704",
+    "feature_distance": 2.514673058925568,
+    "similarity_weight": 0.3976660092850668
+  },
+  {
+    "source_node": 35,
+    "target_node": 38,
+    "source_id": "384661566686720",
+    "target_id": "1497229894979968",
+    "feature_distance": 2.5776623959012825,
+    "similarity_weight": 0.3879483991346977
+  },
+  {
+    "source_node": 35,
+    "target_node": 6,
+    "source_id": "384661566686720",
+    "target_id": "675379313032192",
+    "feature_distance": 2.624291102690853,
+    "similarity_weight": 0.3810552872637699
+  },
+  {
+    "source_node": 36,
+    "target_node": 31,
+    "source_id": "154829276705920",
+    "target_id": "596798591393792",
+    "feature_distance": 2.116315700642576,
+    "similarity_weight": 0.47251929364598
+  },
+  {
+    "source_node": 36,
+    "target_node": 30,
+    "source_id": "154829276705920",
+    "target_id": "77863462880768",
+    "feature_distance": 2.520645657733851,
+    "similarity_weight": 0.3967237508895393
+  },
+  {
+    "source_node": 36,
+    "target_node": 35,
+    "source_id": "154829276705920",
+    "target_id": "384661566686720",
+    "feature_distance": 2.6358128517840327,
+    "similarity_weight": 0.3793896062547753
+  },
+  {
+    "source_node": 36,
+    "target_node": 6,
+    "source_id": "154829276705920",
+    "target_id": "675379313032192",
+    "feature_distance": 2.66843951922046,
+    "similarity_weight": 0.3747508582438317
+  },
+  {
+    "source_node": 36,
+    "target_node": 27,
+    "source_id": "154829276705920",
+    "target_id": "290653322568704",
+    "feature_distance": 2.696697408542697,
+    "similarity_weight": 0.3708239555657199
+  },
+  {
+    "source_node": 37,
+    "target_node": 39,
+    "source_id": "1213006138643456",
+    "target_id": "320683733915264",
+    "feature_distance": 2.025119850750774,
+    "similarity_weight": 0.4937979347882919
+  },
+  {
+    "source_node": 37,
+    "target_node": 32,
+    "source_id": "1213006138643456",
+    "target_id": "1611029348487680",
+    "feature_distance": 2.50510322459827,
+    "similarity_weight": 0.3991851474144206
+  },
+  {
+    "source_node": 37,
+    "target_node": 30,
+    "source_id": "1213006138643456",
+    "target_id": "77863462880768",
+    "feature_distance": 2.537101636137565,
+    "similarity_weight": 0.3941505479149769
+  },
+  {
+    "source_node": 37,
+    "target_node": 23,
+    "source_id": "1213006138643456",
+    "target_id": "535294659636864",
+    "feature_distance": 2.7564510733763186,
+    "similarity_weight": 0.3627853255435288
+  },
+  {
+    "source_node": 37,
+    "target_node": 35,
+    "source_id": "1213006138643456",
+    "target_id": "384661566686720",
+    "feature_distance": 2.8238412487442863,
+    "similarity_weight": 0.354127556017651
+  },
+  {
+    "source_node": 38,
+    "target_node": 7,
+    "source_id": "1497229894979968",
+    "target_id": "1411674146537728",
+    "feature_distance": 1.925864891972772,
+    "similarity_weight": 0.5192472245418651
+  },
+  {
+    "source_node": 38,
+    "target_node": 18,
+    "source_id": "1497229894979968",
+    "target_id": "347278171374336",
+    "feature_distance": 2.571078817080212,
+    "similarity_weight": 0.388941791031999
+  },
+  {
+    "source_node": 38,
+    "target_node": 35,
+    "source_id": "1497229894979968",
+    "target_id": "384661566686720",
+    "feature_distance": 2.5776623959012825,
+    "similarity_weight": 0.3879483991346977
+  },
+  {
+    "source_node": 38,
+    "target_node": 16,
+    "source_id": "1497229894979968",
+    "target_id": "339993906853248",
+    "feature_distance": 2.882309723910253,
+    "similarity_weight": 0.3469439774997582
+  },
+  {
+    "source_node": 38,
+    "target_node": 32,
+    "source_id": "1497229894979968",
+    "target_id": "1611029348487680",
+    "feature_distance": 2.9081755852640225,
+    "similarity_weight": 0.3438581924237115
+  },
+  {
+    "source_node": 39,
+    "target_node": 37,
+    "source_id": "320683733915264",
+    "target_id": "1213006138643456",
+    "feature_distance": 2.025119850750774,
+    "similarity_weight": 0.4937979347882919
+  },
+  {
+    "source_node": 39,
+    "target_node": 30,
+    "source_id": "320683733915264",
+    "target_id": "77863462880768",
+    "feature_distance": 2.210073491867113,
+    "similarity_weight": 0.4524736411162182
+  },
+  {
+    "source_node": 39,
+    "target_node": 16,
+    "source_id": "320683733915264",
+    "target_id": "339993906853248",
+    "feature_distance": 2.829466086601285,
+    "similarity_weight": 0.3534235680487807
+  },
+  {
+    "source_node": 39,
+    "target_node": 36,
+    "source_id": "320683733915264",
+    "target_id": "154829276705920",
+    "feature_distance": 2.954127823329227,
+    "similarity_weight": 0.3385093874755517
+  },
+  {
+    "source_node": 39,
+    "target_node": 6,
+    "source_id": "320683733915264",
+    "target_id": "675379313032192",
+    "feature_distance": 2.966884595806994,
+    "similarity_weight": 0.3370538919555321
+  },
+  {
+    "source_node": 40,
+    "target_node": 29,
+    "source_id": "1240631368988288",
+    "target_id": "1166173815955456",
+    "feature_distance": 1.6024503811077473,
+    "similarity_weight": 0.6240442835478578
+  },
+  {
+    "source_node": 40,
+    "target_node": 7,
+    "source_id": "1240631368988288",
+    "target_id": "1411674146537728",
+    "feature_distance": 2.762976276102701,
+    "similarity_weight": 0.3619285509791571
+  },
+  {
+    "source_node": 40,
+    "target_node": 16,
+    "source_id": "1240631368988288",
+    "target_id": "339993906853248",
+    "feature_distance": 2.8556606349618363,
+    "similarity_weight": 0.3501816664615731
+  },
+  {
+    "source_node": 40,
+    "target_node": 18,
+    "source_id": "1240631368988288",
+    "target_id": "347278171374336",
+    "feature_distance": 2.934183152588745,
+    "similarity_weight": 0.340810354362981
+  },
+  {
+    "source_node": 40,
+    "target_node": 32,
+    "source_id": "1240631368988288",
+    "target_id": "1611029348487680",
+    "feature_distance": 3.168340066375815,
+    "similarity_weight": 0.3156226853967602
+  },
+  {
+    "source_node": 41,
+    "target_node": 2,
+    "source_id": "755540582699392",
+    "target_id": "695170522295168",
+    "feature_distance": 2.102290591470098,
+    "similarity_weight": 0.4756716336252261
+  },
+  {
+    "source_node": 41,
+    "target_node": 0,
+    "source_id": "755540582699392",
+    "target_id": "613978460597248",
+    "feature_distance": 2.3639463217611314,
+    "similarity_weight": 0.4230214496810488
+  },
+  {
+    "source_node": 41,
+    "target_node": 3,
+    "source_id": "755540582699392",
+    "target_id": "1066152617449600",
+    "feature_distance": 2.9395563499250104,
+    "similarity_weight": 0.3401873891701958
+  },
+  {
+    "source_node": 41,
+    "target_node": 1,
+    "source_id": "755540582699392",
+    "target_id": "673008491088640",
+    "feature_distance": 2.9397247740725283,
+    "similarity_weight": 0.3401678989881479
+  },
+  {
+    "source_node": 41,
+    "target_node": 4,
+    "source_id": "755540582699392",
+    "target_id": "250246270117248",
+    "feature_distance": 3.21693780665944,
+    "similarity_weight": 0.31085462638711
+  },
+  {
+    "source_node": 42,
+    "target_node": 10,
+    "source_id": "132667245587072",
+    "target_id": "75458281197696",
+    "feature_distance": 2.572914586752843,
+    "similarity_weight": 0.3886642818025549
+  },
+  {
+    "source_node": 42,
+    "target_node": 1,
+    "source_id": "132667245587072",
+    "target_id": "673008491088640",
+    "feature_distance": 2.5787504314550174,
+    "similarity_weight": 0.3877847145663408
+  },
+  {
+    "source_node": 42,
+    "target_node": 22,
+    "source_id": "132667245587072",
+    "target_id": "120190364960512",
+    "feature_distance": 2.664881454928183,
+    "similarity_weight": 0.3752512135766182
+  },
+  {
+    "source_node": 42,
+    "target_node": 4,
+    "source_id": "132667245587072",
+    "target_id": "250246270117248",
+    "feature_distance": 2.886666832183516,
+    "similarity_weight": 0.346420303462329
+  },
+  {
+    "source_node": 42,
+    "target_node": 25,
+    "source_id": "132667245587072",
+    "target_id": "115727894578176",
+    "feature_distance": 3.047588211063689,
+    "similarity_weight": 0.3281283200825368
+  },
+  {
+    "source_node": 43,
+    "target_node": 6,
+    "source_id": "1036706321717888",
+    "target_id": "675379313032192",
+    "feature_distance": 2.284574855229599,
+    "similarity_weight": 0.4377182028903416
+  },
+  {
+    "source_node": 43,
+    "target_node": 11,
+    "source_id": "1036706321717888",
+    "target_id": "896106271727872",
+    "feature_distance": 2.389082559516576,
+    "similarity_weight": 0.4185707170378945
+  },
+  {
+    "source_node": 43,
+    "target_node": 31,
+    "source_id": "1036706321717888",
+    "target_id": "596798591393792",
+    "feature_distance": 2.6971992689682303,
+    "similarity_weight": 0.3707549573755309
+  },
+  {
+    "source_node": 43,
+    "target_node": 32,
+    "source_id": "1036706321717888",
+    "target_id": "1611029348487680",
+    "feature_distance": 3.252723738204186,
+    "similarity_weight": 0.3074346549184001
+  },
+  {
+    "source_node": 43,
+    "target_node": 12,
+    "source_id": "1036706321717888",
+    "target_id": "188020783957632",
+    "feature_distance": 3.2674428182925026,
+    "similarity_weight": 0.3060497323476568
+  },
+  {
+    "source_node": 44,
+    "target_node": 9,
+    "source_id": "92603790642688",
+    "target_id": "86693915665280",
+    "feature_distance": 1.7756179367112472,
+    "similarity_weight": 0.5631842184764198
+  },
+  {
+    "source_node": 44,
+    "target_node": 8,
+    "source_id": "92603790642688",
+    "target_id": "44358422235136",
+    "feature_distance": 2.5638628860617296,
+    "similarity_weight": 0.3900364584377907
+  },
+  {
+    "source_node": 44,
+    "target_node": 46,
+    "source_id": "92603790642688",
+    "target_id": "1292480214037760",
+    "feature_distance": 3.063661153814141,
+    "similarity_weight": 0.3264068543463795
+  },
+  {
+    "source_node": 44,
+    "target_node": 4,
+    "source_id": "92603790642688",
+    "target_id": "250246270117248",
+    "feature_distance": 3.218351487667765,
+    "similarity_weight": 0.3107180815493701
+  },
+  {
+    "source_node": 44,
+    "target_node": 13,
+    "source_id": "92603790642688",
+    "target_id": "332469124171904",
+    "feature_distance": 3.349665247071247,
+    "similarity_weight": 0.2985372943980129
+  },
+  {
+    "source_node": 45,
+    "target_node": 47,
+    "source_id": "850236021522688",
+    "target_id": "1811277903614976",
+    "feature_distance": 2.057441786447,
+    "similarity_weight": 0.4860404831800446
+  },
+  {
+    "source_node": 45,
+    "target_node": 49,
+    "source_id": "850236021522688",
+    "target_id": "1039420741032448",
+    "feature_distance": 2.743784762031693,
+    "similarity_weight": 0.3644600749437665
+  },
+  {
+    "source_node": 45,
+    "target_node": 29,
+    "source_id": "850236021522688",
+    "target_id": "1166173815955456",
+    "feature_distance": 2.8777334895057045,
+    "similarity_weight": 0.3474956953610801
+  },
+  {
+    "source_node": 45,
+    "target_node": 11,
+    "source_id": "850236021522688",
+    "target_id": "896106271727872",
+    "feature_distance": 3.0044374754967924,
+    "similarity_weight": 0.332841008726372
+  },
+  {
+    "source_node": 45,
+    "target_node": 12,
+    "source_id": "850236021522688",
+    "target_id": "188020783957632",
+    "feature_distance": 3.3003169553484524,
+    "similarity_weight": 0.3030012006510797
+  },
+  {
+    "source_node": 46,
+    "target_node": 23,
+    "source_id": "1292480214037760",
+    "target_id": "535294659636864",
+    "feature_distance": 2.2790807522347056,
+    "similarity_weight": 0.4387733953783918
+  },
+  {
+    "source_node": 46,
+    "target_node": 17,
+    "source_id": "1292480214037760",
+    "target_id": "1155453577587072",
+    "feature_distance": 2.7357346440146704,
+    "similarity_weight": 0.3655325278668628
+  },
+  {
+    "source_node": 46,
+    "target_node": 26,
+    "source_id": "1292480214037760",
+    "target_id": "774472798501120",
+    "feature_distance": 3.040522356185533,
+    "similarity_weight": 0.3288908558640609
+  },
+  {
+    "source_node": 46,
+    "target_node": 44,
+    "source_id": "1292480214037760",
+    "target_id": "92603790642688",
+    "feature_distance": 3.063661153814141,
+    "similarity_weight": 0.3264068543463795
+  },
+  {
+    "source_node": 46,
+    "target_node": 20,
+    "source_id": "1292480214037760",
+    "target_id": "452212812313984",
+    "feature_distance": 3.1016283468928783,
+    "similarity_weight": 0.3224112911533868
+  },
+  {
+    "source_node": 47,
+    "target_node": 45,
+    "source_id": "1811277903614976",
+    "target_id": "850236021522688",
+    "feature_distance": 2.057441786447,
+    "similarity_weight": 0.4860404831800446
+  },
+  {
+    "source_node": 47,
+    "target_node": 49,
+    "source_id": "1811277903614976",
+    "target_id": "1039420741032448",
+    "feature_distance": 2.582061521485483,
+    "similarity_weight": 0.3872874413249084
+  },
+  {
+    "source_node": 47,
+    "target_node": 11,
+    "source_id": "1811277903614976",
+    "target_id": "896106271727872",
+    "feature_distance": 3.813878271469829,
+    "similarity_weight": 0.2622002929355027
+  },
+  {
+    "source_node": 47,
+    "target_node": 29,
+    "source_id": "1811277903614976",
+    "target_id": "1166173815955456",
+    "feature_distance": 3.862459713811005,
+    "similarity_weight": 0.258902376748174
+  },
+  {
+    "source_node": 47,
+    "target_node": 32,
+    "source_id": "1811277903614976",
+    "target_id": "1611029348487680",
+    "feature_distance": 4.274318664253,
+    "similarity_weight": 0.2339554157164205
+  },
+  {
+    "source_node": 48,
+    "target_node": 22,
+    "source_id": "83154862613888",
+    "target_id": "120190364960512",
+    "feature_distance": 2.9075474990722205,
+    "similarity_weight": 0.3439324724080172
+  },
+  {
+    "source_node": 48,
+    "target_node": 25,
+    "source_id": "83154862613888",
+    "target_id": "115727894578176",
+    "feature_distance": 2.9179031905525727,
+    "similarity_weight": 0.3427118498096175
+  },
+  {
+    "source_node": 48,
+    "target_node": 40,
+    "source_id": "83154862613888",
+    "target_id": "1240631368988288",
+    "feature_distance": 3.36265319177735,
+    "similarity_weight": 0.2973842210207669
+  },
+  {
+    "source_node": 48,
+    "target_node": 42,
+    "source_id": "83154862613888",
+    "target_id": "132667245587072",
+    "feature_distance": 3.511141732899193,
+    "similarity_weight": 0.2848076426621499
+  },
+  {
+    "source_node": 48,
+    "target_node": 8,
+    "source_id": "83154862613888",
+    "target_id": "44358422235136",
+    "feature_distance": 3.982068621737856,
+    "similarity_weight": 0.2511257577382804
+  },
+  {
+    "source_node": 49,
+    "target_node": 47,
+    "source_id": "1039420741032448",
+    "target_id": "1811277903614976",
+    "feature_distance": 2.582061521485483,
+    "similarity_weight": 0.3872874413249084
+  },
+  {
+    "source_node": 49,
+    "target_node": 45,
+    "source_id": "1039420741032448",
+    "target_id": "850236021522688",
+    "feature_distance": 2.743784762031693,
+    "similarity_weight": 0.3644600749437665
+  },
+  {
+    "source_node": 49,
+    "target_node": 3,
+    "source_id": "1039420741032448",
+    "target_id": "1066152617449600",
+    "feature_distance": 3.7450135921351215,
+    "similarity_weight": 0.2670217277982185
+  },
+  {
+    "source_node": 49,
+    "target_node": 1,
+    "source_id": "1039420741032448",
+    "target_id": "673008491088640",
+    "feature_distance": 3.827970089126541,
+    "similarity_weight": 0.2612350610680756
+  },
+  {
+    "source_node": 49,
+    "target_node": 19,
+    "source_id": "1039420741032448",
+    "target_id": "1753553543188992",
+    "feature_distance": 3.837272682592184,
+    "similarity_weight": 0.2606017561734006
+  }
+]

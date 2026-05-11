@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Graph3DViewer from "./components/Graph3DViewer.jsx";
+import InteractiveSourceTable from "./components/InteractiveSourceTable.jsx";
 
 const DATA_BASE = "/data";
+const CODEX_ALPHA_WEBSITE = "https://www.codexalpha.org";
 
 async function loadJson(path) {
   const response = await fetch(path);
@@ -22,12 +24,7 @@ function formatNumber(value, digits = 6) {
 }
 
 /* ─── Lightweight Markdown renderer ──────────────────────────────────────── */
-/*
-  Handles: headings (# ## ###), bold (**), italic (*), inline code (`),
-  fenced code blocks (```), horizontal rules (---), unordered lists (- / *),
-  ordered lists (1.), blockquotes (>), tables (| col | col |), blank lines → <p>.
-  No external deps.
-*/
+
 function renderMarkdown(md) {
   if (!md) return [];
 
@@ -37,110 +34,154 @@ function renderMarkdown(md) {
   let key = 0;
 
   function inlineMarkup(text) {
-    // Bold+italic, bold, italic, inline code
     const parts = [];
     const regex = /(\*\*\*(.+?)\*\*\*|\*\*(.+?)\*\*|\*(.+?)\*|`([^`]+)`)/g;
     let last = 0;
     let m;
+
     while ((m = regex.exec(text)) !== null) {
       if (m.index > last) parts.push(text.slice(last, m.index));
-      if (m[2]) parts.push(<strong key={key++}><em>{m[2]}</em></strong>);
-      else if (m[3]) parts.push(<strong key={key++}>{m[3]}</strong>);
-      else if (m[4]) parts.push(<em key={key++}>{m[4]}</em>);
-      else if (m[5]) parts.push(<code key={key++} className="md-inline-code">{m[5]}</code>);
+
+      if (m[2]) {
+        parts.push(
+          <strong key={key++}>
+            <em>{m[2]}</em>
+          </strong>,
+        );
+      } else if (m[3]) {
+        parts.push(<strong key={key++}>{m[3]}</strong>);
+      } else if (m[4]) {
+        parts.push(<em key={key++}>{m[4]}</em>);
+      } else if (m[5]) {
+        parts.push(
+          <code key={key++} className="md-inline-code">
+            {m[5]}
+          </code>,
+        );
+      }
+
       last = m.index + m[0].length;
     }
+
     if (last < text.length) parts.push(text.slice(last));
+
     return parts.length ? parts : text;
   }
 
   while (i < lines.length) {
     const line = lines[i];
 
-    // Fenced code block
     if (line.startsWith("```")) {
       const lang = line.slice(3).trim();
       const codeLines = [];
       i++;
+
       while (i < lines.length && !lines[i].startsWith("```")) {
         codeLines.push(lines[i]);
         i++;
       }
+
       elements.push(
         <div key={key++} className="md-code-block">
           {lang && <span className="md-code-lang">{lang}</span>}
-          <pre><code>{codeLines.join("\n")}</code></pre>
+          <pre>
+            <code>{codeLines.join("\n")}</code>
+          </pre>
         </div>,
       );
+
       i++;
       continue;
     }
 
-    // Horizontal rule
     if (/^(\-{3,}|\*{3,}|_{3,})$/.test(line.trim())) {
       elements.push(<hr key={key++} className="md-hr" />);
       i++;
       continue;
     }
 
-    // Headings
     const hMatch = line.match(/^(#{1,6})\s+(.*)/);
+
     if (hMatch) {
       const level = hMatch[1].length;
       const Tag = `h${Math.min(level, 6)}`;
+
       elements.push(
         <Tag key={key++} className={`md-h md-h${level}`}>
           {inlineMarkup(hMatch[2])}
         </Tag>,
       );
+
       i++;
       continue;
     }
 
-    // Blockquote
     if (line.startsWith(">")) {
       const qLines = [];
+
       while (i < lines.length && lines[i].startsWith(">")) {
         qLines.push(lines[i].slice(1).trim());
         i++;
       }
+
       elements.push(
         <blockquote key={key++} className="md-blockquote">
-          {qLines.map((l, idx) => <p key={idx}>{inlineMarkup(l)}</p>)}
+          {qLines.map((l, idx) => (
+            <p key={idx}>{inlineMarkup(l)}</p>
+          ))}
         </blockquote>,
       );
+
       continue;
     }
 
-    // Unordered list
     if (/^[\-\*\+]\s/.test(line)) {
       const items = [];
+
       while (i < lines.length && /^[\-\*\+]\s/.test(lines[i])) {
         items.push(<li key={i}>{inlineMarkup(lines[i].slice(2))}</li>);
         i++;
       }
-      elements.push(<ul key={key++} className="md-ul">{items}</ul>);
+
+      elements.push(
+        <ul key={key++} className="md-ul">
+          {items}
+        </ul>,
+      );
+
       continue;
     }
 
-    // Ordered list
     if (/^\d+\.\s/.test(line)) {
       const items = [];
+
       while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
-        items.push(<li key={i}>{inlineMarkup(lines[i].replace(/^\d+\.\s/, ""))}</li>);
+        items.push(
+          <li key={i}>
+            {inlineMarkup(lines[i].replace(/^\d+\.\s/, ""))}
+          </li>,
+        );
+
         i++;
       }
-      elements.push(<ol key={key++} className="md-ol">{items}</ol>);
+
+      elements.push(
+        <ol key={key++} className="md-ol">
+          {items}
+        </ol>,
+      );
+
       continue;
     }
 
-    // Table
     if (line.includes("|") && lines[i + 1]?.match(/^\|?[\s\-\|:]+\|?$/)) {
       const tableLines = [];
+
       while (i < lines.length && lines[i].includes("|")) {
         tableLines.push(lines[i]);
         i++;
       }
+
       const rows = tableLines
         .filter((l) => !l.match(/^\|?[\s\-\|:]+\|?$/))
         .map((l) =>
@@ -150,6 +191,7 @@ function renderMarkdown(md) {
             .split("|")
             .map((c) => c.trim()),
         );
+
       if (rows.length > 0) {
         elements.push(
           <div key={key++} className="md-table-wrapper">
@@ -161,6 +203,7 @@ function renderMarkdown(md) {
                   ))}
                 </tr>
               </thead>
+
               <tbody>
                 {rows.slice(1).map((row, ri) => (
                   <tr key={ri}>
@@ -174,17 +217,17 @@ function renderMarkdown(md) {
           </div>,
         );
       }
+
       continue;
     }
 
-    // Empty line
     if (line.trim() === "") {
       i++;
       continue;
     }
 
-    // Normal paragraph
     const paraLines = [];
+
     while (
       i < lines.length &&
       lines[i].trim() !== "" &&
@@ -198,6 +241,7 @@ function renderMarkdown(md) {
       paraLines.push(lines[i]);
       i++;
     }
+
     if (paraLines.length) {
       elements.push(
         <p key={key++} className="md-p">
@@ -224,9 +268,111 @@ function MetricCard({ label, value, subtitle }) {
   );
 }
 
+function NavigationActions({ currentPage, setCurrentPage }) {
+  return (
+    <div className="dashboard-nav-actions">
+      <a
+        className="dashboard-nav-button"
+        href={CODEX_ALPHA_WEBSITE}
+        target="_blank"
+        rel="noreferrer"
+      >
+        Back to Website
+      </a>
+
+      {currentPage === "dashboard" ? (
+        <button
+          type="button"
+          className="dashboard-nav-button dashboard-nav-button-accent"
+          onClick={() => setCurrentPage("advanced")}
+        >
+          Advanced Analysis Layer
+        </button>
+      ) : (
+        <button
+          type="button"
+          className="dashboard-nav-button dashboard-nav-button-accent"
+          onClick={() => setCurrentPage("dashboard")}
+        >
+          Operational Dashboard
+        </button>
+      )}
+    </div>
+  );
+}
+
+function AdvancedAnalysisLayer({ setCurrentPage }) {
+  return (
+    <section className="advanced-page-shell">
+      <div className="panel advanced-hero-panel">
+        <div className="eyebrow">Second Analysis Interface</div>
+
+        <h2>Advanced Analysis Layer</h2>
+
+        <p>
+          This page is reserved for the next interpretative layer of the Codex
+          Alpha Computational Framework: Gaia physical mapping, relational
+          structure exploration, knowledge graph navigation and future
+          coherence-gradient analysis.
+        </p>
+
+        <div className="advanced-actions">
+          <button
+            type="button"
+            className="dashboard-nav-button dashboard-nav-button-accent"
+            onClick={() => setCurrentPage("dashboard")}
+          >
+            Back to Operational Dashboard
+          </button>
+
+          <a
+            className="dashboard-nav-button"
+            href={CODEX_ALPHA_WEBSITE}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Back to Codex Alpha Website
+          </a>
+        </div>
+      </div>
+
+      <section className="advanced-grid">
+        <div className="panel advanced-card">
+          <h2>Gaia Physical Map</h2>
+          <p>
+            Reserved area for a second 3D visualization layer based on Gaia
+            coordinates, physical projection modes and background astronomical
+            mapping.
+          </p>
+        </div>
+
+        <div className="panel advanced-card">
+          <h2>Relational Knowledge Graph</h2>
+          <p>
+            Reserved area for semantic and technical exploration of detected
+            structures, anomaly families, feature contributions and graph-based
+            source relationships.
+          </p>
+        </div>
+
+        <div className="panel advanced-card">
+          <h2>Coherence Gradient Module</h2>
+          <p>
+            Reserved area for future experimental implementation of
+            Codex-compatible exploratory indicators linked to relational
+            coherence, local density and structural anomalies.
+          </p>
+        </div>
+      </section>
+    </section>
+  );
+}
+
 /* ─── App ────────────────────────────────────────────────────────────────── */
 
 function App() {
+  const [currentPage, setCurrentPage] = useState("dashboard");
+
   const [summary, setSummary] = useState(null);
   const [allSources, setAllSources] = useState([]);
   const [nodes, setNodes] = useState([]);
@@ -239,15 +385,22 @@ function App() {
   useEffect(() => {
     async function loadDashboardData() {
       try {
-        const [summaryData, allSourcesData, nodesData, edgesData, centralityData, reportText] =
-          await Promise.all([
-            loadJson(DATA_BASE + "/summary.json"),
-            loadJson(DATA_BASE + "/anomalies.json"),
-            loadJson(DATA_BASE + "/graph_nodes.json"),
-            loadJson(DATA_BASE + "/graph_edges.json"),
-            loadJson(DATA_BASE + "/graph_centrality.json"),
-            loadText(DATA_BASE + "/report.md"),
-          ]);
+        const [
+          summaryData,
+          allSourcesData,
+          nodesData,
+          edgesData,
+          centralityData,
+          reportText,
+        ] = await Promise.all([
+          loadJson(DATA_BASE + "/summary.json"),
+          loadJson(DATA_BASE + "/anomalies.json"),
+          loadJson(DATA_BASE + "/graph_nodes.json"),
+          loadJson(DATA_BASE + "/graph_edges.json"),
+          loadJson(DATA_BASE + "/graph_centrality.json"),
+          loadText(DATA_BASE + "/report.md"),
+        ]);
+
         setSummary(summaryData);
         setAllSources(allSourcesData);
         setNodes(nodesData);
@@ -258,6 +411,7 @@ function App() {
         setError(err.message);
       }
     }
+
     loadDashboardData();
   }, []);
 
@@ -269,12 +423,20 @@ function App() {
       <header className="top-bar">
         <div>
           <div className="eyebrow">Local Scientific Interface</div>
+
           <h1>Codex Alpha Computational Framework</h1>
+
           <p>
             Local dashboard for exploratory analysis of multidimensional Gaia
             DR3 outputs.
           </p>
+
+          <NavigationActions
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
+
         <div className="status-pill">
           <span className="status-dot" />
           Offline-first dashboard
@@ -292,7 +454,11 @@ function App() {
         </section>
       )}
 
-      {!error && (
+      {!error && currentPage === "advanced" && (
+        <AdvancedAnalysisLayer setCurrentPage={setCurrentPage} />
+      )}
+
+      {!error && currentPage === "dashboard" && (
         <>
           <section className="metrics-grid">
             <MetricCard
@@ -300,16 +466,19 @@ function App() {
               value={summary?.dataset ?? "Loading"}
               subtitle="Local exported package"
             />
+
             <MetricCard
               label="Sources"
               value={summary?.total_sources ?? "..."}
               subtitle="Total analyzed"
             />
+
             <MetricCard
               label="Anomalies"
               value={summary?.anomalous_sources ?? "..."}
               subtitle="Detected sources"
             />
+
             <MetricCard
               label="Graph"
               value={(summary?.graph_nodes ?? "...") + " nodes"}
@@ -323,11 +492,13 @@ function App() {
                 <h2>3D Relational Graph Viewer</h2>
                 <span>Interactive local graph</span>
               </div>
+
               <Graph3DViewer
                 allSources={allSources}
                 nodes={nodes}
                 edges={edges}
                 centrality={centrality}
+                selectedNode={selectedNode}
                 onNodeSelect={setSelectedNode}
               />
             </div>
@@ -338,6 +509,7 @@ function App() {
                   <h2>Top Structural Nodes</h2>
                   <span>Graph centrality</span>
                 </div>
+
                 <div className="node-list compact-node-list">
                   {topCentralSources.map((source) => (
                     <button
@@ -350,6 +522,7 @@ function App() {
                         <strong>{source.SOURCE_ID}</strong>
                         <small>rank {source.structural_rank}</small>
                       </div>
+
                       <span>
                         {formatNumber(source.structural_importance_score, 4)}
                       </span>
@@ -366,8 +539,8 @@ function App() {
 
                 {!selectedNode && (
                   <div className="empty-selection">
-                    Select a node in the 3D viewer or from the structural
-                    ranking.
+                    Select a node in the 3D viewer, from the structural ranking
+                    or from the interactive source table.
                   </div>
                 )}
 
@@ -379,14 +552,17 @@ function App() {
                         {selectedNode.source_id ?? selectedNode.SOURCE_ID}
                       </strong>
                     </p>
+
                     <p>
                       <span>Type</span>
-                      <strong>{selectedNode.node_type ?? "centrality"}</strong>
+                      <strong>{selectedNode.node_type ?? "source"}</strong>
                     </p>
+
                     <p>
                       <span>Structural rank</span>
                       <strong>{selectedNode.structural_rank ?? "N/A"}</strong>
                     </p>
+
                     <p>
                       <span>Structural importance</span>
                       <strong>
@@ -396,24 +572,29 @@ function App() {
                         )}
                       </strong>
                     </p>
+
                     <p>
                       <span>Anomaly score</span>
                       <strong>
                         {formatNumber(selectedNode.anomaly_score, 6)}
                       </strong>
                     </p>
+
                     <p>
                       <span>RA</span>
                       <strong>{formatNumber(selectedNode.ra, 6)}</strong>
                     </p>
+
                     <p>
                       <span>DEC</span>
                       <strong>{formatNumber(selectedNode.dec, 6)}</strong>
                     </p>
+
                     <p>
                       <span>Parallax</span>
                       <strong>{formatNumber(selectedNode.parallax, 6)}</strong>
                     </p>
+
                     <p>
                       <span>Radial velocity</span>
                       <strong>
@@ -424,6 +605,12 @@ function App() {
                 )}
               </aside>
             </section>
+
+            <InteractiveSourceTable
+              sources={allSources}
+              selectedNode={selectedNode}
+              onSourceSelect={setSelectedNode}
+            />
           </section>
 
           <section className="panel report-panel">
@@ -431,6 +618,7 @@ function App() {
               <h2>Automatic Pipeline Report</h2>
               <span>Markdown export</span>
             </div>
+
             <div className="md-body">{renderedReport}</div>
           </section>
         </>
