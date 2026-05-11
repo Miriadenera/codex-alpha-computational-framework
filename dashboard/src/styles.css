@@ -543,6 +543,7 @@ h1 {
 
 .report-panel {
   margin-top: 22px;
+  overflow: hidden;
 }
 
 .report-panel pre {
@@ -561,6 +562,20 @@ h1 {
     "Courier New",
     monospace;
   tab-size: 2;
+}
+
+.report-panel pre::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.report-panel pre::-webkit-scrollbar-thumb {
+  background: rgba(125, 220, 255, 0.32);
+  border-radius: 999px;
+}
+
+.report-panel pre::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
 }
 
 .error-box {
