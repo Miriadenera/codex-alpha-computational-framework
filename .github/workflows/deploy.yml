@@ -4,77 +4,50 @@ on:
   push:
     branches: [main]
   schedule:
-    # Riesegue automaticamente ogni domenica alle 03:00 UTC
-    # per tenere i dati aggiornati senza intervento manuale.
-    # Puoi modificare o rimuovere questo blocco se preferisci
-    # aggiornare solo quando fai push.
     - cron: "0 3 * * 0"
-  workflow_dispatch: # permette di avviare manualmente dal tab Actions
+  workflow_dispatch:
 
 jobs:
   pipeline-and-build:
     runs-on: ubuntu-latest
 
     steps:
-      # ── 1. checkout del repository ─────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ── 2. setup Python ────────────────────────────────────────────────────
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # ── 3. installa dipendenze Python ──────────────────────────────────────
       - name: Install Python dependencies
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ── 4. esegui la pipeline completa ─────────────────────────────────────
       - name: Run Codex Alpha pipeline
         run: python -m pipeline.run_full_pipeline
 
-      # ── 5. setup Node.js per il build della dashboard ──────────────────────
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
-          cache-dependency-path: dashboard/package-lock.json
 
-      # ── 6. installa dipendenze Node ────────────────────────────────────────
       - name: Install dashboard dependencies
         working-directory: dashboard
-        run: npm ci
+        run: npm install
 
-      # ── 7. build della dashboard React ─────────────────────────────────────
       - name: Build dashboard
         working-directory: dashboard
         run: npm run build
-        # I JSON generati dalla pipeline sono già in dashboard/public/data/
-        # Vite li copia automaticamente in dist/ durante il build.
 
-      # ── 8. carica l'artefatto di build per Netlify ─────────────────────────
-      #    (usato solo se usi Netlify via CLI nel passo successivo)
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dashboard-dist
-          path: dashboard/dist
-          retention-days: 7
-
-      # ── 9. deploy su Netlify ───────────────────────────────────────────────
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3
         with:
           publish-dir: dashboard/dist
           production-branch: main
           production-deploy: true
-          deploy-message: "Auto-deploy: pipeline ${{ github.run_number }}"
-          # Se vuoi un messaggio con data:
-          # deploy-message: "Pipeline run ${{ github.run_number }} — ${{ github.event.head_commit.message }}"
+          deploy-message: "Pipeline run ${{ github.run_number }}"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
