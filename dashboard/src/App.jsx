@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Graph3DViewer from "./components/Graph3DViewer.jsx";
 import InteractiveSourceTable from "./components/InteractiveSourceTable.jsx";
+import GaiaPhysicalMap from "./components/GaiaPhysicalMap.jsx";
+import RelationalKnowledgeGraph from "./components/RelationalKnowledgeGraph.jsx";
+import CoherenceGradientModule from "./components/CoherenceGradientModule.jsx";
+import CandidateRegistry from "./components/CandidateRegistry.jsx";
 
 const DATA_BASE = "/data";
 const CODEX_ALPHA_WEBSITE = "https://www.codexalpha.org";
@@ -301,7 +305,15 @@ function NavigationActions({ currentPage, setCurrentPage }) {
   );
 }
 
-function AdvancedAnalysisLayer({ setCurrentPage }) {
+function AdvancedAnalysisLayer({
+  setCurrentPage,
+  allSources,
+  featureContributions,
+  emergentStructures,
+  graphCentrality,
+  selectedNode,
+  setSelectedNode,
+}) {
   return (
     <section className="advanced-page-shell">
       <div className="panel advanced-hero-panel">
@@ -310,10 +322,11 @@ function AdvancedAnalysisLayer({ setCurrentPage }) {
         <h2>Advanced Analysis Layer</h2>
 
         <p>
-          This page is reserved for the next interpretative layer of the Codex
-          Alpha Computational Framework: Gaia physical mapping, relational
-          structure exploration, knowledge graph navigation and future
-          coherence-gradient analysis.
+          This page extends the Codex Alpha Computational Framework with
+          interpretative and coordinate-based analysis layers. It explores Gaia
+          physical projections, relational source context, exploratory
+          coherence-proxy indicators and internal candidate ranking without
+          modifying the operational dashboard.
         </p>
 
         <div className="advanced-actions">
@@ -336,34 +349,38 @@ function AdvancedAnalysisLayer({ setCurrentPage }) {
         </div>
       </div>
 
-      <section className="advanced-grid">
-        <div className="panel advanced-card">
-          <h2>Gaia Physical Map</h2>
-          <p>
-            Reserved area for a second 3D visualization layer based on Gaia
-            coordinates, physical projection modes and background astronomical
-            mapping.
-          </p>
-        </div>
+      <GaiaPhysicalMap
+        sources={allSources}
+        selectedSource={selectedNode}
+        onSourceSelect={setSelectedNode}
+      />
 
-        <div className="panel advanced-card">
-          <h2>Relational Knowledge Graph</h2>
-          <p>
-            Reserved area for semantic and technical exploration of detected
-            structures, anomaly families, feature contributions and graph-based
-            source relationships.
-          </p>
-        </div>
+      <RelationalKnowledgeGraph
+        sources={allSources}
+        featureContributions={featureContributions}
+        emergentStructures={emergentStructures}
+        graphCentrality={graphCentrality}
+        selectedSource={selectedNode}
+        onSourceSelect={setSelectedNode}
+      />
 
-        <div className="panel advanced-card">
-          <h2>Coherence Gradient Module</h2>
-          <p>
-            Reserved area for future experimental implementation of
-            Codex-compatible exploratory indicators linked to relational
-            coherence, local density and structural anomalies.
-          </p>
-        </div>
-      </section>
+      <CoherenceGradientModule
+        sources={allSources}
+        emergentStructures={emergentStructures}
+        graphCentrality={graphCentrality}
+		featureContributions={featureContributions}
+        selectedSource={selectedNode}
+        onSourceSelect={setSelectedNode}
+      />
+
+      <CandidateRegistry
+        sources={allSources}
+        emergentStructures={emergentStructures}
+        graphCentrality={graphCentrality}
+        featureContributions={featureContributions}
+        selectedSource={selectedNode}
+        onSourceSelect={setSelectedNode}
+      />
     </section>
   );
 }
@@ -378,6 +395,8 @@ function App() {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [centrality, setCentrality] = useState([]);
+  const [featureContributions, setFeatureContributions] = useState([]);
+  const [emergentStructures, setEmergentStructures] = useState([]);
   const [report, setReport] = useState("");
   const [selectedNode, setSelectedNode] = useState(null);
   const [error, setError] = useState(null);
@@ -391,6 +410,8 @@ function App() {
           nodesData,
           edgesData,
           centralityData,
+          featureContributionsData,
+          emergentStructuresData,
           reportText,
         ] = await Promise.all([
           loadJson(DATA_BASE + "/summary.json"),
@@ -398,6 +419,8 @@ function App() {
           loadJson(DATA_BASE + "/graph_nodes.json"),
           loadJson(DATA_BASE + "/graph_edges.json"),
           loadJson(DATA_BASE + "/graph_centrality.json"),
+          loadJson(DATA_BASE + "/feature_contributions.json"),
+          loadJson(DATA_BASE + "/emergent_structures.json"),
           loadText(DATA_BASE + "/report.md"),
         ]);
 
@@ -406,6 +429,8 @@ function App() {
         setNodes(nodesData);
         setEdges(edgesData);
         setCentrality(centralityData);
+        setFeatureContributions(featureContributionsData);
+        setEmergentStructures(emergentStructuresData);
         setReport(reportText);
       } catch (err) {
         setError(err.message);
@@ -455,7 +480,15 @@ function App() {
       )}
 
       {!error && currentPage === "advanced" && (
-        <AdvancedAnalysisLayer setCurrentPage={setCurrentPage} />
+        <AdvancedAnalysisLayer
+          setCurrentPage={setCurrentPage}
+          allSources={allSources}
+          featureContributions={featureContributions}
+          emergentStructures={emergentStructures}
+          graphCentrality={centrality}
+          selectedNode={selectedNode}
+          setSelectedNode={setSelectedNode}
+        />
       )}
 
       {!error && currentPage === "dashboard" && (
