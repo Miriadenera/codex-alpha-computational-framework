@@ -27,6 +27,12 @@ function formatNumber(value, digits = 6) {
   return number.toFixed(digits);
 }
 
+function formatGaiaValue(value, digits = 10) {
+  const number = Number(value);
+  if (Number.isNaN(number)) return "N/A";
+  return number.toFixed(digits);
+}
+
 /* ─── Lightweight Markdown renderer ──────────────────────────────────────── */
 
 function renderMarkdown(md) {
@@ -368,7 +374,7 @@ function AdvancedAnalysisLayer({
         sources={allSources}
         emergentStructures={emergentStructures}
         graphCentrality={graphCentrality}
-		featureContributions={featureContributions}
+        featureContributions={featureContributions}
         selectedSource={selectedNode}
         onSourceSelect={setSelectedNode}
       />
@@ -615,23 +621,25 @@ function App() {
 
                     <p>
                       <span>RA</span>
-                      <strong>{formatNumber(selectedNode.ra, 6)}</strong>
+                      <strong>{formatGaiaValue(selectedNode.ra, 10)}</strong>
                     </p>
 
                     <p>
                       <span>DEC</span>
-                      <strong>{formatNumber(selectedNode.dec, 6)}</strong>
+                      <strong>{formatGaiaValue(selectedNode.dec, 10)}</strong>
                     </p>
 
                     <p>
                       <span>Parallax</span>
-                      <strong>{formatNumber(selectedNode.parallax, 6)}</strong>
+                      <strong>
+                        {formatGaiaValue(selectedNode.parallax, 10)}
+                      </strong>
                     </p>
 
                     <p>
                       <span>Radial velocity</span>
                       <strong>
-                        {formatNumber(selectedNode.radial_velocity, 6)}
+                        {formatGaiaValue(selectedNode.radial_velocity, 10)}
                       </strong>
                     </p>
                   </div>

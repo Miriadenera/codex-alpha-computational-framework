@@ -2345,3 +2345,131 @@ h1 {
     width: 100%;
   }
 }
+
+/* ─── Candidate Sky Preview / Aladin Lite ───────────────────────────────── */
+
+.sky-preview-panel {
+  margin-top: 22px;
+  overflow: hidden;
+}
+
+.sky-preview-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 14px;
+  border: 1px solid rgba(125, 220, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(2, 6, 23, 0.64);
+}
+
+.sky-preview-source-pill {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 3px;
+  min-height: 42px;
+  padding: 8px 13px;
+  border: 1px solid rgba(0, 245, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.82);
+}
+
+.sky-preview-source-pill span {
+  color: var(--dim);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.sky-preview-source-pill strong {
+  color: #ffffff;
+  font-size: 0.82rem;
+}
+
+.sky-preview-toolbar label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 13px;
+  border: 1px solid rgba(0, 245, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.82);
+  color: #dff7ff;
+  font-size: 0.8rem;
+}
+
+.sky-preview-toolbar select {
+  border: 1px solid rgba(125, 220, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.94);
+  color: #e5f7ff;
+  padding: 7px 10px;
+  outline: none;
+}
+
+.sky-preview-canvas-shell {
+  position: relative;
+  width: 100%;
+  height: 620px;
+  border: 1px solid rgba(125, 220, 255, 0.14);
+  border-radius: 22px;
+  overflow: hidden;
+  background: #000000;
+  box-shadow:
+    inset 0 0 80px rgba(0, 245, 255, 0.04),
+    0 0 32px rgba(0, 191, 255, 0.08);
+}
+
+.sky-preview-canvas {
+  width: 100%;
+  height: 100%;
+  min-height: 620px;
+}
+
+.sky-preview-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: rgba(2, 6, 23, 0.72);
+  color: #dff7ff;
+  font-weight: 800;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.sky-preview-error {
+  color: #fecaca;
+}
+
+.sky-preview-note {
+  margin-top: 14px;
+  color: #8fb9c8;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 980px) {
+  .sky-preview-canvas-shell,
+  .sky-preview-canvas {
+    height: 520px;
+    min-height: 520px;
+  }
+
+  .sky-preview-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sky-preview-toolbar label,
+  .sky-preview-toolbar .dashboard-nav-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

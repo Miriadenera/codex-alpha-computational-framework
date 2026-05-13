@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import SkyPreviewPanel from "./SkyPreviewPanel.jsx";
 
 function normalizeNumber(value, fallback = 0) {
   const number = Number(value);
@@ -10,6 +11,16 @@ function getSourceId(source) {
 }
 
 function formatNumber(value, digits = 6) {
+  const number = Number(value);
+
+  if (Number.isNaN(number)) {
+    return "N/A";
+  }
+
+  return number.toFixed(digits);
+}
+
+function formatGaiaValue(value, digits = 10) {
   const number = Number(value);
 
   if (Number.isNaN(number)) {
@@ -184,10 +195,10 @@ SOURCE_ID: ${getSourceId(candidate)}
 Status: ${candidate.candidate_status}
 
 Astrometric parameters:
-RA: ${formatNumber(candidate.ra, 6)}
-DEC: ${formatNumber(candidate.dec, 6)}
-Parallax: ${formatNumber(candidate.parallax, 6)}
-Radial velocity: ${formatNumber(candidate.radial_velocity, 6)}
+RA: ${formatGaiaValue(candidate.ra, 10)}
+DEC: ${formatGaiaValue(candidate.dec, 10)}
+Parallax: ${formatGaiaValue(candidate.parallax, 10)}
+Radial velocity: ${formatGaiaValue(candidate.radial_velocity, 10)}
 
 Computational indicators:
 Anomaly score: ${formatNumber(candidate.anomaly_score, 6)}
@@ -545,6 +556,10 @@ function CandidateRegistry({
           </div>
         </div>
       )}
+	  
+	  {activeCandidate && (
+        <SkyPreviewPanel selectedSource={activeCandidate} />
+      )}
 
       <div className="candidate-table-toolbar">
         <input
@@ -622,10 +637,10 @@ function CandidateRegistry({
                   <td>{formatNumber(candidate.local_density_score, 6)}</td>
                   <td>{candidate.dominant_anomaly_feature ?? "N/A"}</td>
                   <td>{formatNumber(candidate.dominant_feature_zscore, 6)}</td>
-                  <td>{formatNumber(candidate.ra, 6)}</td>
-                  <td>{formatNumber(candidate.dec, 6)}</td>
-                  <td>{formatNumber(candidate.parallax, 6)}</td>
-                  <td>{formatNumber(candidate.radial_velocity, 6)}</td>
+                  <td>{formatGaiaValue(candidate.ra, 10)}</td>
+                  <td>{formatGaiaValue(candidate.dec, 10)}</td>
+                  <td>{formatGaiaValue(candidate.parallax, 10)}</td>
+                  <td>{formatGaiaValue(candidate.radial_velocity, 10)}</td>
                   <td>
                     <div className="candidate-external-links">
                       <a
