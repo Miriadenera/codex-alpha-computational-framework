@@ -19,6 +19,16 @@ function formatNumber(value, digits = 6) {
   return number.toFixed(digits);
 }
 
+function formatGaiaValue(value, digits = 10) {
+  const number = Number(value);
+
+  if (Number.isNaN(number)) {
+    return "N/A";
+  }
+
+  return number.toFixed(digits);
+}
+
 function buildMapBySourceId(items = []) {
   const map = new Map();
 
@@ -483,7 +493,7 @@ function CoherenceGradientModule({
                   )}px`,
                 }}
               >
-                <span>Anomaly</span>
+                <span>Anomaly score</span>
                 <strong>{formatNumber(activeSource.anomaly_score, 4)}</strong>
               </div>
 
@@ -497,7 +507,7 @@ function CoherenceGradientModule({
                   )}px`,
                 }}
               >
-                <span>Structure</span>
+                <span>Structural importance</span>
                 <strong>
                   {formatNumber(activeSource.structural_importance_score, 4)}
                 </strong>
@@ -512,7 +522,7 @@ function CoherenceGradientModule({
                   )}px`,
                 }}
               >
-                <span>Density</span>
+                <span>Local density</span>
                 <strong>
                   {formatNumber(activeSource.local_density_score, 4)}
                 </strong>
@@ -532,7 +542,7 @@ function CoherenceGradientModule({
                   )}px`,
                 }}
               >
-                <span>Feature</span>
+                <span>Feature z-score</span>
                 <strong>
                   {formatNumber(activeSource.dominant_feature_zscore, 4)}
                 </strong>
@@ -550,7 +560,7 @@ function CoherenceGradientModule({
                   )}px`,
                 }}
               >
-                <span>Neighbor</span>
+                <span>Mean neighbor distance</span>
                 <strong>
                   {formatNumber(activeSource.mean_neighbor_distance, 4)}
                 </strong>
@@ -576,6 +586,28 @@ function CoherenceGradientModule({
               <p>
                 <span>Interpretation</span>
                 <strong>{activeSource.coherence_interpretation}</strong>
+              </p>
+
+              <p>
+                <span>RA (deg)</span>
+                <strong>{formatGaiaValue(activeSource.ra, 10)}</strong>
+              </p>
+
+              <p>
+                <span>DEC (deg)</span>
+                <strong>{formatGaiaValue(activeSource.dec, 10)}</strong>
+              </p>
+
+              <p>
+                <span>Parallax (mas)</span>
+                <strong>{formatGaiaValue(activeSource.parallax, 10)}</strong>
+              </p>
+
+              <p>
+                <span>Radial velocity (km/s)</span>
+                <strong>
+                  {formatGaiaValue(activeSource.radial_velocity, 10)}
+                </strong>
               </p>
 
               <p>

@@ -180,8 +180,8 @@ function SkyPreviewPanel({ selectedSource }) {
       const popupDescription = `
         <strong>Codex Alpha candidate</strong><br/>
         SOURCE_ID: ${sourceId}<br/>
-        RA: ${formatGaiaValue(coordinates.ra, 10)}<br/>
-        DEC: ${formatGaiaValue(coordinates.dec, 10)}
+        RA: ${formatGaiaValue(coordinates.ra, 10)} deg<br/>
+        DEC: ${formatGaiaValue(coordinates.dec, 10)} deg
       `;
 
       const marker = window.A.marker(coordinates.ra, coordinates.dec, {
@@ -242,27 +242,32 @@ function SkyPreviewPanel({ selectedSource }) {
         </div>
 
         <div className="sky-preview-source-pill">
-          <span>RA</span>
+          <span>RA (deg)</span>
           <strong>{formatGaiaValue(coordinates.ra, 10)}</strong>
         </div>
 
         <div className="sky-preview-source-pill">
-          <span>DEC</span>
+          <span>DEC (deg)</span>
           <strong>{formatGaiaValue(coordinates.dec, 10)}</strong>
         </div>
 
         <label>
           Survey
-          <select value={survey} onChange={(event) => setSurvey(event.target.value)}>
+          <select
+            value={survey}
+            onChange={(event) => setSurvey(event.target.value)}
+          >
             <option value="P/DSS2/color">DSS2 color</option>
             <option value="P/2MASS/color">2MASS color</option>
             <option value="P/WISE/color">WISE color</option>
-            <option value="P/PanSTARRS/DR1/color-z-zg-g">Pan-STARRS color</option>
+            <option value="P/PanSTARRS/DR1/color-z-zg-g">
+              Pan-STARRS color
+            </option>
           </select>
         </label>
 
         <label className="range-control">
-          FoV
+          FoV (deg)
           <input
             type="range"
             min="0.02"
@@ -297,7 +302,9 @@ function SkyPreviewPanel({ selectedSource }) {
         <div id={containerIdRef.current} className="sky-preview-canvas" />
 
         {status === "loading" && (
-          <div className="sky-preview-overlay">Loading Aladin Lite sky field...</div>
+          <div className="sky-preview-overlay">
+            Loading Aladin Lite sky field...
+          </div>
         )}
 
         {status === "error" && (

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 
 function getSourceId(source) {
-  return String(source.SOURCE_ID ?? source.source_id ?? source.id ?? "");
+  return String(source?.SOURCE_ID ?? source?.source_id ?? source?.id ?? "");
 }
 
 function normalizeNumber(value) {
@@ -16,11 +16,45 @@ function formatValue(value, digits = 6) {
 
   const number = Number(value);
 
-  if (!Number.isNaN(number) && String(value).length < 18) {
+  if (!Number.isNaN(number)) {
     return number.toFixed(digits);
   }
 
   return String(value);
+}
+
+function formatInteger(value) {
+  if (value === null || value === undefined || value === "") {
+    return "N/A";
+  }
+
+  const number = Number(value);
+
+  if (!Number.isNaN(number)) {
+    return String(Math.trunc(number));
+  }
+
+  return String(value);
+}
+
+function formatTableCell(value, column) {
+  if (column.type === "id") {
+    return String(value ?? "");
+  }
+
+  if (column.type === "integer") {
+    return formatInteger(value);
+  }
+
+  if (column.type === "gaia") {
+    return formatValue(value, 10);
+  }
+
+  if (column.type === "score") {
+    return formatValue(value, 6);
+  }
+
+  return formatValue(value, column.digits ?? 6);
 }
 
 function compareValues(a, b, column, direction) {
@@ -54,16 +88,56 @@ function InteractiveSourceTable({
   const selectedSourceId = selectedNode ? getSourceId(selectedNode) : null;
 
   const columns = [
-    { key: "SOURCE_ID", label: "SOURCE_ID", digits: 0 },
-    { key: "anomaly_rank", label: "Rank", digits: 0 },
-    { key: "anomaly_score", label: "Anomaly", digits: 6 },
-    { key: "anomaly_label", label: "Label", digits: 0 },
-    { key: "ra", label: "RA", digits: 6 },
-    { key: "dec", label: "DEC", digits: 6 },
-    { key: "parallax", label: "Parallax", digits: 6 },
-    { key: "pmra", label: "PMRA", digits: 6 },
-    { key: "pmdec", label: "PMDEC", digits: 6 },
-    { key: "radial_velocity", label: "Radial Velocity", digits: 6 },
+    {
+      key: "SOURCE_ID",
+      label: "SOURCE_ID",
+      type: "id",
+    },
+    {
+      key: "anomaly_rank",
+      label: "Rank",
+      type: "integer",
+    },
+    {
+      key: "anomaly_score",
+      label: "Anomaly score",
+      type: "score",
+    },
+    {
+      key: "anomaly_label",
+      label: "Label",
+      type: "integer",
+    },
+    {
+      key: "ra",
+      label: "RA (deg)",
+      type: "gaia",
+    },
+    {
+      key: "dec",
+      label: "DEC (deg)",
+      type: "gaia",
+    },
+    {
+      key: "parallax",
+      label: "Parallax (mas)",
+      type: "gaia",
+    },
+    {
+      key: "pmra",
+      label: "PMRA (mas/yr)",
+      type: "gaia",
+    },
+    {
+      key: "pmdec",
+      label: "PMDEC (mas/yr)",
+      type: "gaia",
+    },
+    {
+      key: "radial_velocity",
+      label: "Radial velocity (km/s)",
+      type: "gaia",
+    },
   ];
 
   const tableRows = useMemo(() => {
@@ -183,7 +257,7 @@ function InteractiveSourceTable({
                     <td key={column.key}>
                       {column.key === "SOURCE_ID"
                         ? sourceId
-                        : formatValue(source[column.key], column.digits)}
+                        : formatTableCell(source[column.key], column)}
                     </td>
                   ))}
                 </tr>

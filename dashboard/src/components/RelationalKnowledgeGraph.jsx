@@ -19,6 +19,16 @@ function formatNumber(value, digits = 6) {
   return number.toFixed(digits);
 }
 
+function formatGaiaValue(value, digits = 10) {
+  const number = Number(value);
+
+  if (Number.isNaN(number)) {
+    return "N/A";
+  }
+
+  return number.toFixed(digits);
+}
+
 function buildMapBySourceId(items = []) {
   const map = new Map();
 
@@ -315,7 +325,7 @@ function RelationalKnowledgeGraph({
                 className="knowledge-node knowledge-node-anomaly"
                 onClick={() => handleSourceClick(activeSource)}
               >
-                <span>Anomaly</span>
+                <span>Anomaly score</span>
                 <strong>{formatNumber(activeSource.anomaly_score, 6)}</strong>
               </button>
 
@@ -361,7 +371,7 @@ function RelationalKnowledgeGraph({
                 className="knowledge-node knowledge-node-structural"
                 onClick={() => handleSourceClick(activeSource)}
               >
-                <span>Structural</span>
+                <span>Structural importance</span>
                 <strong>
                   {formatNumber(
                     activeSource.structural_importance_score,
@@ -377,11 +387,11 @@ function RelationalKnowledgeGraph({
                 onClick={() => handleSourceClick(activeSource)}
               >
                 <span>Physical coordinates</span>
-                <strong>RA / DEC / π</strong>
+                <strong>deg / deg / mas</strong>
                 <small>
-                  {formatNumber(activeSource.ra, 3)} /{" "}
-                  {formatNumber(activeSource.dec, 3)} /{" "}
-                  {formatNumber(activeSource.parallax, 3)}
+                  {formatGaiaValue(activeSource.ra, 10)} /{" "}
+                  {formatGaiaValue(activeSource.dec, 10)} /{" "}
+                  {formatGaiaValue(activeSource.parallax, 10)}
                 </small>
               </button>
             </>
@@ -405,6 +415,28 @@ function RelationalKnowledgeGraph({
               <p>
                 <span>Status</span>
                 <strong>{getSourceStatus(activeSource)}</strong>
+              </p>
+
+              <p>
+                <span>RA (deg)</span>
+                <strong>{formatGaiaValue(activeSource.ra, 10)}</strong>
+              </p>
+
+              <p>
+                <span>DEC (deg)</span>
+                <strong>{formatGaiaValue(activeSource.dec, 10)}</strong>
+              </p>
+
+              <p>
+                <span>Parallax (mas)</span>
+                <strong>{formatGaiaValue(activeSource.parallax, 10)}</strong>
+              </p>
+
+              <p>
+                <span>Radial velocity (km/s)</span>
+                <strong>
+                  {formatGaiaValue(activeSource.radial_velocity, 10)}
+                </strong>
               </p>
 
               <p>
@@ -447,13 +479,6 @@ function RelationalKnowledgeGraph({
                     activeSource.structural_importance_score,
                     6,
                   )}
-                </strong>
-              </p>
-
-              <p>
-                <span>Radial velocity</span>
-                <strong>
-                  {formatNumber(activeSource.radial_velocity, 6)}
                 </strong>
               </p>
             </div>

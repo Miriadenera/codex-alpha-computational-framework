@@ -16,6 +16,26 @@ function normalizeScore(value, fallback = 0) {
   return Number.isNaN(n) ? fallback : n;
 }
 
+function formatNumber(value, digits = 6) {
+  const number = Number(value);
+
+  if (Number.isNaN(number)) {
+    return "N/A";
+  }
+
+  return number.toFixed(digits);
+}
+
+function formatGaiaValue(value, digits = 10) {
+  const number = Number(value);
+
+  if (Number.isNaN(number)) {
+    return "N/A";
+  }
+
+  return number.toFixed(digits);
+}
+
 function buildCentralityMap(centrality = []) {
   const map = new Map();
 
@@ -290,12 +310,7 @@ function Graph3DViewer({
       anomalyGlowOpacity: 0.18,
       selectedSourceId: selectedNode ? getSourceId(selectedNode) : null,
     }),
-    [
-      gaiaBrightness,
-      anomalyBrightness,
-      anomalyGlow,
-      selectedNode,
-    ],
+    [gaiaBrightness, anomalyBrightness, anomalyGlow, selectedNode],
   );
 
   const graphData = useMemo(() => {
@@ -591,11 +606,27 @@ function Graph3DViewer({
         graphData={graphData}
         backgroundColor="#000000"
         nodeLabel={(node) =>
-          `SOURCE_ID: ${node.source_id}\nType: ${node.node_type}\nAnomaly: ${Number(
-            node.anomaly_score ?? 0,
-          ).toFixed(6)}\nStructural: ${Number(
-            node.structural_importance_score ?? 0,
-          ).toFixed(6)}\nRank: ${node.structural_rank ?? "N/A"}`
+          `SOURCE_ID: ${node.source_id}\nType: ${
+            node.node_type
+          }\nRA (deg): ${formatGaiaValue(
+            node.ra,
+            10,
+          )}\nDEC (deg): ${formatGaiaValue(
+            node.dec,
+            10,
+          )}\nParallax (mas): ${formatGaiaValue(
+            node.parallax,
+            10,
+          )}\nRadial velocity (km/s): ${formatGaiaValue(
+            node.radial_velocity,
+            10,
+          )}\nAnomaly score: ${formatNumber(
+            node.anomaly_score,
+            6,
+          )}\nStructural importance: ${formatNumber(
+            node.structural_importance_score,
+            6,
+          )}\nRank: ${node.structural_rank ?? "N/A"}`
         }
         nodeThreeObject={(node) => createNodeObject(node, visualControls)}
         linkColor={() => COLORS.link + String(linkIntensity) + ")"}
@@ -861,23 +892,38 @@ function Graph3DViewer({
         </p>
 
         <p>
-          <span>Anomaly</span>
-          {Number(selectedNode.anomaly_score ?? 0).toFixed(6)}
+          <span>RA (deg)</span>
+          {formatGaiaValue(selectedNode.ra, 10)}
         </p>
 
         <p>
-          <span>Structural</span>
-          {Number(selectedNode.structural_importance_score ?? 0).toFixed(6)}
+          <span>DEC (deg)</span>
+          {formatGaiaValue(selectedNode.dec, 10)}
+        </p>
+
+        <p>
+          <span>Parallax (mas)</span>
+          {formatGaiaValue(selectedNode.parallax, 10)}
+        </p>
+
+        <p>
+          <span>Radial velocity (km/s)</span>
+          {formatGaiaValue(selectedNode.radial_velocity, 10)}
+        </p>
+
+        <p>
+          <span>Anomaly score</span>
+          {formatNumber(selectedNode.anomaly_score, 6)}
+        </p>
+
+        <p>
+          <span>Structural importance</span>
+          {formatNumber(selectedNode.structural_importance_score, 6)}
         </p>
 
         <p>
           <span>Rank</span>
           {selectedNode.structural_rank ?? "N/A"}
-        </p>
-
-        <p>
-          <span>Radial velocity</span>
-          {selectedNode.radial_velocity ?? "N/A"}
         </p>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import SkyPreviewPanel from "./SkyPreviewPanel.jsx";
+import CandidateValidationConsole from "./CandidateValidationConsole.jsx";
 
 function normalizeNumber(value, fallback = 0) {
   const number = Number(value);
@@ -195,10 +196,10 @@ SOURCE_ID: ${getSourceId(candidate)}
 Status: ${candidate.candidate_status}
 
 Astrometric parameters:
-RA: ${formatGaiaValue(candidate.ra, 10)}
-DEC: ${formatGaiaValue(candidate.dec, 10)}
-Parallax: ${formatGaiaValue(candidate.parallax, 10)}
-Radial velocity: ${formatGaiaValue(candidate.radial_velocity, 10)}
+RA: ${formatGaiaValue(candidate.ra, 10)} deg
+DEC: ${formatGaiaValue(candidate.dec, 10)} deg
+Parallax: ${formatGaiaValue(candidate.parallax, 10)} mas
+Radial velocity: ${formatGaiaValue(candidate.radial_velocity, 10)} km/s
 
 Computational indicators:
 Anomaly score: ${formatNumber(candidate.anomaly_score, 6)}
@@ -533,10 +534,10 @@ function CandidateRegistry({
             <h3>Candidate interpretation</h3>
 
             <p>
-              {activeCandidate.candidate_id} is a computational candidate because
-              multiple independent indicators converge on the same Gaia source:
-              anomaly strength, structural graph importance, local density,
-              dominant feature deviation and coherence-proxy ranking.
+              {activeCandidate.candidate_id} is a computational candidate
+              because multiple independent indicators converge on the same Gaia
+              source: anomaly strength, structural graph importance, local
+              density, dominant feature deviation and coherence-proxy ranking.
             </p>
 
             <p>
@@ -556,9 +557,13 @@ function CandidateRegistry({
           </div>
         </div>
       )}
-	  
-	  {activeCandidate && (
+
+      {activeCandidate && (
         <SkyPreviewPanel selectedSource={activeCandidate} />
+      )}
+
+      {activeCandidate && (
+        <CandidateValidationConsole selectedSource={activeCandidate} />
       )}
 
       <div className="candidate-table-toolbar">
@@ -599,16 +604,16 @@ function CandidateRegistry({
               <th>SOURCE_ID</th>
               <th>Status</th>
               <th>K proxy</th>
-              <th>Anomaly</th>
+              <th>Anomaly score</th>
               <th>Structural rank</th>
               <th>Structural importance</th>
               <th>Local density</th>
               <th>Dominant feature</th>
-              <th>Feature z</th>
-              <th>RA</th>
-              <th>DEC</th>
-              <th>Parallax</th>
-              <th>Radial velocity</th>
+              <th>Feature z-score</th>
+              <th>RA (deg)</th>
+              <th>DEC (deg)</th>
+              <th>Parallax (mas)</th>
+              <th>Radial velocity (km/s)</th>
               <th>External</th>
             </tr>
           </thead>

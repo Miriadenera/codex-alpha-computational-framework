@@ -8,10 +8,20 @@ function normalizeNumber(value, fallback = 0) {
 }
 
 function getSourceId(source) {
-  return String(source.SOURCE_ID ?? source.source_id ?? source.id ?? "");
+  return String(source?.SOURCE_ID ?? source?.source_id ?? source?.id ?? "");
 }
 
 function formatNumber(value, digits = 6) {
+  const number = Number(value);
+
+  if (Number.isNaN(number)) {
+    return "N/A";
+  }
+
+  return number.toFixed(digits);
+}
+
+function formatGaiaValue(value, digits = 10) {
   const number = Number(value);
 
   if (Number.isNaN(number)) {
@@ -169,7 +179,8 @@ function projectSource3D(source, ranges, depthMode, scale) {
   const x = normalizeRange(ra, ranges.ra.min, ranges.ra.max) - 0.5;
   const y = normalizeRange(dec, ranges.dec.min, ranges.dec.max) - 0.5;
 
-  let z = normalizeRange(parallax, ranges.parallax.min, ranges.parallax.max) - 0.5;
+  let z =
+    normalizeRange(parallax, ranges.parallax.min, ranges.parallax.max) - 0.5;
 
   if (depthMode === "radial_velocity") {
     z =
@@ -506,15 +517,15 @@ function GaiaPhysicalMap({ sources = [], selectedSource, onSourceSelect }) {
         {viewMode === "2d" && (
           <div className="gaia-map-canvas">
             <div className="gaia-axis gaia-axis-x">
-              {projection === "dec_parallax" ? "DEC" : "RA"}
+              {projection === "dec_parallax" ? "DEC (deg)" : "RA (deg)"}
             </div>
 
             <div className="gaia-axis gaia-axis-y">
               {projection === "ra_dec"
-                ? "DEC"
+                ? "DEC (deg)"
                 : projection === "ra_radial_velocity"
-                  ? "Radial velocity"
-                  : "Parallax"}
+                  ? "Radial velocity (km/s)"
+                  : "Parallax (mas)"}
             </div>
 
             {projectedSources2D.map((source) => (
@@ -555,19 +566,19 @@ function GaiaPhysicalMap({ sources = [], selectedSource, onSourceSelect }) {
               backgroundColor="#000000"
               nodeThreeObject={create3DNodeObject}
               nodeLabel={(node) =>
-                `SOURCE_ID: ${node.source_id}\nRA: ${formatNumber(
+                `SOURCE_ID: ${node.source_id}\nRA (deg): ${formatGaiaValue(
                   node.ra,
-                  6,
-                )}\nDEC: ${formatNumber(
+                  10,
+                )}\nDEC (deg): ${formatGaiaValue(
                   node.dec,
-                  6,
-                )}\nParallax: ${formatNumber(
+                  10,
+                )}\nParallax (mas): ${formatGaiaValue(
                   node.parallax,
-                  6,
-                )}\nRadial velocity: ${formatNumber(
+                  10,
+                )}\nRadial velocity (km/s): ${formatGaiaValue(
                   node.radial_velocity,
-                  6,
-                )}\nAnomaly: ${formatNumber(node.anomaly_score, 6)}`
+                  10,
+                )}\nAnomaly score: ${formatNumber(node.anomaly_score, 6)}`
               }
               onNodeClick={(node) => onSourceSelect(node)}
               enableNodeDrag={false}
@@ -596,23 +607,25 @@ function GaiaPhysicalMap({ sources = [], selectedSource, onSourceSelect }) {
               </p>
 
               <p>
-                <span>RA</span>
-                <strong>{formatNumber(selected.ra, 6)}</strong>
+                <span>RA (deg)</span>
+                <strong>{formatGaiaValue(selected.ra, 10)}</strong>
               </p>
 
               <p>
-                <span>DEC</span>
-                <strong>{formatNumber(selected.dec, 6)}</strong>
+                <span>DEC (deg)</span>
+                <strong>{formatGaiaValue(selected.dec, 10)}</strong>
               </p>
 
               <p>
-                <span>Parallax</span>
-                <strong>{formatNumber(selected.parallax, 6)}</strong>
+                <span>Parallax (mas)</span>
+                <strong>{formatGaiaValue(selected.parallax, 10)}</strong>
               </p>
 
               <p>
-                <span>Radial velocity</span>
-                <strong>{formatNumber(selected.radial_velocity, 6)}</strong>
+                <span>Radial velocity (km/s)</span>
+                <strong>
+                  {formatGaiaValue(selected.radial_velocity, 10)}
+                </strong>
               </p>
 
               <p>
