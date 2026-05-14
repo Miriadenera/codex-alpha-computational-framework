@@ -15,6 +15,30 @@ async function loadJson(path) {
   return response.json();
 }
 
+async function loadOptionalJson(path, fallback = []) {
+  try {
+    const response = await fetch(path);
+
+    if (!response.ok) {
+      return fallback;
+    }
+
+    const data = await response.json();
+
+    if (Array.isArray(data)) {
+      return data;
+    }
+
+    if (Array.isArray(data?.records)) {
+      return data.records;
+    }
+
+    return fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 async function loadText(path) {
   const response = await fetch(path);
   if (!response.ok) throw new Error("Unable to load " + path);
@@ -317,6 +341,7 @@ function AdvancedAnalysisLayer({
   featureContributions,
   emergentStructures,
   graphCentrality,
+  candidateCrossmatchResults,
   selectedNode,
   setSelectedNode,
 }) {
@@ -331,8 +356,8 @@ function AdvancedAnalysisLayer({
           This page extends the Codex Alpha Computational Framework with
           interpretative and coordinate-based analysis layers. It explores Gaia
           physical projections, relational source context, exploratory
-          coherence-proxy indicators and internal candidate ranking without
-          modifying the operational dashboard.
+          coherence-proxy indicators, internal candidate ranking and external
+          crossmatch validation outputs.
         </p>
 
         <div className="advanced-actions">
@@ -384,6 +409,7 @@ function AdvancedAnalysisLayer({
         emergentStructures={emergentStructures}
         graphCentrality={graphCentrality}
         featureContributions={featureContributions}
+        candidateCrossmatchResults={candidateCrossmatchResults}
         selectedSource={selectedNode}
         onSourceSelect={setSelectedNode}
       />
@@ -403,6 +429,9 @@ function App() {
   const [centrality, setCentrality] = useState([]);
   const [featureContributions, setFeatureContributions] = useState([]);
   const [emergentStructures, setEmergentStructures] = useState([]);
+  const [candidateCrossmatchResults, setCandidateCrossmatchResults] = useState(
+    [],
+  );
   const [report, setReport] = useState("");
   const [selectedNode, setSelectedNode] = useState(null);
   const [error, setError] = useState(null);
@@ -418,6 +447,7 @@ function App() {
           centralityData,
           featureContributionsData,
           emergentStructuresData,
+          candidateCrossmatchData,
           reportText,
         ] = await Promise.all([
           loadJson(DATA_BASE + "/summary.json"),
@@ -427,6 +457,7 @@ function App() {
           loadJson(DATA_BASE + "/graph_centrality.json"),
           loadJson(DATA_BASE + "/feature_contributions.json"),
           loadJson(DATA_BASE + "/emergent_structures.json"),
+          loadOptionalJson(DATA_BASE + "/candidate_crossmatch_results.json", []),
           loadText(DATA_BASE + "/report.md"),
         ]);
 
@@ -437,6 +468,7 @@ function App() {
         setCentrality(centralityData);
         setFeatureContributions(featureContributionsData);
         setEmergentStructures(emergentStructuresData);
+        setCandidateCrossmatchResults(candidateCrossmatchData);
         setReport(reportText);
       } catch (err) {
         setError(err.message);
@@ -492,6 +524,7 @@ function App() {
           featureContributions={featureContributions}
           emergentStructures={emergentStructures}
           graphCentrality={centrality}
+          candidateCrossmatchResults={candidateCrossmatchResults}
           selectedNode={selectedNode}
           setSelectedNode={setSelectedNode}
         />
@@ -620,24 +653,24 @@ function App() {
                     </p>
 
                     <p>
-                      <span>RA</span>
+                      <span>RA (deg)</span>
                       <strong>{formatGaiaValue(selectedNode.ra, 10)}</strong>
                     </p>
 
                     <p>
-                      <span>DEC</span>
+                      <span>DEC (deg)</span>
                       <strong>{formatGaiaValue(selectedNode.dec, 10)}</strong>
                     </p>
 
                     <p>
-                      <span>Parallax</span>
+                      <span>Parallax (mas)</span>
                       <strong>
                         {formatGaiaValue(selectedNode.parallax, 10)}
                       </strong>
                     </p>
 
                     <p>
-                      <span>Radial velocity</span>
+                      <span>Radial velocity (km/s)</span>
                       <strong>
                         {formatGaiaValue(selectedNode.radial_velocity, 10)}
                       </strong>

@@ -1,0 +1,601 @@
+candidate_id,candidate_rank,SOURCE_ID,ra,dec,parallax,radial_velocity,anomaly_score,anomaly_rank,structural_rank,structural_importance_score,local_density_score,mean_neighbor_distance,dominant_anomaly_feature,dominant_feature_zscore,coherence_proxy,simbad_match,simbad_status,simbad_main_id,simbad_object_type,simbad_angular_separation_arcsec,simbad_note,vizier_match_count,vizier_status,vizier_catalogues,vizier_note,nss_match,nss_status,nss_solution_type,nss_note,classification_hint,validation_status,validation_note,gaia_archive_url,esasky_url,simbad_url,vizier_url,gaia_source_adql,gaia_cone_search_adql,gaia_nss_adql
+CAC-001,1,250246270117248,45.79434455067139,1.368091554630673,4.800003764568492,21.995173,0.613007255498986,15,1,0.5810122410396288,0.5895201198413421,1.6962949462497412,phot_rp_mean_mag,4.277085676814324,0.748541263979982,True,match,HD  18974,PM*,0.8174379964478178,1 SIMBAD row(s) returned.,472,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *ATLAS catalog of candidate variable stars"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *List of all targets having exoplanets near their habitable zone"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3""]",472 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+250246270117248,https://sky.esa.int/esasky/?target=45.7943445507+1.3680915546&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.7943445507+1.3680915546&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.7943445507+1.3680915546&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 250246270117248","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.7943445507, 1.3680915546, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 250246270117248"
+CAC-002,2,673008491088640,46.32375593978757,1.895340177005703,5.56693233635593,-12.3359165,0.5728621510051637,30,11,0.3717507142099131,0.6257888399858997,1.5979831152340558,phot_rp_mean_mag,3.7740204721383326,0.5940835355361271,True,match,HD  19187,PM*,1.0785480091060673,1 SIMBAD row(s) returned.,330,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *The AGK3U Catalogue""]",330 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+673008491088640,https://sky.esa.int/esasky/?target=46.3237559398+1.8953401770&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.3237559398+1.8953401770&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.3237559398+1.8953401770&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 673008491088640","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.3237559398, 1.8953401770, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 673008491088640"
+CAC-003,3,188020783957632,46.272348511528605,1.1691840238061104,8.74578932917776,-1.7357773,0.5467162211519753,43,2,0.5654242088164496,0.4953813566552579,2.018646819394572,pmdec,4.326366136168632,0.5690614443777062,True,match,Gaia DR3 188016489534208,PM*,4.862918594535065,1 SIMBAD row(s) returned.,626,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Automated classifications for GZ DECaLS DR1, DR2 and DR5 galaxies"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Gaussian component catalog: |b|<5deg (RACS_DR1_Gaussians_GalacticRegion_v2021_08)"", ""Title: *Gaussian component catalog: |b|>5deg (RACS_DR1_Gaussians_GalacticCut_v2021_08)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master Norhtern catalog of quasars with at least two photometric observations (master_2obsDR7.dat )"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)""]",626 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+188020783957632,https://sky.esa.int/esasky/?target=46.2723485115+1.1691840238&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.2723485115+1.1691840238&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.2723485115+1.1691840238&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 188020783957632","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.2723485115, 1.1691840238, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 188020783957632"
+CAC-004,4,675379313032192,46.38608119407246,1.9707835108576768,6.795771505580588,1.328567,0.5706214014125198,31,4,0.4576751857087359,0.5416296169138387,1.8462801308713075,bp_rp,3.741583735178621,0.5608762601982711,False,no_match,,,,No SIMBAD object found within radius.,165,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *VIRAC2 source catalog (VVVX DR3); the complete catalog containing 545,346,533 sources"", ""Title: *the AllWISE data release (among 747,634,026 sources) (updated version, 16-Feb-2021)"", ""Title: *the band-merged single_master catalog (1000 among 279,909,360 sources)""]",165 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,catalogued_source_requires_review,externally_contextualized,VizieR returned 165 row-like match(es).,https://gea.esac.esa.int/archive/?target=Gaia+DR3+675379313032192,https://sky.esa.int/esasky/?target=46.3860811941+1.9707835109&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.3860811941+1.9707835109&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.3860811941+1.9707835109&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 675379313032192","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.3860811941, 1.9707835109, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 675379313032192"
+CAC-005,5,1301929142132608,44.65574879321864,2.120449164372491,4.310796473680449,16.90616,0.6047016302866218,18,19,0.3150297205880555,0.5664358563290746,1.7654249617603253,phot_rp_mean_mag,4.580722430716304,0.5434034707843368,True,match,HD  18509,*,0.4186641430147863,1 SIMBAD row(s) returned.,549,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Appendix D: Index of IR source positions ordered by name"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *CIO main catalog"", ""Title: *Data from our proper motion correction table"", ""Title: *IRAS PSC V2 data for CIO sources"", ""Title: *KiDS-ESO-DR5 multi-band source catalog""]",549 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1301929142132608,https://sky.esa.int/esasky/?target=44.6557487932+2.1204491644&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.6557487932+2.1204491644&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.6557487932+2.1204491644&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1301929142132608","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.6557487932, 2.1204491644, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1301929142132608"
+CAC-006,6,613978460597248,46.93593705501945,1.8475097193233243,5.764100398709869,21.620523,0.5581809313939637,36,20,0.3142473284346746,0.6441919915818024,1.5523322442178655,phot_bp_mean_mag,3.144855932482295,0.5428857972856229,True,match,HD  19449,Em*,0.543477787119091,1 SIMBAD row(s) returned.,496,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Millennium simulation (MS) galaxies"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)""]",496 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: Em*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+613978460597248,https://sky.esa.int/esasky/?target=46.9359370550+1.8475097193&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.9359370550+1.8475097193&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.9359370550+1.8475097193&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 613978460597248","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.9359370550, 1.8475097193, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 613978460597248"
+CAC-007,7,1155453577587072,43.726188251009376,1.6485541236514143,20.86394458857037,22.52529,0.6177325884841668,14,18,0.3213431862535297,0.4835524852807872,2.068027836562231,parallax,7.569949151780486,0.5340128823101984,True,match,[CR2000b] 21869,LM*,1.913274357782238,1 SIMBAD row(s) returned.,325,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *ATLAS catalog of candidate variable stars"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Gaia nearby accelerating star catalog"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder""]",325 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: LM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1155453577587072,https://sky.esa.int/esasky/?target=43.7261882510+1.6485541237&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=43.7261882510+1.6485541237&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=43.7261882510+1.6485541237&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1155453577587072","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 43.7261882510, 1.6485541237, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1155453577587072"
+CAC-008,8,1066152617449600,46.26169849925982,2.941159994364313,4.473279872561656,11.552453,0.5514433097826035,40,14,0.3620327032143104,0.5936935231429598,1.6843707418357825,phot_rp_mean_mag,3.523681051012961,0.5281306245702598,True,match,HD  19155,*,0.2487049127809434,1 SIMBAD row(s) returned.,553,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)""]",553 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1066152617449600,https://sky.esa.int/esasky/?target=46.2616984993+2.9411599944&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.2616984993+2.9411599944&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.2616984993+2.9411599944&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1066152617449600","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.2616984993, 2.9411599944, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1066152617449600"
+CAC-009,9,44358422235136,45.501453861130194,0.4976972037485959,9.558267252454172,40.74684,0.5797619012856708,25,6,0.4370879969571837,0.5264744658543781,1.8994273509098765,parallax,2.90384273841749,0.5221538333751802,True,match,BD-00   483,Em*,0.5531742974164585,1 SIMBAD row(s) returned.,706,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *All Gaia EDR3 red candidate binaries within 200pc"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *List of all targets having exoplanets near their habitable zone"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3""]",706 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: Em*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+44358422235136,https://sky.esa.int/esasky/?target=45.5014538611+0.4976972037&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.5014538611+0.4976972037&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.5014538611+0.4976972037&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 44358422235136","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.5014538611, 0.4976972037, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 44358422235136"
+CAC-010,10,452212812313984,45.0349266115007,1.6364715669582413,24.114540315165154,39.94661,0.6210451483243908,11,38,0.2613379728077101,0.4696632743958036,2.129185002352965,parallax,8.911542858745838,0.5121234313596654,True,match,[CR2000b] 21790,PM*,1.7717559301737122,1 SIMBAD row(s) returned.,426,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *VIRAC2 source catalog (VVVX DR3); the complete catalog containing 545,346,533 sources"", ""Title: *the AllWISE data release (among 747,634,026 sources) (updated version, 16-Feb-2021)"", ""Title: *the Dark Energy Survey (DES) DR1 main catalog (1000 among 399,263,026 sources)""]",426 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+452212812313984,https://sky.esa.int/esasky/?target=45.0349266115+1.6364715670&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.0349266115+1.6364715670&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.0349266115+1.6364715670&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 452212812313984","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.0349266115, 1.6364715670, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 452212812313984"
+CAC-011,11,339993906853248,44.36039043546913,1.2086815246994866,8.97081292097879,-25.202927,0.6186749622152127,12,15,0.3536939448485371,0.484015355018785,2.066050156530065,pmdec,5.212505018004336,0.5074740637227174,True,match,2MASS J02572644+0112330,LM*,2.082756080410119,1 SIMBAD row(s) returned.,392,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SDSS Stripe 82 Standard Star Catalog (v2.6)"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)""]",392 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: LM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+339993906853248,https://sky.esa.int/esasky/?target=44.3603904355+1.2086815247&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.3603904355+1.2086815247&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.3603904355+1.2086815247&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 339993906853248","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.3603904355, 1.2086815247, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 339993906853248"
+CAC-012,12,347278171374336,44.714033802442366,1.38742216946027,6.509961732673614,12.115913,0.5939956198903111,22,12,0.3698304927433588,0.4741373565516567,2.1090934645445447,pmdec,5.362998093340685,0.4883730376297582,True,match,[CR2000b] 20479,PM*,1.986794114059223,1 SIMBAD row(s) returned.,225,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SED-fitting-based stellar parameters of ~1.5 million stars (Table 4)"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)""]",225 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+347278171374336,https://sky.esa.int/esasky/?target=44.7140338024+1.3874221695&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.7140338024+1.3874221695&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.7140338024+1.3874221695&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 347278171374336","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.7140338024, 1.3874221695, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 347278171374336"
+CAC-013,13,115727894578176,45.10561087170264,0.8123211433603595,10.390628064061833,9.915567,0.5466704082842411,45,3,0.5363066807953462,0.4472725754575001,2.235773116598276,pmdec,3.4985031964215434,0.48165943465852973,True,match,TYC   55-301-1,Em*,1.335806408821297,1 SIMBAD row(s) returned.,629,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SDSS Stripe 82 Standard Star Catalog (v2.6)"", ""Title: *SED-fitting-based stellar parameters of ~1.5 million stars (Table 4)"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)""]",629 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: Em*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+115727894578176,https://sky.esa.int/esasky/?target=45.1056108717+0.8123211434&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.1056108717+0.8123211434&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.1056108717+0.8123211434&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 115727894578176","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.1056108717, 0.8123211434, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 115727894578176"
+CAC-014,14,695170522295168,46.38030666104432,2.114453435851673,5.552260708543552,16.200611,0.5345219807528394,49,26,0.2919778202633337,0.6220440926880526,1.6076030811225237,phot_bp_mean_mag,2.548810431303387,0.46859800728881557,True,match,BD+01   538,PM*,1.0791979121454656,1 SIMBAD row(s) returned.,383,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *Data from our proper motion correction table"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder""]",383 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+695170522295168,https://sky.esa.int/esasky/?target=46.3803066610+2.1144534359&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.3803066610+2.1144534359&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.3803066610+2.1144534359&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 695170522295168","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.3803066610, 2.1144534359, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 695170522295168"
+CAC-015,15,896106271727872,46.18846750540428,2.4374752905998016,7.386047122171779,-15.073964,0.5493494409558477,42,9,0.402225411131705,0.4956415685479245,2.017587029532638,pmdec,4.051971170868113,0.46508239134028945,False,no_match,,,,No SIMBAD object found within radius.,260,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: *All Gaia EDR3 red candidate binaries within 200pc"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Gaussian component catalog: |b|<5deg (RACS_DR1_Gaussians_GalacticRegion_v2021_08)"", ""Title: *Gaussian component catalog: |b|>5deg (RACS_DR1_Gaussians_GalacticCut_v2021_08)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *RACS DR1 source or island catalog: |b|<5deg (RACS_DR1_Sources_GalacticRegion_v2021_08)"", ""Title: *RACS DR1 source or island catalog: |b|>5deg (RACS_DR1_Sources_GalacticCut_v2021_08)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *Solar System object observations (sso_observation)""]",260 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,catalogued_source_requires_review,externally_contextualized,VizieR returned 260 row-like match(es).,https://gea.esac.esa.int/archive/?target=Gaia+DR3+896106271727872,https://sky.esa.int/esasky/?target=46.1884675054+2.4374752906&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.1884675054+2.4374752906&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.1884675054+2.4374752906&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 896106271727872","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.1884675054, 2.4374752906, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 896106271727872"
+CAC-016,16,384317969303168,43.867137016382586,1.3556393106569646,1.614464343506432,36.25969,0.58397445835994,24,17,0.3365249852107274,0.4936361701048947,2.0257834829789974,phot_rp_mean_mag,4.052061488486166,0.45296435333442936,True,match,HD  18204,*,0.20824181055057941,1 SIMBAD row(s) returned.,626,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * A (interc_left=-8.3dex, interc_right=-7.3dex)"", ""Title: * B (interc_left=-8.8dex, interc_right=-7.8dex)"", ""Title: * C (interc_left=-9.3dex, interc_right=-8.3dex)"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Appendix D: Index of IR source positions ordered by name"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *CIO main catalog""]",626 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+384317969303168,https://sky.esa.int/esasky/?target=43.8671370164+1.3556393107&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=43.8671370164+1.3556393107&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=43.8671370164+1.3556393107&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 384317969303168","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 43.8671370164, 1.3556393107, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 384317969303168"
+CAC-017,17,1166173815955456,43.92833383907752,1.63438539908412,11.895246284149833,-48.302563,0.6314245967325884,10,22,0.3036411419145226,0.4272319466334415,2.340648932926258,pmdec,6.477246609073676,0.45227221833422016,True,match,UCAC4 459-003892,PM*,2.4438198687294292,1 SIMBAD row(s) returned.,306,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Gaussian component catalog: |b|<5deg (RACS_DR1_Gaussians_GalacticRegion_v2021_08)"", ""Title: *Gaussian component catalog: |b|>5deg (RACS_DR1_Gaussians_GalacticCut_v2021_08)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *RACS DR1 source or island catalog: |b|<5deg (RACS_DR1_Sources_GalacticRegion_v2021_08)"", ""Title: *RACS DR1 source or island catalog: |b|>5deg (RACS_DR1_Sources_GalacticCut_v2021_08)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3""]",306 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1166173815955456,https://sky.esa.int/esasky/?target=43.9283338391+1.6343853991&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=43.9283338391+1.6343853991&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=43.9283338391+1.6343853991&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1166173815955456","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 43.9283338391, 1.6343853991, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1166173815955456"
+CAC-018,18,535294659636864,45.01823006813042,2.0230550711534843,17.267511064863456,12.035548,0.5341821494107749,50,8,0.4022649877278801,0.4505103213038182,2.219704971698446,parallax,6.085620435216623,0.4462887841089427,True,match,UCAC4 461-004188,*,0.9460497012434951,1 SIMBAD row(s) returned.,380,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *The 2MASS Extended Catalog (2MASX)"", ""Title: *VIRAC2 source catalog (VVVX DR3); the complete catalog containing 545,346,533 sources""]",380 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+535294659636864,https://sky.esa.int/esasky/?target=45.0182300681+2.0230550712&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.0182300681+2.0230550712&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.0182300681+2.0230550712&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 535294659636864","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.0182300681, 2.0230550712, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 535294659636864"
+CAC-019,19,290653322568704,44.44850159775912,0.7917886784873427,17.045755084229523,35.11118,0.6084269451186824,16,23,0.2982721078608555,0.4449539249291457,2.24742370832844,parallax,5.9940967721334655,0.4398293181823925,True,match,SDSS J025747.56+004731.2,PM*,1.6308693857152328,2 SIMBAD row(s) returned.,437,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Gaia nearby accelerating star catalog"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SDSS Stripe 82 Standard Star Catalog (v2.6)"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder""]",437 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+290653322568704,https://sky.esa.int/esasky/?target=44.4485015978+0.7917886785&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.4485015978+0.7917886785&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.4485015978+0.7917886785&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 290653322568704","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.4485015978, 0.7917886785, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 290653322568704"
+CAC-020,20,1292480214037760,44.11843694271478,2.1668869996551168,18.92895612358451,7.728459,0.6368768998510451,8,7,0.4194044801767005,0.3516019308426451,2.8441254506283853,parallax,6.771336046362109,0.43840918206458696,True,match,StKM 1-323,PM*,2.1381034172488516,1 SIMBAD row(s) returned.,398,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)""]",398 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1292480214037760,https://sky.esa.int/esasky/?target=44.1184369427+2.1668869997&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.1184369427+2.1668869997&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.1184369427+2.1668869997&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1292480214037760","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.1184369427, 2.1668869997, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1292480214037760"
+CAC-021,21,123424475948672,44.8000069221394,0.7794933038508934,22.499346672897467,34.41306,0.662182644585814,3,48,0.2191599108716621,0.4049289597656259,2.46956898459028,parallax,8.244916243732478,0.43809125873225263,True,match,LSPM J0259+0046,LM*,2.9055084210091855,1 SIMBAD row(s) returned.,613,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Automated classifications for GZ DECaLS DR1, DR2 and DR5 galaxies"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Catalogue released with this paper"", ""Title: *Deep catalog (GSWLC-D2; Covers 7% of SDSS)"", ""Title: *GIM2D parameters from matched catalog"", ""Title: *Gaussian component catalog: |b|<5deg (RACS_DR1_Gaussians_GalacticRegion_v2021_08)"", ""Title: *Gaussian component catalog: |b|>5deg (RACS_DR1_Gaussians_GalacticCut_v2021_08)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog""]",613 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: LM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+123424475948672,https://sky.esa.int/esasky/?target=44.8000069221+0.7794933039&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.8000069221+0.7794933039&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.8000069221+0.7794933039&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 123424475948672","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.8000069221, 0.7794933039, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 123424475948672"
+CAC-022,22,332469124171904,44.819887017386776,1.2445538835450447,1.9900866479524288,15.14028,0.5538052197146874,38,13,0.3658452791678773,0.4938792785335096,2.024786306015583,phot_bp_mean_mag,3.3499238761634738,0.4304098975461306,True,match,HD  18571,*,0.21405581166032406,1 SIMBAD row(s) returned.,732,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *McDonald UBVRI observations of stars and other objects"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)""]",732 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+332469124171904,https://sky.esa.int/esasky/?target=44.8198870174+1.2445538835&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.8198870174+1.2445538835&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.8198870174+1.2445538835&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 332469124171904","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.8198870174, 1.2445538835, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 332469124171904"
+CAC-023,23,774472798501120,46.75561090023727,2.134491835812317,12.864794696071058,6.408355,0.5764262583484938,27,10,0.3763102040872215,0.4452022474672675,2.2461701523038187,parallax,4.268520718509362,0.42570820389984426,True,match,TYC   55-1202-1,*,0.7845242196882796,1 SIMBAD row(s) returned.,442,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Gaia nearby accelerating star catalog"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)""]",442 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+774472798501120,https://sky.esa.int/esasky/?target=46.7556109002+2.1344918358&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.7556109002+2.1344918358&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.7556109002+2.1344918358&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 774472798501120","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.7556109002, 2.1344918358, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 774472798501120"
+CAC-024,24,154829276705920,45.79773407480096,0.9005394643362447,7.864939110122796,8.6005125,0.6185335196291022,13,29,0.2776500302836274,0.3956350021321254,2.527582227584724,pmra,7.271182813810164,0.4083852361390166,True,match,LSPM J0303+0054,PM*,2.8087755421689535,1 SIMBAD row(s) returned.,357,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *ATLAS catalog of candidate variable stars"", ""Title: *Appendix D: Index of IR source positions ordered by name"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *CIO main catalog"", ""Title: *Catalogue released with this paper"", ""Title: *Classification results of variable stars for LAMOST DR9 based on LightGBM and XGBoost"", ""Title: *Deep catalog (GSWLC-D2; Covers 7% of SDSS)"", ""Title: *GIM2D parameters from matched catalog""]",357 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+154829276705920,https://sky.esa.int/esasky/?target=45.7977340748+0.9005394643&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.7977340748+0.9005394643&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.7977340748+0.9005394643&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 154829276705920","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.7977340748, 0.9005394643, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 154829276705920"
+CAC-025,25,1411674146537728,42.98368757524648,1.9919651698598573,9.200918713206,5.2444015,0.5610600809084039,34,35,0.2728600053413085,0.532654247763032,1.877390453937296,bp_rp,2.9508630962540074,0.40688567450026036,False,no_match,,,,No SIMBAD object found within radius.,227,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *VIRAC2 source catalog (VVVX DR3); the complete catalog containing 545,346,533 sources""]",227 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,catalogued_source_requires_review,externally_contextualized,VizieR returned 227 row-like match(es).,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1411674146537728,https://sky.esa.int/esasky/?target=42.9836875752+1.9919651699&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=42.9836875752+1.9919651699&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=42.9836875752+1.9919651699&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1411674146537728","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 42.9836875752, 1.9919651699, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1411674146537728"
+CAC-026,26,1611029348487680,43.92070343473486,3.0634098423356084,11.831171660416295,-9.581694,0.5592141500220746,35,5,0.4371109011529269,0.4143096284723471,2.4136537779409344,parallax,3.841921326692184,0.40666101678566413,True,match,Gaia DR3 1611029348487680,*,1.230874326031761,1 SIMBAD row(s) returned.,204,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *ATLAS catalog of candidate variable stars"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder""]",204 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1611029348487680,https://sky.esa.int/esasky/?target=43.9207034347+3.0634098423&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=43.9207034347+3.0634098423&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=43.9207034347+3.0634098423&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1611029348487680","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 43.9207034347, 3.0634098423, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1611029348487680"
+CAC-027,27,86693915665280,44.856484140123165,0.6802329091064019,7.9457636260696125,31.442774,0.5575921073407458,37,24,0.2933208742365339,0.5258849397845091,1.901556641666221,pmdec,2.594055825823096,0.4029954345881188,True,match,BD+00   491,PM*,0.9381443085281763,1 SIMBAD row(s) returned.,670,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3""]",670 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+86693915665280,https://sky.esa.int/esasky/?target=44.8564841401+0.6802329091&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.8564841401+0.6802329091&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.8564841401+0.6802329091&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 86693915665280","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.8564841401, 0.6802329091, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 86693915665280"
+CAC-028,28,1240631368988288,43.7474352249586,1.985125132516976,14.787355923680485,-46.3987,0.6410240206725266,5,28,0.2777711865190944,0.3752736539257703,2.664722102227369,pmdec,7.204248702508382,0.40259669452972835,True,match,[CR2000b] 23745,PM*,2.605488959445965,1 SIMBAD row(s) returned.,385,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *The 2MASS Extended Catalog (2MASX)"", ""Title: *VIRAC2 source catalog (VVVX DR3); the complete catalog containing 545,346,533 sources""]",385 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1240631368988288,https://sky.esa.int/esasky/?target=43.7474352250+1.9851251325&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=43.7474352250+1.9851251325&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=43.7474352250+1.9851251325&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1240631368988288","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 43.7474352250, 1.9851251325, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1240631368988288"
+CAC-029,29,1195551392247936,43.88154987112852,2.018217023833527,6.7012607524697705,25.450867,0.6397669757197583,7,42,0.246096763913283,0.4277319475868719,2.3379128111455207,phot_bp_mean_mag,4.708380419900095,0.3934599777710348,True,match,HD  18216,*,0.20774244239867132,1 SIMBAD row(s) returned.,571,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *314 Galactic sight lines for which TiII data ({lambda}3383 equivalent widths and/or column density estimates) are available"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder""]",571 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1195551392247936,https://sky.esa.int/esasky/?target=43.8815498711+2.0182170238&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=43.8815498711+2.0182170238&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=43.8815498711+2.0182170238&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1195551392247936","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 43.8815498711, 2.0182170238, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1195551392247936"
+CAC-030,30,120190364960512,45.00799417061545,0.8885621585799379,3.916101739365879,-5.3862348,0.5796472035463137,26,16,0.3419743060304848,0.4523419728779735,2.210716802681748,pmra,3.102072091750585,0.3928005572026688,True,match,BD+00   493,PM*,1.4045619841730617,1 SIMBAD row(s) returned.,666,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *Gaussian component catalog: |b|<5deg (RACS_DR1_Gaussians_GalacticRegion_v2021_08)"", ""Title: *Gaussian component catalog: |b|>5deg (RACS_DR1_Gaussians_GalacticCut_v2021_08)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)""]",666 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+120190364960512,https://sky.esa.int/esasky/?target=45.0079941706+0.8885621586&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.0079941706+0.8885621586&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.0079941706+0.8885621586&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 120190364960512","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.0079941706, 0.8885621586, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 120190364960512"
+CAC-031,31,1753553543188992,45.46359917458231,3.138095461386887,4.017941960688069,1.1090981,0.5944787239266723,21,37,0.2715256834058619,0.4697158956341007,2.128946474441883,phot_bp_mean_mag,3.640042173008829,0.3907829333807768,True,match,HD  18826,*,0.1608426299879399,1 SIMBAD row(s) returned.,527,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3""]",527 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1753553543188992,https://sky.esa.int/esasky/?target=45.4635991746+3.1380954614&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.4635991746+3.1380954614&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.4635991746+3.1380954614&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1753553543188992","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.4635991746, 3.1380954614, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1753553543188992"
+CAC-032,32,77863462880768,44.660730046322826,0.5174706461824936,15.226840636607095,-23.940832,0.6038200395509421,19,31,0.2768439591763888,0.4244842621621357,2.355799941571488,parallax,5.2433900150693,0.38862948180583945,True,match,[CR2000b] 15818,PM*,1.69209454533417,1 SIMBAD row(s) returned.,596,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Automated classifications for GZ DECaLS DR1, DR2 and DR5 galaxies"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Catalogue released with this paper"", ""Title: *Deep catalog (GSWLC-D2; Covers 7% of SDSS)"", ""Title: *GIM2D parameters from matched catalog"", ""Title: *Gaussian component catalog: |b|<5deg (RACS_DR1_Gaussians_GalacticRegion_v2021_08)"", ""Title: *Gaussian component catalog: |b|>5deg (RACS_DR1_Gaussians_GalacticCut_v2021_08)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog""]",596 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+77863462880768,https://sky.esa.int/esasky/?target=44.6607300463+0.5174706462&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.6607300463+0.5174706462&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.6607300463+0.5174706462&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 77863462880768","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.6607300463, 0.5174706462, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 77863462880768"
+CAC-033,33,75458281197696,44.61949163493268,0.4372530289318131,2.4718649417171226,-15.516421,0.5498790087049304,41,25,0.2926092514685027,0.4975330005068826,2.00991692808459,phot_rp_mean_mag,3.255378179559562,0.38316713768424376,True,match,HD  18496,*,0.04880676599478274,1 SIMBAD row(s) returned.,606,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Automated classifications for GZ DECaLS DR1, DR2 and DR5 galaxies"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *Catalogue released with this paper"", ""Title: *Deep catalog (GSWLC-D2; Covers 7% of SDSS)"", ""Title: *GIM2D parameters from matched catalog"", ""Title: *KiDS-ESO-DR5 multi-band source catalog""]",606 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+75458281197696,https://sky.esa.int/esasky/?target=44.6194916349+0.4372530289&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.6194916349+0.4372530289&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.6194916349+0.4372530289&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 75458281197696","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.6194916349, 0.4372530289, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 75458281197696"
+CAC-034,34,92603790642688,44.41500318632742,0.5679005443548504,10.969874447270998,45.771442,0.6657403748548207,2,27,0.286932332373454,0.3578801231385922,2.794231742265226,pmra,5.130045970112984,0.37133069554933446,True,match,BD-00   463,PM*,2.262681684628057,1 SIMBAD row(s) returned.,553,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SDSS Stripe 82 Standard Star Catalog (v2.6)""]",553 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+92603790642688,https://sky.esa.int/esasky/?target=44.4150031863+0.5679005444&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.4150031863+0.5679005444&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.4150031863+0.5679005444&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 92603790642688","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.4150031863, 0.5679005444, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 92603790642688"
+CAC-035,35,1435244927007872,42.83483697311728,2.1727002563146143,2.020616111720801,-13.892095,0.6401901209441745,6,50,0.2132426050878692,0.4017032248210491,2.489399980408618,phot_rp_mean_mag,5.407007565256447,0.3625409700117193,True,match,HD  17791,*,0.40966104962312505,1 SIMBAD row(s) returned.,383,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Appendix D: Index of IR source positions ordered by name"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *CIO main catalog"", ""Title: *IRAS PSC V2 data for CIO sources"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)""]",383 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1435244927007872,https://sky.esa.int/esasky/?target=42.8348369731+2.1727002563&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=42.8348369731+2.1727002563&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=42.8348369731+2.1727002563&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1435244927007872","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 42.8348369731, 2.1727002563, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1435244927007872"
+CAC-036,36,1261796967786112,43.68908377736916,2.264956257711477,11.78846928230527,15.258974,0.5466879211372961,44,39,0.2527689691093519,0.4896473318985801,2.0422862228658865,parallax,3.8242970982230777,0.36017503471265766,False,no_match,,,,No SIMBAD object found within radius.,303,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Millennium simulation (MS) galaxies"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)""]",303 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,catalogued_source_requires_review,externally_contextualized,VizieR returned 303 row-like match(es).,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1261796967786112,https://sky.esa.int/esasky/?target=43.6890837774+2.2649562577&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=43.6890837774+2.2649562577&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=43.6890837774+2.2649562577&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1261796967786112","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 43.6890837774, 2.2649562577, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1261796967786112"
+CAC-037,37,596798591393792,46.43770275725954,1.7117729330493443,10.972149047948747,51.444305,0.5918487772523259,23,32,0.2741345292809446,0.4194417329005053,2.3841213726741586,pmra,4.37826032441743,0.3563518389508006,True,match,UCAC4 459-004173,LM*,1.774288722387727,1 SIMBAD row(s) returned.,323,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Appendix D: Index of IR source positions ordered by name"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *CIO main catalog"", ""Title: *IRAS PSC V2 data for CIO sources"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Quaia, the Gaia-unWISE G<20.0 Quasar catalog""]",323 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: LM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+596798591393792,https://sky.esa.int/esasky/?target=46.4377027573+1.7117729330&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.4377027573+1.7117729330&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.4377027573+1.7117729330&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 596798591393792","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.4377027573, 1.7117729330, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 596798591393792"
+CAC-038,38,1425830358704768,42.7529857336048,2.016595544570301,12.229727789012838,16.642065,0.5653498573004919,32,44,0.2381412951637823,0.4689990223960301,2.1322006064974595,parallax,4.00641437318915,0.3524043766154166,False,no_match,,,,No SIMBAD object found within radius.,199,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *The 2MASS Extended Catalog (2MASX)"", ""Title: *The Tycho-2 main catalogue""]",199 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,catalogued_source_requires_review,externally_contextualized,VizieR returned 199 row-like match(es).,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1425830358704768,https://sky.esa.int/esasky/?target=42.7529857336+2.0165955446&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=42.7529857336+2.0165955446&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=42.7529857336+2.0165955446&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1425830358704768","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 42.7529857336, 2.0165955446, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1425830358704768"
+CAC-039,39,1604569717638528,43.790130857726965,2.993515477317277,1.6689507256624774,-11.099302,0.5964764174123142,20,47,0.2196206126078981,0.449202023832636,2.226169845512832,phot_rp_mean_mag,4.019506860887278,0.3498979633417012,True,match,BD+02   451,*,0.18501299876851163,1 SIMBAD row(s) returned.,428,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * A (interc_left=-8.3dex, interc_right=-7.3dex)"", ""Title: * B (interc_left=-8.8dex, interc_right=-7.8dex)"", ""Title: * C (interc_left=-9.3dex, interc_right=-8.3dex)"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Appendix D: Index of IR source positions ordered by name"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *CIO main catalog""]",428 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: *.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1604569717638528,https://sky.esa.int/esasky/?target=43.7901308577+2.9935154773&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=43.7901308577+2.9935154773&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=43.7901308577+2.9935154773&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1604569717638528","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 43.7901308577, 2.9935154773, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1604569717638528"
+CAC-040,40,132667245587072,45.0727955724553,0.969970782487376,5.737753870967776,-73.29518,0.6584734247788637,4,36,0.2722619578429096,0.3636151677442936,2.7501603032766497,phot_rp_mean_mag,4.209719808717174,0.34874000889492324,True,match,HD  18682,PM*,1.5726385982124789,1 SIMBAD row(s) returned.,643,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Automated classifications for GZ DECaLS DR1, DR2 and DR5 galaxies"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *Catalogue released with this paper"", ""Title: *Deep catalog (GSWLC-D2; Covers 7% of SDSS)"", ""Title: *GIM2D parameters from matched catalog"", ""Title: *KiDS-ESO-DR5 multi-band source catalog""]",643 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+132667245587072,https://sky.esa.int/esasky/?target=45.0727955725+0.9699707825&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.0727955725+0.9699707825&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.0727955725+0.9699707825&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 132667245587072","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.0727955725, 0.9699707825, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 132667245587072"
+CAC-041,41,1497229894979968,42.38610306175436,2.36409349067239,4.63157585582022,20.25241,0.6047956331317728,17,46,0.2292262508597571,0.3886486181129672,2.573018282825708,pmdec,6.237179318168923,0.34592822153351177,True,match,[CR2000b] 25782,PM*,4.372430111703454,1 SIMBAD row(s) returned.,256,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Data from our proper motion correction table"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Millennium simulation (MS) galaxies"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *VIRAC2 source catalog (VVVX DR3); the complete catalog containing 545,346,533 sources""]",256 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1497229894979968,https://sky.esa.int/esasky/?target=42.3861030618+2.3640934907&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=42.3861030618+2.3640934907&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=42.3861030618+2.3640934907&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1497229894979968","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 42.3861030618, 2.3640934907, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1497229894979968"
+CAC-042,42,83154862613888,44.937315650530685,0.6237932770156848,15.672103956026024,-37.740585,0.69079939374155,1,40,0.2516678135752035,0.2997365752631311,3.3362628472078386,pmdec,7.23014824820212,0.3416523839418153,True,match,BD+00   492,PM*,3.012494922823666,1 SIMBAD row(s) returned.,839,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Automated classifications for GZ DECaLS DR1, DR2 and DR5 galaxies"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *Bright AGN test sample"", ""Title: *Catalogue released with this paper"", ""Title: *Deep catalog (GSWLC-D2; Covers 7% of SDSS)"", ""Title: *GIM2D parameters from matched catalog""]",839 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+83154862613888,https://sky.esa.int/esasky/?target=44.9373156505+0.6237932770&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.9373156505+0.6237932770&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.9373156505+0.6237932770&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 83154862613888","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.9373156505, 0.6237932770, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 83154862613888"
+CAC-043,43,384661566686720,43.83396053831552,1.383050405086603,5.29501651826468,43.7549,0.5747085399766488,29,21,0.3135940765562367,0.4006324486471909,2.4960534359517887,pmra,3.6029176979084094,0.3325977874897031,True,match,[CR2000b] 20452,PM*,1.8894773493246098,1 SIMBAD row(s) returned.,243,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * A (interc_left=-8.3dex, interc_right=-7.3dex)"", ""Title: * B (interc_left=-8.8dex, interc_right=-7.8dex)"", ""Title: * C (interc_left=-9.3dex, interc_right=-8.3dex)"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Appendix D: Index of IR source positions ordered by name"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *CIO main catalog""]",243 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+384661566686720,https://sky.esa.int/esasky/?target=43.8339605383+1.3830504051&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=43.8339605383+1.3830504051&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=43.8339605383+1.3830504051&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 384661566686720","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 43.8339605383, 1.3830504051, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 384661566686720"
+CAC-044,44,755540582699392,47.62704817309152,2.463640960160351,7.71408533173123,65.57477,0.6345418722559044,9,49,0.216440910284417,0.3686647947503814,2.7124911687776416,pmdec,3.949427566108921,0.30246775459329994,True,match,TYC   56-157-1,PM*,1.9970918844297978,1 SIMBAD row(s) returned.,356,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: \""Non-metal-poor\"" objects"", ""Title: * output (out of 526,280,881 stars)"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *The Tycho-2 main catalogue""]",356 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+755540582699392,https://sky.esa.int/esasky/?target=47.6270481731+2.4636409602&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=47.6270481731+2.4636409602&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=47.6270481731+2.4636409602&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 755540582699392","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 47.6270481731, 2.4636409602, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 755540582699392"
+CAC-045,45,1213006138643456,43.40279969005572,1.8781951893461832,8.518939615345458,-27.766453,0.5444726597069016,46,34,0.2731014342281541,0.3953313882537743,2.529523406721443,pmra,3.988414258725708,0.2890655700357765,True,match,BD+01   508,PM*,3.5138381041981495,1 SIMBAD row(s) returned.,514,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Basic yalezone data: RA = 0-4h"", ""Title: *Data from our proper motion correction table"", ""Title: *Gaussian component catalog: |b|<5deg (RACS_DR1_Gaussians_GalacticRegion_v2021_08)"", ""Title: *Gaussian component catalog: |b|>5deg (RACS_DR1_Gaussians_GalacticCut_v2021_08)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)""]",514 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1213006138643456,https://sky.esa.int/esasky/?target=43.4027996901+1.8781951893&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=43.4027996901+1.8781951893&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=43.4027996901+1.8781951893&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1213006138643456","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 43.4027996901, 1.8781951893, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1213006138643456"
+CAC-046,46,320683733915264,44.76491823550084,1.0788416794272702,6.587289641125705,-34.91773,0.5754856056379555,28,41,0.249098764405011,0.3850397621615021,2.597134369671079,bp_rp,3.62386794081744,0.2843819216975354,False,no_match,,,,No SIMBAD object found within radius.,564,match,"[""Title:     Full ACT catalog, originally split into 48 files, each 30min wide"", ""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Master quasar catalog (table 1)"", ""Title: *Optical+MIR photometric quasar candidates catalog (table 2)"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SDSS Stripe 82 Standard Star Catalog (v2.6)""]",564 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,catalogued_source_requires_review,externally_contextualized,VizieR returned 564 row-like match(es).,https://gea.esac.esa.int/archive/?target=Gaia+DR3+320683733915264,https://sky.esa.int/esasky/?target=44.7649182355+1.0788416794&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=44.7649182355+1.0788416794&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=44.7649182355+1.0788416794&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 320683733915264","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 44.7649182355, 1.0788416794, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 320683733915264"
+CAC-047,47,850236021522688,45.56523860938604,1.941113045918304,2.916306534451321,-89.93606,0.5440489173134175,47,33,0.2739365175523703,0.3575587881991904,2.7967428937659284,pmdec,4.550855482980838,0.26573782238404375,False,no_match,,,,No SIMBAD object found within radius.,381,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *VIRAC2 source catalog (VVVX DR3); the complete catalog containing 545,346,533 sources"", ""Title: *the AllWISE data release (among 747,634,026 sources) (updated version, 16-Feb-2021)""]",381 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,catalogued_source_requires_review,externally_contextualized,VizieR returned 381 row-like match(es).,https://gea.esac.esa.int/archive/?target=Gaia+DR3+850236021522688,https://sky.esa.int/esasky/?target=45.5652386094+1.9411130459&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.5652386094+1.9411130459&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.5652386094+1.9411130459&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 850236021522688","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.5652386094, 1.9411130459, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 850236021522688"
+CAC-048,48,1036706321717888,46.97620865297792,3.0654077936270854,4.796519299535264,33.86144,0.5355529605111098,48,45,0.2344081871031252,0.359944686113866,2.7782046480422187,bp_rp,2.9160606246353864,0.21350977048421718,False,no_match,,,,No SIMBAD object found within radius.,152,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *The Tycho-2 main catalogue"", ""Title: *VIRAC2 source catalog (VVVX DR3); the complete catalog containing 545,346,533 sources"", ""Title: *the AllWISE data release (among 747,634,026 sources) (updated version, 16-Feb-2021)""]",152 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,catalogued_source_requires_review,externally_contextualized,VizieR returned 152 row-like match(es).,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1036706321717888,https://sky.esa.int/esasky/?target=46.9762086530+3.0654077936&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.9762086530+3.0654077936&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.9762086530+3.0654077936&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1036706321717888","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.9762086530, 3.0654077936, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1036706321717888"
+CAC-049,49,1811277903614976,45.10976661513767,3.376439664926681,2.745629798093961,-122.16464,0.5640359342728317,33,43,0.244771282368898,0.3013834714564201,3.318031991493263,pmdec,4.206528426549998,0.21155547815855943,False,no_match,,,,No SIMBAD object found within radius.,397,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: * output of the SDSS photometric catalog"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *Data from our proper motion correction table"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *VIRAC2 source catalog (VVVX DR3); the complete catalog containing 545,346,533 sources""]",397 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,catalogued_source_requires_review,externally_contextualized,VizieR returned 397 row-like match(es).,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1811277903614976,https://sky.esa.int/esasky/?target=45.1097666151+3.3764396649&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=45.1097666151+3.3764396649&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=45.1097666151+3.3764396649&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1811277903614976","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 45.1097666151, 3.3764396649, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1811277903614976"
+CAC-050,50,1039420741032448,46.50942996259301,2.917776771819711,2.859521316069049,-112.725365,0.5520055521771929,39,30,0.2774292765854653,0.2987553378076303,3.347220529474205,radial_velocity,3.276846262774016,0.2023994345375643,True,match,TYC   58-980-1,PM*,1.011184702718864,1 SIMBAD row(s) returned.,268,match,"[""Title: * output (out of 526,280,881 stars)"", ""Title: *Auxilliary Quasar Solution for the QSOs that were matched to ICRF2 sources (qso_icrf2)"", ""Title: *KiDS-ESO-DR5 multi-band source catalog"", ""Title: *Properties of objects detected repeatedly during the Mark IV survey of northern sky (V.2)"", ""Title: *Representation of the Gaia scanning law over the 34 month time period covered by the Gaia Data Release 3"", ""Title: *SoS DR2 final catalog with cuts PASTEL dr2 newSoSId reorder"", ""Title: *Solar System object observations (sso_observation)"", ""Title: *The Tycho-2 main catalogue"", ""Title: *VIRAC2 source catalog (VVVX DR3); the complete catalog containing 545,346,533 sources"", ""Title: *the AllWISE data release (among 747,634,026 sources) (updated version, 16-Feb-2021)""]",268 VizieR row-like result(s) parsed.,False,no_match,,No Gaia NSS two-body orbit match.,known_simbad_object,externally_contextualized,SIMBAD match detected: PM*.,https://gea.esac.esa.int/archive/?target=Gaia+DR3+1039420741032448,https://sky.esa.int/esasky/?target=46.5094299626+2.9177767718&hips=Digitized%20Sky%20Survey%202%20color,https://simbad.cds.unistra.fr/simbad/sim-coo?Coord=46.5094299626+2.9177767718&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5.000&Radius.unit=arcsec,https://vizier.cds.unistra.fr/viz-bin/VizieR?-c=46.5094299626+2.9177767718&-c.rs=5.000&-c.u=arcsec,"SELECT *
+FROM gaiadr3.gaia_source
+WHERE source_id = 1039420741032448","SELECT TOP 100 *
+FROM gaiadr3.gaia_source
+WHERE 1 = CONTAINS(
+  POINT('ICRS', ra, dec),
+  CIRCLE('ICRS', 46.5094299626, 2.9177767718, 0.0013888889)
+)","SELECT TOP 20
+  source_id,
+  nss_solution_type
+FROM gaiadr3.nss_two_body_orbit
+WHERE source_id = 1039420741032448"

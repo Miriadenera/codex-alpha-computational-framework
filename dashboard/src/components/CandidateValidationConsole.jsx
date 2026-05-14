@@ -29,6 +29,66 @@ function formatNumber(value, digits = 6) {
   return number.toFixed(digits);
 }
 
+function formatBoolean(value) {
+  if (value === true) {
+    return "Yes";
+  }
+
+  if (value === false) {
+    return "No";
+  }
+
+  return "N/A";
+}
+
+function normalizeLabel(value) {
+  if (value === null || value === undefined || value === "") {
+    return "N/A";
+  }
+
+  return String(value)
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function getValidationTone(status) {
+  const normalized = String(status ?? "");
+
+  if (
+    normalized === "externally_contextualized" ||
+    normalized === "high_priority_followup"
+  ) {
+    return "ready";
+  }
+
+  if (normalized === "incomplete_external_validation") {
+    return "planned";
+  }
+
+  if (
+    normalized === "pending_followup" ||
+    normalized === "crossmatch_not_available"
+  ) {
+    return "planned";
+  }
+
+  return "ready";
+}
+
+function getServiceTone(status) {
+  const normalized = String(status ?? "");
+
+  if (normalized === "match" || normalized === "no_match") {
+    return "ready";
+  }
+
+  if (normalized === "service_error" || normalized === "not_checked") {
+    return "planned";
+  }
+
+  return "ready";
+}
+
 function buildGaiaArchiveUrl(source) {
   const sourceId = getSourceId(source);
 
@@ -123,12 +183,64 @@ FROM gaiadr3.nss_two_body_orbit
 WHERE source_id = ${sourceId}`;
 }
 
-function buildValidationChecklist(source) {
+function getCrossmatchGaiaSourceAdql(source, crossmatchResult) {
+  return crossmatchResult?.gaia_source_adql || buildSourceAdqlQuery(source);
+}
+
+function getCrossmatchConeSearchAdql(source, crossmatchResult) {
+  return (
+    crossmatchResult?.gaia_cone_search_adql ||
+    buildConeSearchAdqlQuery(source)
+  );
+}
+
+function getCrossmatchNssAdql(source, crossmatchResult) {
+  return crossmatchResult?.gaia_nss_adql || buildGaiaNssAdqlQuery(source);
+}
+
+function buildValidationChecklist(source, crossmatchResult = null) {
   if (!source) {
     return "";
   }
 
   const sourceId = getSourceId(source);
+
+  const crossmatchBlock = crossmatchResult
+    ? `
+
+Backend crossmatch result:
+Validation status: ${normalizeLabel(crossmatchResult.validation_status)}
+Classification hint: ${normalizeLabel(crossmatchResult.classification_hint)}
+
+SIMBAD:
+Status: ${crossmatchResult.simbad_status ?? "N/A"}
+Match: ${formatBoolean(crossmatchResult.simbad_match)}
+Main ID: ${crossmatchResult.simbad_main_id ?? "N/A"}
+Object type: ${crossmatchResult.simbad_object_type ?? "N/A"}
+Angular separation: ${formatNumber(
+        crossmatchResult.simbad_angular_separation_arcsec,
+        6,
+      )} arcsec
+Note: ${crossmatchResult.simbad_note ?? "N/A"}
+
+VizieR:
+Status: ${crossmatchResult.vizier_status ?? "N/A"}
+Match count: ${crossmatchResult.vizier_match_count ?? "N/A"}
+Catalogues: ${(crossmatchResult.vizier_catalogues ?? []).join("; ") || "N/A"}
+Note: ${crossmatchResult.vizier_note ?? "N/A"}
+
+Gaia NSS:
+Status: ${crossmatchResult.nss_status ?? "N/A"}
+Match: ${formatBoolean(crossmatchResult.nss_match)}
+Solution type: ${crossmatchResult.nss_solution_type ?? "N/A"}
+Note: ${crossmatchResult.nss_note ?? "N/A"}
+
+Validation note:
+${crossmatchResult.validation_note ?? "N/A"}`
+    : `
+
+Backend crossmatch result:
+No automatic crossmatch result is currently available for this source.`;
 
   return `Codex Alpha Candidate External Validation Checklist
 
@@ -162,18 +274,55 @@ ${sourceId}
 
 6. Known-object classification check
 - Compare Gaia, SIMBAD, VizieR and NSS evidence.
-- Classify the candidate conservatively as known object, likely stellar source, possible binary, possible variable, catalogue artefact, or unresolved candidate requiring further study.
+- Classify the candidate conservatively as known object, likely stellar source, possible binary, possible variable, catalogue artefact, or unresolved candidate requiring further study.${crossmatchBlock}
 
 Scientific note:
 This validation checklist does not confirm exotic physics. It defines a reproducible external verification pathway for a computationally selected Gaia candidate.`;
 }
 
-function buildValidationReport(source) {
+function buildValidationReport(source, crossmatchResult = null) {
   if (!source) {
     return "";
   }
 
   const sourceId = getSourceId(source);
+
+  const crossmatchBlock = crossmatchResult
+    ? `
+
+Automatic backend crossmatch:
+Validation status: ${normalizeLabel(crossmatchResult.validation_status)}
+Classification hint: ${normalizeLabel(crossmatchResult.classification_hint)}
+
+SIMBAD:
+Status: ${crossmatchResult.simbad_status ?? "N/A"}
+Match: ${formatBoolean(crossmatchResult.simbad_match)}
+Main ID: ${crossmatchResult.simbad_main_id ?? "N/A"}
+Object type: ${crossmatchResult.simbad_object_type ?? "N/A"}
+Angular separation: ${formatNumber(
+        crossmatchResult.simbad_angular_separation_arcsec,
+        6,
+      )} arcsec
+Note: ${crossmatchResult.simbad_note ?? "N/A"}
+
+VizieR:
+Status: ${crossmatchResult.vizier_status ?? "N/A"}
+Match count: ${crossmatchResult.vizier_match_count ?? "N/A"}
+Catalogues: ${(crossmatchResult.vizier_catalogues ?? []).join("; ") || "N/A"}
+Note: ${crossmatchResult.vizier_note ?? "N/A"}
+
+Gaia NSS:
+Status: ${crossmatchResult.nss_status ?? "N/A"}
+Match: ${formatBoolean(crossmatchResult.nss_match)}
+Solution type: ${crossmatchResult.nss_solution_type ?? "N/A"}
+Note: ${crossmatchResult.nss_note ?? "N/A"}
+
+Backend validation note:
+${crossmatchResult.validation_note ?? "N/A"}`
+    : `
+
+Automatic backend crossmatch:
+No backend crossmatch record is currently available for this source.`;
 
   return `Codex Alpha Candidate Validation Report
 
@@ -195,7 +344,7 @@ Local density score: ${formatNumber(source.local_density_score, 6)}
 Mean neighbor distance: ${formatNumber(source.mean_neighbor_distance, 6)}
 Dominant anomaly feature: ${source.dominant_anomaly_feature ?? "N/A"}
 Dominant feature z-score: ${formatNumber(source.dominant_feature_zscore, 6)}
-Coherence-proxy index: ${formatNumber(source.coherence_proxy, 6)}
+Coherence-proxy index: ${formatNumber(source.coherence_proxy, 6)}${crossmatchBlock}
 
 External inspection:
 Gaia Archive:
@@ -211,13 +360,13 @@ VizieR cone search:
 ${buildVizierUrl(source)}
 
 Gaia ADQL source query:
-${buildSourceAdqlQuery(source)}
+${getCrossmatchGaiaSourceAdql(source, crossmatchResult)}
 
 Gaia ADQL cone-search query:
-${buildConeSearchAdqlQuery(source)}
+${getCrossmatchConeSearchAdql(source, crossmatchResult)}
 
 Gaia NSS / binary-system ADQL query:
-${buildGaiaNssAdqlQuery(source)}
+${getCrossmatchNssAdql(source, crossmatchResult)}
 
 Scientific note:
 This source is an internal computational candidate of the Codex Alpha Computational Framework. The candidate status is based on anomaly score, structural graph relevance, local density, feature deviation and coherence-proxy ranking. This is not an official astronomical classification and does not imply that the source is physically exotic. Independent astrophysical validation is required.`;
@@ -245,7 +394,16 @@ function ValidationStep({ label, status, tone = "ready" }) {
   );
 }
 
-function CandidateValidationConsole({ selectedSource }) {
+function ResultCard({ label, value, tone = "neutral" }) {
+  return (
+    <div className={"validation-result-card validation-result-" + tone}>
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
+
+function CandidateValidationConsole({ selectedSource, crossmatchResult = null }) {
   if (!selectedSource) {
     return (
       <section className="panel candidate-validation-console">
@@ -265,11 +423,29 @@ function CandidateValidationConsole({ selectedSource }) {
   }
 
   const sourceId = getSourceId(selectedSource);
-  const sourceAdqlQuery = buildSourceAdqlQuery(selectedSource);
-  const coneSearchQuery = buildConeSearchAdqlQuery(selectedSource);
-  const gaiaNssQuery = buildGaiaNssAdqlQuery(selectedSource);
-  const validationReport = buildValidationReport(selectedSource);
-  const validationChecklist = buildValidationChecklist(selectedSource);
+  const sourceAdqlQuery = getCrossmatchGaiaSourceAdql(
+    selectedSource,
+    crossmatchResult,
+  );
+  const coneSearchQuery = getCrossmatchConeSearchAdql(
+    selectedSource,
+    crossmatchResult,
+  );
+  const gaiaNssQuery = getCrossmatchNssAdql(selectedSource, crossmatchResult);
+  const validationReport = buildValidationReport(
+    selectedSource,
+    crossmatchResult,
+  );
+  const validationChecklist = buildValidationChecklist(
+    selectedSource,
+    crossmatchResult,
+  );
+
+  const validationStatus =
+    crossmatchResult?.validation_status ?? "crossmatch_not_available";
+
+  const classificationHint =
+    crossmatchResult?.classification_hint ?? "pending_external_crossmatch";
 
   return (
     <section className="panel candidate-validation-console">
@@ -317,6 +493,112 @@ function CandidateValidationConsole({ selectedSource }) {
             </p>
           </div>
 
+          <div className="validation-backend-summary">
+            <ResultCard
+              label="Backend validation"
+              value={normalizeLabel(validationStatus)}
+              tone={getValidationTone(validationStatus)}
+            />
+
+            <ResultCard
+              label="Classification hint"
+              value={normalizeLabel(classificationHint)}
+              tone={getValidationTone(validationStatus)}
+            />
+
+            <ResultCard
+              label="SIMBAD"
+              value={normalizeLabel(crossmatchResult?.simbad_status)}
+              tone={getServiceTone(crossmatchResult?.simbad_status)}
+            />
+
+            <ResultCard
+              label="VizieR rows"
+              value={String(crossmatchResult?.vizier_match_count ?? "N/A")}
+              tone={getServiceTone(crossmatchResult?.vizier_status)}
+            />
+
+            <ResultCard
+              label="Gaia NSS"
+              value={normalizeLabel(crossmatchResult?.nss_status)}
+              tone={getServiceTone(crossmatchResult?.nss_status)}
+            />
+          </div>
+
+          {crossmatchResult && (
+            <div className="validation-backend-details">
+              <h3>Automatic crossmatch result</h3>
+
+              <div className="validation-mini-grid">
+                <p>
+                  <span>SIMBAD match</span>
+                  <strong>{formatBoolean(crossmatchResult.simbad_match)}</strong>
+                </p>
+
+                <p>
+                  <span>SIMBAD main ID</span>
+                  <strong>{crossmatchResult.simbad_main_id ?? "N/A"}</strong>
+                </p>
+
+                <p>
+                  <span>SIMBAD object type</span>
+                  <strong>
+                    {crossmatchResult.simbad_object_type ?? "N/A"}
+                  </strong>
+                </p>
+
+                <p>
+                  <span>SIMBAD separation</span>
+                  <strong>
+                    {formatNumber(
+                      crossmatchResult.simbad_angular_separation_arcsec,
+                      6,
+                    )}{" "}
+                    arcsec
+                  </strong>
+                </p>
+
+                <p>
+                  <span>VizieR status</span>
+                  <strong>{normalizeLabel(crossmatchResult.vizier_status)}</strong>
+                </p>
+
+                <p>
+                  <span>VizieR match count</span>
+                  <strong>{crossmatchResult.vizier_match_count ?? "N/A"}</strong>
+                </p>
+
+                <p>
+                  <span>NSS match</span>
+                  <strong>{formatBoolean(crossmatchResult.nss_match)}</strong>
+                </p>
+
+                <p>
+                  <span>NSS solution type</span>
+                  <strong>
+                    {crossmatchResult.nss_solution_type ?? "N/A"}
+                  </strong>
+                </p>
+              </div>
+
+              <p className="validation-console-note">
+                {crossmatchResult.validation_note ?? "No backend note available."}
+              </p>
+            </div>
+          )}
+
+          {!crossmatchResult && (
+            <div className="validation-backend-details">
+              <h3>Automatic crossmatch result</h3>
+
+              <p className="validation-console-note">
+                No automatic crossmatch record is currently available for this
+                source. The console remains usable through external links and
+                reproducible ADQL queries.
+              </p>
+            </div>
+          )}
+
           <div className="validation-action-row">
             <button
               type="button"
@@ -362,7 +644,7 @@ function CandidateValidationConsole({ selectedSource }) {
           <div className="validation-action-row">
             <a
               className="dashboard-nav-button"
-              href={buildSimbadUrl(selectedSource)}
+              href={crossmatchResult?.simbad_url ?? buildSimbadUrl(selectedSource)}
               target="_blank"
               rel="noreferrer"
             >
@@ -371,7 +653,7 @@ function CandidateValidationConsole({ selectedSource }) {
 
             <a
               className="dashboard-nav-button"
-              href={buildVizierUrl(selectedSource)}
+              href={crossmatchResult?.vizier_url ?? buildVizierUrl(selectedSource)}
               target="_blank"
               rel="noreferrer"
             >
@@ -380,7 +662,10 @@ function CandidateValidationConsole({ selectedSource }) {
 
             <a
               className="dashboard-nav-button"
-              href={buildGaiaArchiveUrl(selectedSource)}
+              href={
+                crossmatchResult?.gaia_archive_url ??
+                buildGaiaArchiveUrl(selectedSource)
+              }
               target="_blank"
               rel="noreferrer"
             >
@@ -389,7 +674,7 @@ function CandidateValidationConsole({ selectedSource }) {
 
             <a
               className="dashboard-nav-button"
-              href={buildEsaSkyUrl(selectedSource)}
+              href={crossmatchResult?.esasky_url ?? buildEsaSkyUrl(selectedSource)}
               target="_blank"
               rel="noreferrer"
             >
@@ -422,26 +707,42 @@ function CandidateValidationConsole({ selectedSource }) {
 
             <ValidationStep
               label="SIMBAD crossmatch"
-              status="External ready"
-              tone="ready"
+              status={
+                crossmatchResult
+                  ? normalizeLabel(crossmatchResult.simbad_status)
+                  : "External ready"
+              }
+              tone={getServiceTone(crossmatchResult?.simbad_status)}
             />
 
             <ValidationStep
               label="VizieR catalogue crossmatch"
-              status="External ready"
-              tone="ready"
+              status={
+                crossmatchResult
+                  ? normalizeLabel(crossmatchResult.vizier_status)
+                  : "External ready"
+              }
+              tone={getServiceTone(crossmatchResult?.vizier_status)}
             />
 
             <ValidationStep
               label="Gaia NSS / binary-system check"
-              status="ADQL ready"
-              tone="ready"
+              status={
+                crossmatchResult
+                  ? normalizeLabel(crossmatchResult.nss_status)
+                  : "ADQL ready"
+              }
+              tone={getServiceTone(crossmatchResult?.nss_status)}
             />
 
             <ValidationStep
               label="Known-object classification check"
-              status="Checklist ready"
-              tone="ready"
+              status={
+                crossmatchResult
+                  ? normalizeLabel(crossmatchResult.classification_hint)
+                  : "Checklist ready"
+              }
+              tone={getValidationTone(crossmatchResult?.validation_status)}
             />
           </div>
         </div>

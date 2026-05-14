@@ -144,6 +144,53 @@ function getCandidateId(index) {
   return "CAC-" + String(index + 1).padStart(3, "0");
 }
 
+function normalizeLabel(value) {
+  if (value === null || value === undefined || value === "") {
+    return "N/A";
+  }
+
+  return String(value)
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function getValidationStatusLabel(crossmatchResult) {
+  if (!crossmatchResult) {
+    return "Crossmatch not available";
+  }
+
+  return normalizeLabel(crossmatchResult.validation_status);
+}
+
+function getClassificationLabel(crossmatchResult) {
+  if (!crossmatchResult) {
+    return "Pending external crossmatch";
+  }
+
+  return normalizeLabel(crossmatchResult.classification_hint);
+}
+
+function getCrossmatchTone(crossmatchResult) {
+  if (!crossmatchResult) {
+    return "pending";
+  }
+
+  const status = String(crossmatchResult.validation_status ?? "");
+
+  if (
+    status === "high_priority_followup" ||
+    status === "externally_contextualized"
+  ) {
+    return "ready";
+  }
+
+  if (status === "incomplete_external_validation") {
+    return "warning";
+  }
+
+  return "pending";
+}
+
 function buildGaiaArchiveUrl(source) {
   const sourceId = getSourceId(source);
 
@@ -184,10 +231,30 @@ function mergeSourceContext({
   };
 }
 
-function buildCandidateSummary(candidate) {
+function buildCandidateSummary(candidate, crossmatchResult = null) {
   if (!candidate) {
     return "";
   }
+
+  const crossmatchBlock = crossmatchResult
+    ? `
+
+External crossmatch:
+Validation status: ${getValidationStatusLabel(crossmatchResult)}
+Classification hint: ${getClassificationLabel(crossmatchResult)}
+SIMBAD status: ${crossmatchResult.simbad_status ?? "N/A"}
+SIMBAD match: ${crossmatchResult.simbad_match ?? "N/A"}
+SIMBAD main ID: ${crossmatchResult.simbad_main_id ?? "N/A"}
+SIMBAD object type: ${crossmatchResult.simbad_object_type ?? "N/A"}
+VizieR status: ${crossmatchResult.vizier_status ?? "N/A"}
+VizieR match count: ${crossmatchResult.vizier_match_count ?? "N/A"}
+Gaia NSS status: ${crossmatchResult.nss_status ?? "N/A"}
+Gaia NSS match: ${crossmatchResult.nss_match ?? "N/A"}
+Gaia NSS solution type: ${crossmatchResult.nss_solution_type ?? "N/A"}`
+    : `
+
+External crossmatch:
+Validation status: Crossmatch not available yet.`;
 
   return `Codex Alpha Candidate Summary
 
@@ -210,7 +277,7 @@ Local density score: ${formatNumber(candidate.local_density_score, 6)}
 Mean neighbor distance: ${formatNumber(candidate.mean_neighbor_distance, 6)}
 Dominant anomaly feature: ${candidate.dominant_anomaly_feature ?? "N/A"}
 Dominant feature z-score: ${formatNumber(candidate.dominant_feature_zscore, 6)}
-Coherence-proxy index: ${formatNumber(candidate.coherence_proxy, 6)}
+Coherence-proxy index: ${formatNumber(candidate.coherence_proxy, 6)}${crossmatchBlock}
 
 Interpretation:
 This source is an internal computational candidate of the Codex Alpha Computational Framework. The candidate status is based on the convergence of anomaly score, graph centrality, local density, feature deviation and coherence-proxy ranking. This designation does not represent an official astronomical classification and requires independent astrophysical validation.`;
@@ -221,6 +288,7 @@ function CandidateRegistry({
   emergentStructures = [],
   graphCentrality = [],
   featureContributions = [],
+  candidateCrossmatchResults = [],
   selectedSource,
   onSourceSelect,
 }) {
@@ -240,6 +308,11 @@ function CandidateRegistry({
   const featureMap = useMemo(
     () => buildMapBySourceId(featureContributions),
     [featureContributions],
+  );
+
+  const crossmatchMap = useMemo(
+    () => buildMapBySourceId(candidateCrossmatchResults),
+    [candidateCrossmatchResults],
   );
 
   const candidates = useMemo(() => {
@@ -289,15 +362,26 @@ function CandidateRegistry({
     const ranked = enrichedAllSources
       .filter((source) => Number(source.anomaly_label) === -1)
       .sort((a, b) => b.coherence_proxy - a.coherence_proxy)
-      .map((source, index) => ({
-        ...source,
-        candidate_id: getCandidateId(index),
-        candidate_rank: index + 1,
-        candidate_status: getCandidateStatus(index + 1, source),
-      }));
+      .map((source, index) => {
+        const sourceId = getSourceId(source);
+        const crossmatchResult = crossmatchMap.get(sourceId) ?? null;
+
+        return {
+          ...source,
+          candidate_id: getCandidateId(index),
+          candidate_rank: index + 1,
+          candidate_status: getCandidateStatus(index + 1, source),
+          crossmatch_result: crossmatchResult,
+          validation_status:
+            crossmatchResult?.validation_status ?? "crossmatch_not_available",
+          classification_hint:
+            crossmatchResult?.classification_hint ??
+            "pending_external_crossmatch",
+        };
+      });
 
     return ranked;
-  }, [sources, emergentMap, centralityMap, featureMap]);
+  }, [sources, emergentMap, centralityMap, featureMap, crossmatchMap]);
 
   const selectedSourceId = selectedSource ? getSourceId(selectedSource) : null;
 
@@ -315,6 +399,8 @@ function CandidateRegistry({
     return candidates[0] ?? null;
   }, [candidates, selectedSourceId]);
 
+  const activeCrossmatchResult = activeCandidate?.crossmatch_result ?? null;
+
   const visibleCandidates = useMemo(() => {
     let filtered = candidates.slice();
 
@@ -326,6 +412,12 @@ function CandidateRegistry({
           getSourceId(candidate).toLowerCase().includes(query) ||
           String(candidate.candidate_id).toLowerCase().includes(query) ||
           String(candidate.dominant_anomaly_feature ?? "")
+            .toLowerCase()
+            .includes(query) ||
+          String(candidate.validation_status ?? "")
+            .toLowerCase()
+            .includes(query) ||
+          String(candidate.classification_hint ?? "")
             .toLowerCase()
             .includes(query)
         );
@@ -343,8 +435,7 @@ function CandidateRegistry({
 
       if (sortMode === "anomaly_score") {
         return (
-          normalizeNumber(b.anomaly_score) -
-          normalizeNumber(a.anomaly_score)
+          normalizeNumber(b.anomaly_score) - normalizeNumber(a.anomaly_score)
         );
       }
 
@@ -373,6 +464,12 @@ function CandidateRegistry({
         return (
           normalizeNumber(b.radial_velocity) -
           normalizeNumber(a.radial_velocity)
+        );
+      }
+
+      if (sortMode === "validation_status") {
+        return String(a.validation_status ?? "").localeCompare(
+          String(b.validation_status ?? ""),
         );
       }
 
@@ -406,7 +503,7 @@ function CandidateRegistry({
   }
 
   function copyCandidateSummary(candidate) {
-    copyText(buildCandidateSummary(candidate));
+    copyText(buildCandidateSummary(candidate, candidate?.crossmatch_result));
   }
 
   return (
@@ -443,6 +540,47 @@ function CandidateRegistry({
             <div className="candidate-score-orb">
               <span>K proxy</span>
               <strong>{formatNumber(activeCandidate.coherence_proxy, 4)}</strong>
+            </div>
+          </div>
+
+          <div className="candidate-crossmatch-summary">
+            <div
+              className={
+                "candidate-crossmatch-pill candidate-crossmatch-" +
+                getCrossmatchTone(activeCrossmatchResult)
+              }
+            >
+              <span>Validation status</span>
+              <strong>{getValidationStatusLabel(activeCrossmatchResult)}</strong>
+            </div>
+
+            <div
+              className={
+                "candidate-crossmatch-pill candidate-crossmatch-" +
+                getCrossmatchTone(activeCrossmatchResult)
+              }
+            >
+              <span>Classification hint</span>
+              <strong>{getClassificationLabel(activeCrossmatchResult)}</strong>
+            </div>
+
+            <div className="candidate-crossmatch-pill">
+              <span>SIMBAD</span>
+              <strong>
+                {activeCrossmatchResult?.simbad_status ?? "N/A"}
+              </strong>
+            </div>
+
+            <div className="candidate-crossmatch-pill">
+              <span>VizieR rows</span>
+              <strong>
+                {activeCrossmatchResult?.vizier_match_count ?? "N/A"}
+              </strong>
+            </div>
+
+            <div className="candidate-crossmatch-pill">
+              <span>Gaia NSS</span>
+              <strong>{activeCrossmatchResult?.nss_status ?? "N/A"}</strong>
             </div>
           </div>
 
@@ -558,18 +696,19 @@ function CandidateRegistry({
         </div>
       )}
 
-      {activeCandidate && (
-        <SkyPreviewPanel selectedSource={activeCandidate} />
-      )}
+      {activeCandidate && <SkyPreviewPanel selectedSource={activeCandidate} />}
 
       {activeCandidate && (
-        <CandidateValidationConsole selectedSource={activeCandidate} />
+        <CandidateValidationConsole
+          selectedSource={activeCandidate}
+          crossmatchResult={activeCrossmatchResult}
+        />
       )}
 
       <div className="candidate-table-toolbar">
         <input
           type="search"
-          placeholder="Search candidate ID, SOURCE_ID or dominant feature..."
+          placeholder="Search candidate ID, SOURCE_ID, dominant feature or validation status..."
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
         />
@@ -589,6 +728,7 @@ function CandidateRegistry({
             </option>
             <option value="local_density_score">Local density</option>
             <option value="radial_velocity">Radial velocity</option>
+            <option value="validation_status">Validation status</option>
             <option value="SOURCE_ID">SOURCE_ID</option>
           </select>
         </label>
@@ -603,6 +743,8 @@ function CandidateRegistry({
               <th>Candidate</th>
               <th>SOURCE_ID</th>
               <th>Status</th>
+              <th>Validation</th>
+              <th>Classification</th>
               <th>K proxy</th>
               <th>Anomaly score</th>
               <th>Structural rank</th>
@@ -633,6 +775,8 @@ function CandidateRegistry({
                   <td>{candidate.candidate_id}</td>
                   <td>{sourceId}</td>
                   <td>{candidate.candidate_status}</td>
+                  <td>{getValidationStatusLabel(candidate.crossmatch_result)}</td>
+                  <td>{getClassificationLabel(candidate.crossmatch_result)}</td>
                   <td>{formatNumber(candidate.coherence_proxy, 6)}</td>
                   <td>{formatNumber(candidate.anomaly_score, 6)}</td>
                   <td>{candidate.structural_rank ?? "N/A"}</td>
@@ -677,7 +821,8 @@ function CandidateRegistry({
       <p className="candidate-registry-note">
         Gaia Archive may require manual confirmation because of ESA interface
         popups. ESASky links are generated from RA/DEC coordinates and are
-        intended for visual inspection.
+        intended for visual inspection. Crossmatch values are loaded from the
+        automatic backend when candidate_crossmatch_results.json is available.
       </p>
     </section>
   );

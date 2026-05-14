@@ -2716,3 +2716,252 @@ h1 {
     width: 100%;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   Candidate crossmatch backend UI
+   ────────────────────────────────────────────────────────────── */
+
+.candidate-crossmatch-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin: 18px 0 20px;
+}
+
+.candidate-crossmatch-pill {
+  padding: 13px 14px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at top left, rgba(0, 245, 255, 0.08), transparent 45%),
+    rgba(15, 23, 42, 0.72);
+  box-shadow: inset 0 0 22px rgba(15, 23, 42, 0.65);
+}
+
+.candidate-crossmatch-pill span {
+  display: block;
+  margin-bottom: 5px;
+  color: rgba(226, 232, 240, 0.68);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.candidate-crossmatch-pill strong {
+  color: #e2e8f0;
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+
+.candidate-crossmatch-ready {
+  border-color: rgba(57, 255, 20, 0.42);
+  background:
+    radial-gradient(circle at top left, rgba(57, 255, 20, 0.14), transparent 48%),
+    rgba(15, 23, 42, 0.76);
+  box-shadow:
+    0 0 18px rgba(57, 255, 20, 0.12),
+    inset 0 0 20px rgba(57, 255, 20, 0.04);
+}
+
+.candidate-crossmatch-ready strong {
+  color: #39ff14;
+}
+
+.candidate-crossmatch-warning {
+  border-color: rgba(255, 224, 51, 0.42);
+  background:
+    radial-gradient(circle at top left, rgba(255, 224, 51, 0.14), transparent 48%),
+    rgba(15, 23, 42, 0.76);
+}
+
+.candidate-crossmatch-warning strong {
+  color: #ffe033;
+}
+
+.candidate-crossmatch-pending {
+  border-color: rgba(167, 139, 250, 0.36);
+  background:
+    radial-gradient(circle at top left, rgba(167, 139, 250, 0.12), transparent 48%),
+    rgba(15, 23, 42, 0.76);
+}
+
+.candidate-crossmatch-pending strong {
+  color: #c4b5fd;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Candidate Validation Console backend result cards
+   ────────────────────────────────────────────────────────────── */
+
+.validation-backend-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.validation-result-card {
+  min-height: 84px;
+  padding: 13px 14px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at top left, rgba(0, 245, 255, 0.08), transparent 45%),
+    rgba(2, 6, 23, 0.74);
+  box-shadow:
+    inset 0 0 18px rgba(15, 23, 42, 0.9),
+    0 0 14px rgba(0, 245, 255, 0.04);
+}
+
+.validation-result-card span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(226, 232, 240, 0.68);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.validation-result-card strong {
+  display: block;
+  color: #e2e8f0;
+  font-size: 0.92rem;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.validation-result-ready {
+  border-color: rgba(57, 255, 20, 0.42);
+  background:
+    radial-gradient(circle at top left, rgba(57, 255, 20, 0.14), transparent 50%),
+    rgba(2, 6, 23, 0.76);
+  box-shadow:
+    0 0 18px rgba(57, 255, 20, 0.1),
+    inset 0 0 18px rgba(57, 255, 20, 0.04);
+}
+
+.validation-result-ready strong {
+  color: #39ff14;
+}
+
+.validation-result-planned {
+  border-color: rgba(255, 224, 51, 0.42);
+  background:
+    radial-gradient(circle at top left, rgba(255, 224, 51, 0.13), transparent 50%),
+    rgba(2, 6, 23, 0.76);
+  box-shadow:
+    0 0 16px rgba(255, 224, 51, 0.08),
+    inset 0 0 18px rgba(255, 224, 51, 0.035);
+}
+
+.validation-result-planned strong {
+  color: #ffe033;
+}
+
+.validation-result-neutral {
+  border-color: rgba(0, 245, 255, 0.28);
+}
+
+.validation-result-neutral strong {
+  color: #00f5ff;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Backend detailed result block
+   ────────────────────────────────────────────────────────────── */
+
+.validation-backend-details {
+  margin: 18px 0;
+  padding: 18px;
+  border: 1px solid rgba(0, 245, 255, 0.18);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.86), rgba(2, 6, 23, 0.86)),
+    radial-gradient(circle at top right, rgba(0, 245, 255, 0.08), transparent 45%);
+}
+
+.validation-backend-details h3 {
+  margin: 0 0 14px;
+  color: #e2e8f0;
+  font-size: 1rem;
+}
+
+.validation-backend-details .validation-mini-grid {
+  margin-top: 10px;
+}
+
+.validation-backend-details .validation-console-note {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-left: 3px solid rgba(57, 255, 20, 0.55);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.72);
+  color: rgba(226, 232, 240, 0.78);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Validation step tones refinement
+   ────────────────────────────────────────────────────────────── */
+
+.validation-step-ready {
+  border-color: rgba(57, 255, 20, 0.34);
+  background:
+    radial-gradient(circle at left, rgba(57, 255, 20, 0.11), transparent 55%),
+    rgba(15, 23, 42, 0.72);
+}
+
+.validation-step-ready strong {
+  color: #39ff14;
+}
+
+.validation-step-planned {
+  border-color: rgba(255, 224, 51, 0.34);
+  background:
+    radial-gradient(circle at left, rgba(255, 224, 51, 0.1), transparent 55%),
+    rgba(15, 23, 42, 0.72);
+}
+
+.validation-step-planned strong {
+  color: #ffe033;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Table readability for added validation columns
+   ────────────────────────────────────────────────────────────── */
+
+.candidate-table th:nth-child(4),
+.candidate-table th:nth-child(5),
+.candidate-table td:nth-child(4),
+.candidate-table td:nth-child(5) {
+  min-width: 185px;
+}
+
+.candidate-table td:nth-child(4),
+.candidate-table td:nth-child(5) {
+  color: rgba(226, 232, 240, 0.86);
+  font-weight: 700;
+}
+
+.candidate-table td:nth-child(4) {
+  color: #39ff14;
+}
+
+.candidate-table td:nth-child(5) {
+  color: #00f5ff;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Mobile / narrow layout safety
+   ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .candidate-crossmatch-summary,
+  .validation-backend-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .validation-backend-details {
+    padding: 14px;
+  }
+}
