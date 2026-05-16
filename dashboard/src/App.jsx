@@ -5,13 +5,19 @@ import GaiaPhysicalMap from "./components/GaiaPhysicalMap.jsx";
 import RelationalKnowledgeGraph from "./components/RelationalKnowledgeGraph.jsx";
 import CoherenceGradientModule from "./components/CoherenceGradientModule.jsx";
 import CandidateRegistry from "./components/CandidateRegistry.jsx";
+import AstrometricDynamicsLab from "./components/AstrometricDynamicsLab.jsx";
+import CandidateInvestigationCockpit from "./components/CandidateInvestigationCockpit.jsx";
 
 const DATA_BASE = "/data";
 const CODEX_ALPHA_WEBSITE = "https://www.codexalpha.org";
 
 async function loadJson(path) {
   const response = await fetch(path);
-  if (!response.ok) throw new Error("Unable to load " + path);
+
+  if (!response.ok) {
+    throw new Error("Unable to load " + path);
+  }
+
   return response.json();
 }
 
@@ -41,26 +47,40 @@ async function loadOptionalJson(path, fallback = []) {
 
 async function loadText(path) {
   const response = await fetch(path);
-  if (!response.ok) throw new Error("Unable to load " + path);
+
+  if (!response.ok) {
+    throw new Error("Unable to load " + path);
+  }
+
   return response.text();
 }
 
 function formatNumber(value, digits = 6) {
   const number = Number(value);
-  if (Number.isNaN(number)) return "N/A";
+
+  if (Number.isNaN(number)) {
+    return "N/A";
+  }
+
   return number.toFixed(digits);
 }
 
 function formatGaiaValue(value, digits = 10) {
   const number = Number(value);
-  if (Number.isNaN(number)) return "N/A";
+
+  if (Number.isNaN(number)) {
+    return "N/A";
+  }
+
   return number.toFixed(digits);
 }
 
 /* ─── Lightweight Markdown renderer ──────────────────────────────────────── */
 
 function renderMarkdown(md) {
-  if (!md) return [];
+  if (!md) {
+    return [];
+  }
 
   const lines = md.split("\n");
   const elements = [];
@@ -74,7 +94,9 @@ function renderMarkdown(md) {
     let m;
 
     while ((m = regex.exec(text)) !== null) {
-      if (m.index > last) parts.push(text.slice(last, m.index));
+      if (m.index > last) {
+        parts.push(text.slice(last, m.index));
+      }
 
       if (m[2]) {
         parts.push(
@@ -97,7 +119,9 @@ function renderMarkdown(md) {
       last = m.index + m[0].length;
     }
 
-    if (last < text.length) parts.push(text.slice(last));
+    if (last < text.length) {
+      parts.push(text.slice(last));
+    }
 
     return parts.length ? parts : text;
   }
@@ -314,7 +338,7 @@ function NavigationActions({ currentPage, setCurrentPage }) {
         Back to Website
       </a>
 
-      {currentPage === "dashboard" ? (
+      {currentPage === "dashboard" && (
         <button
           type="button"
           className="dashboard-nav-button dashboard-nav-button-accent"
@@ -322,14 +346,82 @@ function NavigationActions({ currentPage, setCurrentPage }) {
         >
           Advanced Analysis Layer
         </button>
-      ) : (
-        <button
-          type="button"
-          className="dashboard-nav-button dashboard-nav-button-accent"
-          onClick={() => setCurrentPage("dashboard")}
-        >
-          Operational Dashboard
-        </button>
+      )}
+
+      {currentPage === "advanced" && (
+        <>
+          <button
+            type="button"
+            className="dashboard-nav-button dashboard-nav-button-accent"
+            onClick={() => setCurrentPage("dashboard")}
+          >
+            Operational Dashboard
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("dynamics")}
+          >
+            Astrometric Dynamics Lab
+          </button>
+        </>
+      )}
+
+      {currentPage === "dynamics" && (
+        <>
+          <button
+            type="button"
+            className="dashboard-nav-button dashboard-nav-button-accent"
+            onClick={() => setCurrentPage("advanced")}
+          >
+            Advanced Analysis Layer
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("dashboard")}
+          >
+            Operational Dashboard
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("validation")}
+          >
+            Continue Analysis
+          </button>
+        </>
+      )}
+
+      {currentPage === "validation" && (
+        <>
+          <button
+            type="button"
+            className="dashboard-nav-button dashboard-nav-button-accent"
+            onClick={() => setCurrentPage("dynamics")}
+          >
+            Back to Dynamics Lab
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("advanced")}
+          >
+            Advanced Analysis Layer
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("dashboard")}
+          >
+            Operational Dashboard
+          </button>
+        </>
       )}
     </div>
   );
@@ -413,6 +505,282 @@ function AdvancedAnalysisLayer({
         selectedSource={selectedNode}
         onSourceSelect={setSelectedNode}
       />
+
+      <section className="panel dynamics-launch-panel">
+        <div>
+          <div className="eyebrow">Third Analysis Interface</div>
+
+          <h2>Astrometric Dynamics Lab</h2>
+
+          <p>
+            Continue to the third analysis interface for astrometric distance,
+            proper-motion, tangential-velocity, possible comoving-pair and
+            dynamical follow-up diagnostics.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          className="dashboard-nav-button dashboard-nav-button-accent"
+          onClick={() => setCurrentPage("dynamics")}
+        >
+          Open Astrometric Dynamics Lab
+        </button>
+      </section>
+    </section>
+  );
+}
+
+function ExternalValidationLayer({
+  setCurrentPage,
+  selectedNode,
+  candidateCrossmatchResults,
+  possibleBinaryPairs,
+}) {
+  const selectedSourceId = String(
+    selectedNode?.SOURCE_ID ?? selectedNode?.source_id ?? selectedNode?.id ?? "",
+  );
+
+  const selectedCrossmatch = useMemo(() => {
+    if (!selectedSourceId) {
+      return null;
+    }
+
+    return (
+      candidateCrossmatchResults.find((item) => {
+        const itemId = String(
+          item?.SOURCE_ID ??
+            item?.source_id ??
+            item?.gaia_source_id ??
+            item?.id ??
+            "",
+        );
+
+        return itemId === selectedSourceId;
+      }) ?? null
+    );
+  }, [candidateCrossmatchResults, selectedSourceId]);
+
+  const selectedPairs = useMemo(() => {
+    if (!selectedSourceId) {
+      return [];
+    }
+
+    return possibleBinaryPairs.filter((pair) => {
+      const sourceA = String(
+        pair?.source_a ??
+          pair?.source_id_a ??
+          pair?.SOURCE_ID_A ??
+          pair?.primary_source_id ??
+          pair?.sourceA ??
+          pair?.a ??
+          "",
+      );
+
+      const sourceB = String(
+        pair?.source_b ??
+          pair?.source_id_b ??
+          pair?.SOURCE_ID_B ??
+          pair?.secondary_source_id ??
+          pair?.sourceB ??
+          pair?.b ??
+          "",
+      );
+
+      return sourceA === selectedSourceId || sourceB === selectedSourceId;
+    });
+  }, [possibleBinaryPairs, selectedSourceId]);
+
+  return (
+    <section className="advanced-page-shell">
+      <div className="panel advanced-hero-panel">
+        <div className="eyebrow">Fourth Analysis Interface</div>
+
+        <h2>External Validation & Follow-up Layer</h2>
+
+        <p>
+          This layer is reserved for catalogue validation, follow-up planning,
+          crossmatch review, Gaia NSS inspection and candidate-status tracking.
+          It does not confirm astrophysical claims by itself; it organizes the
+          evidence required before any stronger interpretation.
+        </p>
+
+        <div className="advanced-actions">
+          <button
+            type="button"
+            className="dashboard-nav-button dashboard-nav-button-accent"
+            onClick={() => setCurrentPage("dynamics")}
+          >
+            Back to Astrometric Dynamics Lab
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("advanced")}
+          >
+            Back to Advanced Analysis Layer
+          </button>
+        </div>
+      </div>
+
+      <section className="metrics-grid dynamics-summary-grid">
+        <MetricCard
+          label="Crossmatch records"
+          value={candidateCrossmatchResults.length}
+          subtitle="Loaded validation entries"
+        />
+
+        <MetricCard
+          label="Possible pairs"
+          value={possibleBinaryPairs.length}
+          subtitle="Imported/local candidate relations"
+        />
+
+        <MetricCard
+          label="Selected source"
+          value={selectedSourceId || "None"}
+          subtitle="Current validation target"
+        />
+
+        <MetricCard
+          label="Attached pairs"
+          value={selectedPairs.length}
+          subtitle="Relations involving selected source"
+        />
+      </section>
+
+      <section className="panel dynamics-lab-panel">
+        <div className="panel-header">
+          <div>
+            <h2>Selected Source Validation Snapshot</h2>
+            <span>External catalogue and local relation status</span>
+          </div>
+        </div>
+
+        {!selectedNode && (
+          <div className="empty-selection">
+            Select a source from the dashboard, advanced layer or dynamics lab
+            to populate this validation page.
+          </div>
+        )}
+
+        {selectedNode && (
+          <div className="candidate-primary-card dynamics-primary-card">
+            <div className="candidate-primary-header">
+              <div>
+                <span className="candidate-id">VALIDATION TARGET</span>
+
+                <h3>Gaia DR3 Source {selectedSourceId}</h3>
+
+                <p>
+                  This panel summarizes whether the selected source already has
+                  local crossmatch evidence or possible pair relations.
+                </p>
+              </div>
+
+              <div className="candidate-score-orb">
+                <span>Pair links</span>
+                <strong>{selectedPairs.length}</strong>
+              </div>
+            </div>
+
+            <div className="candidate-explanation-grid">
+              <div className="candidate-explanation-card">
+                <span>SIMBAD status</span>
+                <strong>
+                  {selectedCrossmatch?.simbad_status ??
+                    selectedCrossmatch?.simbad_match ??
+                    selectedCrossmatch?.simbad ??
+                    "N/A"}
+                </strong>
+                <p>
+                  External object identification should be checked manually
+                  before assigning any physical class.
+                </p>
+              </div>
+
+              <div className="candidate-explanation-card">
+                <span>SIMBAD main ID</span>
+                <strong>
+                  {selectedCrossmatch?.simbad_main_id ??
+                    selectedCrossmatch?.main_id ??
+                    selectedCrossmatch?.simbad_id ??
+                    "N/A"}
+                </strong>
+                <p>
+                  A catalogue name or alias can indicate a known source, but not
+                  necessarily a binary or planet-host classification.
+                </p>
+              </div>
+
+              <div className="candidate-explanation-card">
+                <span>VizieR status</span>
+                <strong>
+                  {selectedCrossmatch?.vizier_status ??
+                    selectedCrossmatch?.vizier_match ??
+                    selectedCrossmatch?.vizier ??
+                    "N/A"}
+                </strong>
+                <p>
+                  VizieR associations are useful for photometry, variability
+                  surveys and catalogue-level context.
+                </p>
+              </div>
+
+              <div className="candidate-explanation-card">
+                <span>Gaia NSS status</span>
+                <strong>
+                  {selectedCrossmatch?.nss_status ??
+                    selectedCrossmatch?.nss_match ??
+                    selectedCrossmatch?.gaia_nss ??
+                    selectedCrossmatch?.nss ??
+                    "N/A"}
+                </strong>
+                <p>
+                  Gaia NSS is the key catalogue layer for non-single-star
+                  solutions when available.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+
+      <section className="panel dynamics-lab-panel">
+        <div className="panel-header">
+          <div>
+            <h2>Follow-up Queue Blueprint</h2>
+            <span>Planned validation workflow</span>
+          </div>
+        </div>
+
+        <div className="candidate-detailed-note">
+          <h3>Recommended validation order</h3>
+
+          <ol className="dossier-validation-list">
+            <li>Verify Gaia DR3 source identity and astrometric parameters.</li>
+            <li>Check SIMBAD object type, aliases and bibliography.</li>
+            <li>Check VizieR catalogue context and photometric associations.</li>
+            <li>Inspect Gaia NSS for non-single-star solutions.</li>
+            <li>
+              For possible pair candidates, compare angular separation,
+              parallax, proper motion and radial velocity.
+            </li>
+            <li>
+              Only after external confirmation, promote the source from
+              candidate-level status to a stronger scientific interpretation.
+            </li>
+          </ol>
+        </div>
+
+        <p className="candidate-registry-note">
+          This fourth layer is currently a structured validation shell. It is
+          ready for the next implementation step: manual status labels, export
+          queue, confirmed/rejected candidate flags and persistent follow-up
+          notes.
+        </p>
+      </section>
     </section>
   );
 }
@@ -432,9 +800,18 @@ function App() {
   const [candidateCrossmatchResults, setCandidateCrossmatchResults] = useState(
     [],
   );
+  const [possibleBinaryPairs, setPossibleBinaryPairs] = useState([]);
   const [report, setReport] = useState("");
   const [selectedNode, setSelectedNode] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    });
+  }, [currentPage]);
 
   useEffect(() => {
     async function loadDashboardData() {
@@ -448,6 +825,7 @@ function App() {
           featureContributionsData,
           emergentStructuresData,
           candidateCrossmatchData,
+          possibleBinaryPairsData,
           reportText,
         ] = await Promise.all([
           loadJson(DATA_BASE + "/summary.json"),
@@ -458,6 +836,7 @@ function App() {
           loadJson(DATA_BASE + "/feature_contributions.json"),
           loadJson(DATA_BASE + "/emergent_structures.json"),
           loadOptionalJson(DATA_BASE + "/candidate_crossmatch_results.json", []),
+          loadOptionalJson(DATA_BASE + "/possible_binary_pairs.json", []),
           loadText(DATA_BASE + "/report.md"),
         ]);
 
@@ -469,6 +848,7 @@ function App() {
         setFeatureContributions(featureContributionsData);
         setEmergentStructures(emergentStructuresData);
         setCandidateCrossmatchResults(candidateCrossmatchData);
+        setPossibleBinaryPairs(possibleBinaryPairsData);
         setReport(reportText);
       } catch (err) {
         setError(err.message);
@@ -527,6 +907,34 @@ function App() {
           candidateCrossmatchResults={candidateCrossmatchResults}
           selectedNode={selectedNode}
           setSelectedNode={setSelectedNode}
+        />
+      )}
+
+      {!error && currentPage === "dynamics" && (
+        <AstrometricDynamicsLab
+          allSources={allSources}
+          graphCentrality={centrality}
+          featureContributions={featureContributions}
+          emergentStructures={emergentStructures}
+          candidateCrossmatchResults={candidateCrossmatchResults}
+          possibleBinaryPairs={possibleBinaryPairs}
+          selectedSource={selectedNode}
+          onSourceSelect={setSelectedNode}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
+
+      {!error && currentPage === "validation" && (
+        <CandidateInvestigationCockpit
+          allSources={allSources}
+          graphCentrality={centrality}
+          featureContributions={featureContributions}
+          emergentStructures={emergentStructures}
+          candidateCrossmatchResults={candidateCrossmatchResults}
+          possibleBinaryPairs={possibleBinaryPairs}
+          selectedSource={selectedNode}
+          onSourceSelect={setSelectedNode}
+          setCurrentPage={setCurrentPage}
         />
       )}
 
