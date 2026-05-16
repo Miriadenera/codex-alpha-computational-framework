@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import CandidateSignalMap3D from "./CandidateSignalMap3D.jsx";
 
 const GAIA_ARCHIVE_BASE = "https://gea.esac.esa.int/archive/";
 const SIMBAD_BASE = "https://simbad.u-strasbg.fr/simbad/";
@@ -6,26 +7,43 @@ const VIZIER_BASE = "https://vizier.cds.unistra.fr/viz-bin/VizieR";
 const ESASKY_BASE = "https://sky.esa.int/";
 
 function normalizeNumber(value, fallback = null) {
-  if (value === null || value === undefined || value === "") return fallback;
+  if (value === null || value === undefined || value === "") {
+    return fallback;
+  }
+
   const number = Number(value);
   return Number.isFinite(number) ? number : fallback;
 }
 
 function clamp01(value) {
-  const n = normalizeNumber(value, 0);
-  if (n >= 0 && n <= 1) return n;
-  return Math.max(0, Math.min(1, n / 100));
+  const number = normalizeNumber(value, 0);
+
+  if (number >= 0 && number <= 1) {
+    return number;
+  }
+
+  return Math.max(0, Math.min(1, number / 100));
 }
 
 function formatNumber(value, digits = 4) {
-  const n = normalizeNumber(value, null);
-  if (n === null) return "N/A";
-  if (Math.abs(n) >= 10000) return n.toExponential(3);
-  return n.toFixed(digits);
+  const number = normalizeNumber(value, null);
+
+  if (number === null) {
+    return "N/A";
+  }
+
+  if (Math.abs(number) >= 10000) {
+    return number.toExponential(3);
+  }
+
+  return number.toFixed(digits);
 }
 
 function text(value) {
-  if (value === null || value === undefined || value === "") return "N/A";
+  if (value === null || value === undefined || value === "") {
+    return "N/A";
+  }
+
   return String(value);
 }
 
@@ -35,15 +53,18 @@ function getSourceId(source) {
       source?.source_id ??
       source?.sourceId ??
       source?.id ??
-      ""
+      "",
   );
 }
 
 function firstAvailable(source, keys, fallback = null) {
-  if (!source) return fallback;
+  if (!source) {
+    return fallback;
+  }
 
   for (const key of keys) {
     const value = source[key];
+
     if (value !== undefined && value !== null && value !== "") {
       return value;
     }
@@ -58,60 +79,91 @@ function buildMapBySourceId(items = []) {
 
   for (const item of array) {
     const id = getSourceId(item);
-    if (id) map.set(id, item);
+
+    if (id) {
+      map.set(id, item);
+    }
   }
 
   return map;
 }
 
 function computeDistancePc(parallaxMas) {
-  const p = normalizeNumber(parallaxMas, null);
-  if (p === null || p <= 0) return null;
-  return 1000 / p;
+  const parallax = normalizeNumber(parallaxMas, null);
+
+  if (parallax === null || parallax <= 0) {
+    return null;
+  }
+
+  return 1000 / parallax;
 }
 
 function computeProperMotionTotal(pmra, pmdec) {
   const a = normalizeNumber(pmra, null);
   const d = normalizeNumber(pmdec, null);
-  if (a === null || d === null) return null;
+
+  if (a === null || d === null) {
+    return null;
+  }
+
   return Math.sqrt(a * a + d * d);
 }
 
 function computeTangentialVelocity(pmTotal, parallaxMas) {
   const mu = normalizeNumber(pmTotal, null);
-  const p = normalizeNumber(parallaxMas, null);
-  if (mu === null || p === null || p <= 0) return null;
-  return 4.74047 * (mu / p);
+  const parallax = normalizeNumber(parallaxMas, null);
+
+  if (mu === null || parallax === null || parallax <= 0) {
+    return null;
+  }
+
+  return 4.74047 * (mu / parallax);
 }
 
 function computeApproximateSpaceVelocity(tangentialVelocity, radialVelocity) {
   const vt = normalizeNumber(tangentialVelocity, null);
   const rv = normalizeNumber(radialVelocity, null);
 
-  if (vt === null && rv === null) return null;
-  if (vt === null) return Math.abs(rv);
-  if (rv === null) return Math.abs(vt);
+  if (vt === null && rv === null) {
+    return null;
+  }
+
+  if (vt === null) {
+    return Math.abs(rv);
+  }
+
+  if (rv === null) {
+    return Math.abs(vt);
+  }
 
   return Math.sqrt(vt * vt + rv * rv);
 }
 
 function estimateColorIndex(source) {
-  const bpRp = normalizeNumber(firstAvailable(source, ["bp_rp", "BP_RP"]), null);
-  if (bpRp !== null) return bpRp;
+  const direct = normalizeNumber(
+    firstAvailable(source, ["gaia_color_index", "bp_rp", "BP_RP"]),
+    null,
+  );
+
+  if (direct !== null) {
+    return direct;
+  }
 
   const bp = normalizeNumber(
     firstAvailable(source, ["phot_bp_mean_mag", "PHOT_BP_MEAN_MAG"]),
-    null
+    null,
   );
 
   const rp = normalizeNumber(
     firstAvailable(source, ["phot_rp_mean_mag", "PHOT_RP_MEAN_MAG"]),
-    null
+    null,
   );
 
-  if (bp !== null && rp !== null) return bp - rp;
+  if (bp !== null && rp !== null) {
+    return bp - rp;
+  }
 
-  return normalizeNumber(firstAvailable(source, ["gaia_color_index"]), null);
+  return null;
 }
 
 function classifyDynamics(record) {
@@ -119,10 +171,21 @@ function classifyDynamics(record) {
   const velocity = normalizeNumber(record.approximate_space_velocity, 0);
   const pmTotal = normalizeNumber(record.proper_motion_total, 0);
 
-  if (dynamics >= 0.72) return "High-priority dynamical candidate";
-  if (dynamics >= 0.52) return "Moderate-priority dynamical candidate";
-  if (velocity > 140) return "High-velocity candidate";
-  if (pmTotal > 90) return "High proper-motion candidate";
+  if (dynamics >= 0.72) {
+    return "High-priority dynamical candidate";
+  }
+
+  if (dynamics >= 0.52) {
+    return "Moderate-priority dynamical candidate";
+  }
+
+  if (velocity > 140) {
+    return "High-velocity candidate";
+  }
+
+  if (pmTotal > 90) {
+    return "High proper-motion candidate";
+  }
 
   return "Candidate-level kinematic profile";
 }
@@ -130,9 +193,17 @@ function classifyDynamics(record) {
 function classifyHiddenCompanion(record) {
   const value = normalizeNumber(record.hidden_companion_index, 0);
 
-  if (value >= 0.7) return "High unresolved-companion suspicion proxy";
-  if (value >= 0.45) return "Moderate unresolved-companion suspicion proxy";
-  if (value >= 0.25) return "Weak unresolved-companion suspicion proxy";
+  if (value >= 0.7) {
+    return "High unresolved-companion suspicion proxy";
+  }
+
+  if (value >= 0.45) {
+    return "Moderate unresolved-companion suspicion proxy";
+  }
+
+  if (value >= 0.25) {
+    return "Weak unresolved-companion suspicion proxy";
+  }
 
   return "Low unresolved-companion suspicion proxy";
 }
@@ -159,19 +230,19 @@ function enrichSource(source, maps) {
   const distancePc =
     normalizeNumber(
       firstAvailable(merged, ["distance_pc", "distancePc", "distance_estimate"]),
-      null
+      null,
     ) ?? computeDistancePc(parallax);
 
   const properMotionTotal =
     normalizeNumber(
       firstAvailable(merged, ["proper_motion_total", "properMotionTotal"]),
-      null
+      null,
     ) ?? computeProperMotionTotal(pmra, pmdec);
 
   const tangentialVelocity =
     normalizeNumber(
       firstAvailable(merged, ["tangential_velocity", "tangentialVelocity"]),
-      null
+      null,
     ) ?? computeTangentialVelocity(properMotionTotal, parallax);
 
   const approximateSpaceVelocity =
@@ -180,12 +251,12 @@ function enrichSource(source, maps) {
         "approximate_space_velocity",
         "approximateSpaceVelocity",
       ]),
-      null
+      null,
     ) ?? computeApproximateSpaceVelocity(tangentialVelocity, radialVelocity);
 
   const anomalyScore = normalizeNumber(
     firstAvailable(merged, ["anomaly_score", "anomalyScore"]),
-    0
+    0,
   );
 
   const structuralImportance = normalizeNumber(
@@ -196,7 +267,7 @@ function enrichSource(source, maps) {
       "pagerank",
       "degree",
     ]),
-    0
+    0,
   );
 
   const hiddenCompanionIndex = normalizeNumber(
@@ -205,13 +276,13 @@ function enrichSource(source, maps) {
       "hiddenCompanionIndex",
       "hidden_companion_suspicion_index",
     ]),
-    0
+    0,
   );
 
   const dynamicsIndex =
     normalizeNumber(
       firstAvailable(merged, ["dynamics_index", "dynamicsIndex"]),
-      null
+      null,
     ) ??
     Math.min(
       1,
@@ -219,7 +290,10 @@ function enrichSource(source, maps) {
         0.26 * clamp01(structuralImportance) +
         0.24 * clamp01(hiddenCompanionIndex) +
         0.14 *
-          Math.min(1, Math.abs(normalizeNumber(approximateSpaceVelocity, 0)) / 220)
+          Math.min(
+            1,
+            Math.abs(normalizeNumber(approximateSpaceVelocity, 0)) / 220,
+          ),
     );
 
   const colorIndex = estimateColorIndex(merged);
@@ -245,24 +319,18 @@ function enrichSource(source, maps) {
     dynamics_index: dynamicsIndex,
     hidden_companion_index: hiddenCompanionIndex,
     gaia_color_index: colorIndex,
+  };
+
+  return {
+    ...enriched,
 
     dynamics_classification:
-      merged.dynamics_classification ?? classifyDynamics({
-        ...merged,
-        dynamics_index: dynamicsIndex,
-        proper_motion_total: properMotionTotal,
-        approximate_space_velocity: approximateSpaceVelocity,
-      }),
+      merged.dynamics_classification ?? classifyDynamics(enriched),
 
     hidden_companion_classification:
       merged.hidden_companion_classification ??
-      classifyHiddenCompanion({
-        ...merged,
-        hidden_companion_index: hiddenCompanionIndex,
-      }),
+      classifyHiddenCompanion(enriched),
   };
-
-  return enriched;
 }
 
 function anomalyPriorityScore(record) {
@@ -274,7 +342,7 @@ function anomalyPriorityScore(record) {
     0.06 *
       Math.min(
         1,
-        Math.abs(normalizeNumber(record.approximate_space_velocity, 0)) / 240
+        Math.abs(normalizeNumber(record.approximate_space_velocity, 0)) / 240,
       )
   );
 }
@@ -287,7 +355,7 @@ function normalizePair(pair) {
       pair?.primary_source_id ??
       pair?.sourceA ??
       pair?.a ??
-      ""
+      "",
   );
 
   const sourceB = String(
@@ -297,7 +365,7 @@ function normalizePair(pair) {
       pair?.secondary_source_id ??
       pair?.sourceB ??
       pair?.b ??
-      ""
+      "",
   );
 
   return {
@@ -306,7 +374,7 @@ function normalizePair(pair) {
     source_b: sourceB,
     binary_pair_score: normalizeNumber(
       pair?.binary_pair_score ?? pair?.pair_score ?? pair?.score,
-      0
+      0,
     ),
     pair_classification:
       pair?.pair_classification ??
@@ -316,7 +384,7 @@ function normalizePair(pair) {
     proper_motion_difference: normalizeNumber(pair?.proper_motion_difference, null),
     parallax_relative_difference: normalizeNumber(
       pair?.parallax_relative_difference,
-      null
+      null,
     ),
   };
 }
@@ -339,7 +407,10 @@ function buildPairCountMap(pairs) {
 
 function findCrossmatch(source, crossmatchResults = []) {
   const sourceId = getSourceId(source);
-  if (!sourceId || !Array.isArray(crossmatchResults)) return null;
+
+  if (!sourceId || !Array.isArray(crossmatchResults)) {
+    return null;
+  }
 
   return (
     crossmatchResults.find((item) => {
@@ -349,7 +420,7 @@ function findCrossmatch(source, crossmatchResults = []) {
           item?.sourceId ??
           item?.gaia_source_id ??
           item?.id ??
-          ""
+          "",
       );
 
       return id === sourceId;
@@ -358,7 +429,9 @@ function findCrossmatch(source, crossmatchResults = []) {
 }
 
 function crossmatchStatus(crossmatch) {
-  if (!crossmatch) return "N/A";
+  if (!crossmatch) {
+    return "N/A";
+  }
 
   const simbad = firstAvailable(crossmatch, [
     "simbad",
@@ -382,18 +455,24 @@ function crossmatchStatus(crossmatch) {
     "non_single_star",
   ]);
 
-  return [
-    simbad ? `SIMBAD: ${text(simbad)}` : null,
-    vizier ? `VizieR: ${text(vizier)}` : null,
-    nss ? `NSS: ${text(nss)}` : null,
-  ]
-    .filter(Boolean)
-    .join(" | ") || "Crossmatch attached";
+  return (
+    [
+      simbad ? `SIMBAD: ${text(simbad)}` : null,
+      vizier ? `VizieR: ${text(vizier)}` : null,
+      nss ? `NSS: ${text(nss)}` : null,
+    ]
+      .filter(Boolean)
+      .join(" | ") || "Crossmatch attached"
+  );
 }
 
 function buildGaiaArchiveUrl(source) {
   const id = getSourceId(source);
-  if (!id) return GAIA_ARCHIVE_BASE;
+
+  if (!id) {
+    return GAIA_ARCHIVE_BASE;
+  }
+
   return `${GAIA_ARCHIVE_BASE}?target=${encodeURIComponent(`Gaia DR3 ${id}`)}`;
 }
 
@@ -401,10 +480,12 @@ function buildSimbadUrl(source) {
   const ra = normalizeNumber(firstAvailable(source, ["ra", "RA"]), null);
   const dec = normalizeNumber(firstAvailable(source, ["dec", "DEC"]), null);
 
-  if (ra === null || dec === null) return SIMBAD_BASE;
+  if (ra === null || dec === null) {
+    return SIMBAD_BASE;
+  }
 
   return `${SIMBAD_BASE}sim-coo?Coord=${encodeURIComponent(
-    `${ra.toFixed(10)} ${dec.toFixed(10)}`
+    `${ra.toFixed(10)} ${dec.toFixed(10)}`,
   )}&Radius=5&Radius.unit=arcsec`;
 }
 
@@ -412,10 +493,12 @@ function buildVizierUrl(source) {
   const ra = normalizeNumber(firstAvailable(source, ["ra", "RA"]), null);
   const dec = normalizeNumber(firstAvailable(source, ["dec", "DEC"]), null);
 
-  if (ra === null || dec === null) return VIZIER_BASE;
+  if (ra === null || dec === null) {
+    return VIZIER_BASE;
+  }
 
   return `${VIZIER_BASE}?-c=${encodeURIComponent(
-    `${ra.toFixed(10)} ${dec.toFixed(10)}`
+    `${ra.toFixed(10)} ${dec.toFixed(10)}`,
   )}&-c.rs=5`;
 }
 
@@ -423,16 +506,21 @@ function buildEsaSkyUrl(source) {
   const ra = normalizeNumber(firstAvailable(source, ["ra", "RA"]), null);
   const dec = normalizeNumber(firstAvailable(source, ["dec", "DEC"]), null);
 
-  if (ra === null || dec === null) return ESASKY_BASE;
+  if (ra === null || dec === null) {
+    return ESASKY_BASE;
+  }
 
   return `${ESASKY_BASE}?target=${encodeURIComponent(
-    `${ra.toFixed(10)} ${dec.toFixed(10)}`
+    `${ra.toFixed(10)} ${dec.toFixed(10)}`,
   )}&hips=Digitized%20Sky%20Survey%202%20color`;
 }
 
 function buildGaiaAdql(source) {
   const id = getSourceId(source);
-  if (!id) return "";
+
+  if (!id) {
+    return "";
+  }
 
   return `SELECT *
 FROM gaiadr3.gaia_source
@@ -441,7 +529,10 @@ WHERE source_id = ${id};`;
 
 function buildNssAdql(source) {
   const id = getSourceId(source);
-  if (!id) return "";
+
+  if (!id) {
+    return "";
+  }
 
   return `SELECT *
 FROM gaiadr3.nss_two_body_orbit
@@ -452,7 +543,9 @@ function buildNeighbourAdql(source) {
   const ra = normalizeNumber(firstAvailable(source, ["ra", "RA"]), null);
   const dec = normalizeNumber(firstAvailable(source, ["dec", "DEC"]), null);
 
-  if (ra === null || dec === null) return "";
+  if (ra === null || dec === null) {
+    return "";
+  }
 
   return `SELECT TOP 100
   source_id,
@@ -471,7 +564,9 @@ WHERE 1 = CONTAINS(
 }
 
 function buildMissionBriefing(record, activePairs, crossmatch) {
-  if (!record) return "";
+  if (!record) {
+    return "";
+  }
 
   const lines = [];
 
@@ -481,39 +576,39 @@ function buildMissionBriefing(record, activePairs, crossmatch) {
   lines.push("");
   lines.push("Candidate-level interpretation:");
   lines.push(
-    "This source is selected from the top-50 anomaly pool using Gaia-derived dashboard proxies. It is not a confirmed planet host, binary system, exotic object, or new physical mechanism."
+    "This source is selected from the top-50 anomaly pool using Gaia-derived dashboard proxies. It is not a confirmed planet host, binary system, exotic object, or new physical mechanism.",
   );
   lines.push("");
   lines.push(`Anomaly score: ${formatNumber(record.anomaly_score, 6)}`);
   lines.push(`Dynamics index: ${formatNumber(record.dynamics_index, 6)}`);
   lines.push(
-    `Hidden companion index: ${formatNumber(record.hidden_companion_index, 6)}`
+    `Hidden companion index: ${formatNumber(record.hidden_companion_index, 6)}`,
   );
   lines.push(
     `Structural importance: ${formatNumber(
       record.structural_importance_score,
-      6
-    )}`
+      6,
+    )}`,
   );
   lines.push(
     `Approximate space velocity: ${formatNumber(
       record.approximate_space_velocity,
-      6
-    )}`
+      6,
+    )}`,
   );
   lines.push("");
   lines.push(`Dynamics classification: ${text(record.dynamics_classification)}`);
   lines.push(
     `Hidden companion classification: ${text(
-      record.hidden_companion_classification
-    )}`
+      record.hidden_companion_classification,
+    )}`,
   );
   lines.push(
     `Possible pair involvement: ${
       activePairs.length
         ? `${activePairs.length} possible pair candidate(s), not confirmed`
         : "N/A"
-    }`
+    }`,
   );
   lines.push(`Crossmatch: ${crossmatchStatus(crossmatch)}`);
   lines.push("");
@@ -522,10 +617,10 @@ function buildMissionBriefing(record, activePairs, crossmatch) {
   lines.push("2. Check SIMBAD and VizieR object context.");
   lines.push("3. Check Gaia NSS, RUWE, astrometric excess noise and radial velocity.");
   lines.push(
-    "4. Compare parallax and proper motion with nearby sources before any comoving-pair interpretation."
+    "4. Compare parallax and proper motion with nearby sources before any comoving-pair interpretation.",
   );
   lines.push(
-    "5. Treat ∇𝒦 language as internal framework context only, not as a direct physical measurement."
+    "5. Treat ∇𝒦 language as internal framework context only, not as a direct physical measurement.",
   );
 
   return lines.join("\n");
@@ -563,6 +658,23 @@ function EvidenceGauge({ label, value, note }) {
   );
 }
 
+function QueryCard({ title, query, onCopy }) {
+  return (
+    <div className="cockpit-query-card">
+      <div className="cockpit-query-header">
+        <span>{title}</span>
+        <button type="button" onClick={() => onCopy(title, query)}>
+          Copy
+        </button>
+      </div>
+
+      <pre>
+        <code>{query || "N/A"}</code>
+      </pre>
+    </div>
+  );
+}
+
 function HexagonStatsChart({ record }) {
   const metrics = [
     {
@@ -584,7 +696,7 @@ function HexagonStatsChart({ record }) {
       label: "Velocity",
       value: Math.min(
         1,
-        Math.abs(normalizeNumber(record?.approximate_space_velocity, 0)) / 220
+        Math.abs(normalizeNumber(record?.approximate_space_velocity, 0)) / 220,
       ),
       raw: formatNumber(record?.approximate_space_velocity, 2),
     },
@@ -597,162 +709,136 @@ function HexagonStatsChart({ record }) {
       label: "Color",
       value: Math.min(
         1,
-        Math.abs(normalizeNumber(record?.gaia_color_index, 0)) / 3.5
+        Math.max(
+          0,
+          (normalizeNumber(record?.gaia_color_index, 1.2) - 0.2) / 3.2,
+        ),
       ),
       raw: formatNumber(record?.gaia_color_index, 3),
     },
   ];
 
-  const cx = 170;
+  const cx = 190;
   const cy = 160;
-  const radius = 104;
+  const radius = 112;
 
-  function point(index, scale = 1) {
-    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / metrics.length;
-    return {
-      x: cx + Math.cos(angle) * radius * scale,
-      y: cy + Math.sin(angle) * radius * scale,
-    };
+  function point(angle, scale = 1) {
+    return [
+      cx + Math.cos(angle) * radius * scale,
+      cy + Math.sin(angle) * radius * scale,
+    ];
   }
 
-  const polygonPoints = metrics
-    .map((metric, index) => {
-      const p = point(index, Math.max(0.08, metric.value));
-      return `${p.x},${p.y}`;
-    })
-    .join(" ");
+  const axisAngles = metrics.map(
+    (_, index) => -Math.PI / 2 + (Math.PI * 2 * index) / metrics.length,
+  );
 
-  const outerPoints = metrics
-    .map((_, index) => {
-      const p = point(index, 1);
-      return `${p.x},${p.y}`;
-    })
-    .join(" ");
+  const outer = axisAngles.map((angle) => point(angle, 1));
+  const mid = axisAngles.map((angle) => point(angle, 0.66));
+  const inner = axisAngles.map((angle) => point(angle, 0.33));
 
-  const midPoints = metrics
-    .map((_, index) => {
-      const p = point(index, 0.5);
-      return `${p.x},${p.y}`;
-    })
+  const polygon = metrics
+    .map((metric, index) => point(axisAngles[index], metric.value))
+    .map(([x, y]) => `${x},${y}`)
     .join(" ");
 
   return (
     <div className="candidate-explanation-card">
-      <span>Top-50 anomaly stat profile</span>
-      <strong>Hexagonal proxy chart</strong>
+      <div className="panel-header">
+        <div>
+          <div className="eyebrow">Top-50 anomaly stat profile</div>
+          <h2>Hexagonal Proxy Chart</h2>
+        </div>
+        <span>candidate-level</span>
+      </div>
 
       <svg
-        viewBox="0 0 340 330"
-        width="100%"
-        height="330"
+        className="hexagon-stats-chart"
+        viewBox="0 0 380 320"
         role="img"
-        aria-label="Candidate hexagonal proxy chart"
+        aria-label="Hexagonal proxy chart"
       >
         <polygon
-          points={outerPoints}
-          fill="none"
-          stroke="rgba(0,245,255,0.45)"
-          strokeWidth="1.5"
+          points={outer.map(([x, y]) => `${x},${y}`).join(" ")}
+          fill="rgba(0,245,255,0.025)"
+          stroke="rgba(0,245,255,0.58)"
+          strokeWidth="1.4"
         />
 
         <polygon
-          points={midPoints}
+          points={mid.map(([x, y]) => `${x},${y}`).join(" ")}
           fill="none"
           stroke="rgba(0,245,255,0.18)"
           strokeWidth="1"
         />
 
-        {metrics.map((_, index) => {
-          const p = point(index, 1);
+        <polygon
+          points={inner.map(([x, y]) => `${x},${y}`).join(" ")}
+          fill="none"
+          stroke="rgba(0,245,255,0.14)"
+          strokeWidth="1"
+        />
+
+        {axisAngles.map((angle, index) => {
+          const [x, y] = point(angle, 1);
           return (
             <line
-              key={`axis-${index}`}
+              key={`axis-${metrics[index].label}`}
               x1={cx}
               y1={cy}
-              x2={p.x}
-              y2={p.y}
-              stroke="rgba(0,245,255,0.18)"
+              x2={x}
+              y2={y}
+              stroke="rgba(170,210,255,0.18)"
               strokeWidth="1"
             />
           );
         })}
 
         <polygon
-          points={polygonPoints}
-          fill="rgba(57,255,20,0.25)"
-          stroke="rgba(57,255,20,0.9)"
+          points={polygon}
+          fill="rgba(57,255,20,0.28)"
+          stroke="rgba(57,255,20,0.95)"
           strokeWidth="2"
         />
 
         {metrics.map((metric, index) => {
-          const p = point(index, Math.max(0.08, metric.value));
-          return (
-            <circle
-              key={`dot-${metric.label}`}
-              cx={p.x}
-              cy={p.y}
-              r="4"
-              fill="#39ff14"
-            />
-          );
-        })}
+          const [x, y] = point(axisAngles[index], metric.value);
+          const [tx, ty] = point(axisAngles[index], 1.18);
 
-        {metrics.map((metric, index) => {
-          const labelPoint = point(index, 1.23);
           return (
-            <g key={`label-${metric.label}`}>
+            <g key={metric.label}>
+              <circle cx={x} cy={y} r="4.8" fill="#39ff14" />
               <text
-                x={labelPoint.x}
-                y={labelPoint.y}
-                textAnchor="middle"
-                fill="#dff7ff"
-                fontSize="12"
-                fontWeight="700"
+                x={tx}
+                y={ty}
+                textAnchor={tx < cx - 8 ? "end" : tx > cx + 8 ? "start" : "middle"}
+                dominantBaseline="middle"
+                fill="#e8fbff"
+                fontSize="11"
+                fontWeight="800"
               >
                 {metric.label}
               </text>
               <text
-                x={labelPoint.x}
-                y={labelPoint.y + 15}
-                textAnchor="middle"
+                x={tx}
+                y={ty + 13}
+                textAnchor={tx < cx - 8 ? "end" : tx > cx + 8 ? "start" : "middle"}
+                dominantBaseline="middle"
                 fill="#39ff14"
-                fontSize="11"
+                fontSize="10"
+                fontWeight="800"
               >
                 {metric.raw}
               </text>
             </g>
           );
         })}
-
-        <circle
-          cx={cx}
-          cy={cy}
-          r="3"
-          fill="rgba(255,255,255,0.85)"
-        />
       </svg>
 
       <p>
-        All axes are normalized dashboard proxies. This plot is for prioritization
-        only and does not confirm an astrophysical classification.
+        All axes are normalized dashboard proxies. This chart supports candidate
+        prioritization only and does not confirm an astrophysical classification.
       </p>
-    </div>
-  );
-}
-
-function QueryCard({ title, query, onCopy }) {
-  return (
-    <div className="cockpit-query-card">
-      <div className="cockpit-query-header">
-        <span>{title}</span>
-        <button type="button" onClick={() => onCopy(title, query)}>
-          Copy
-        </button>
-      </div>
-
-      <pre>
-        <code>{query || "N/A"}</code>
-      </pre>
     </div>
   );
 }
@@ -777,7 +863,7 @@ export default function CandidateInvestigationCockpit({
       featureMap: buildMapBySourceId(featureContributions),
       emergentMap: buildMapBySourceId(emergentStructures),
     }),
-    [graphCentrality, featureContributions, emergentStructures]
+    [graphCentrality, featureContributions, emergentStructures],
   );
 
   const anomalyPool = useMemo(() => {
@@ -802,7 +888,7 @@ export default function CandidateInvestigationCockpit({
 
   const pairCountMap = useMemo(
     () => buildPairCountMap(pairCandidates),
-    [pairCandidates]
+    [pairCandidates],
   );
 
   const selectedSourceId = getSourceId(selectedSource);
@@ -818,18 +904,21 @@ export default function CandidateInvestigationCockpit({
   const activeSourceId = getSourceId(activeRecord);
 
   const activePairs = useMemo(() => {
-    if (!activeSourceId) return [];
+    if (!activeSourceId) {
+      return [];
+    }
 
     return pairCandidates
       .filter(
-        (pair) => pair.source_a === activeSourceId || pair.source_b === activeSourceId
+        (pair) =>
+          pair.source_a === activeSourceId || pair.source_b === activeSourceId,
       )
       .slice(0, 12);
   }, [pairCandidates, activeSourceId]);
 
   const crossmatch = useMemo(
     () => findCrossmatch(activeRecord, candidateCrossmatchResults),
-    [activeRecord, candidateCrossmatchResults]
+    [activeRecord, candidateCrossmatchResults],
   );
 
   const topTargets = useMemo(() => {
@@ -847,7 +936,7 @@ export default function CandidateInvestigationCockpit({
 
   const missionBriefing = useMemo(
     () => buildMissionBriefing(activeRecord, activePairs, crossmatch),
-    [activeRecord, activePairs, crossmatch]
+    [activeRecord, activePairs, crossmatch],
   );
 
   async function copyText(label, value) {
@@ -862,21 +951,43 @@ export default function CandidateInvestigationCockpit({
   }
 
   function handleSelect(record) {
+    if (!record) {
+      return;
+    }
+
     onSourceSelect?.(record);
+  }
+
+  function handleSignalMapSelect(candidate) {
+    const candidateId = getSourceId(candidate);
+
+    if (!candidateId) {
+      return;
+    }
+
+    const matchedRecord = recordMap.get(candidateId);
+
+    if (matchedRecord) {
+      handleSelect(matchedRecord);
+      return;
+    }
+
+    handleSelect(candidate);
   }
 
   if (!activeRecord) {
     return (
       <section className="investigation-cockpit-shell">
-        <div className="panel cockpit-hero-panel">
+        <div className="panel cockpit-briefing-panel">
           <div className="panel-header">
             <h2>Candidate Investigation Cockpit</h2>
             <span>No candidate pool available</span>
           </div>
 
-          <div className="coherence-warning">
-            No Gaia sources were received by the fourth analysis interface.
-          </div>
+          <p>
+            No Gaia source records were received by the fourth analysis
+            interface.
+          </p>
 
           <div className="candidate-action-row">
             <button
@@ -906,42 +1017,13 @@ export default function CandidateInvestigationCockpit({
 
   return (
     <section className="investigation-cockpit-shell">
-      <div className="panel cockpit-hero-panel">
-        <div className="panel-header">
-          <h2>Candidate Investigation Cockpit</h2>
-          <span>Top-50 anomaly pool only</span>
-        </div>
-
-        <div className="coherence-warning">
-          This interface analyzes only the 50 highest-priority Gaia anomaly
-          candidates. All labels are proxy-based and require external validation.
-        </div>
-
-        <div className="candidate-action-row">
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("dashboard")}
-          >
-            Back to Framework Home
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("dynamics")}
-          >
-            Back to Astrometric Dynamics Lab
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("advanced")}
-          >
-            Back to Advanced Analysis Layer
-          </button>
-        </div>
+      <div className="panel cockpit-constellation-panel">
+        <CandidateSignalMap3D
+          records={anomalyPool}
+          possiblePairs={pairCandidates}
+          onCandidateSelect={handleSignalMapSelect}
+          selectedSourceId={activeSourceId}
+        />
       </div>
 
       <div className="cockpit-command-grid" style={{ marginTop: 22 }}>
@@ -996,7 +1078,7 @@ export default function CandidateInvestigationCockpit({
               label="Approx. space velocity"
               value={`${formatNumber(
                 activeRecord.approximate_space_velocity,
-                3
+                3,
               )} km/s`}
               subtitle="Incomplete if radial velocity is missing"
             />
@@ -1071,6 +1153,33 @@ export default function CandidateInvestigationCockpit({
                 Copy briefing
               </button>
 
+              <a
+                className="dashboard-nav-button"
+                href={buildGaiaArchiveUrl(activeRecord)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Gaia Archive
+              </a>
+
+              <a
+                className="dashboard-nav-button"
+                href={buildSimbadUrl(activeRecord)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                SIMBAD
+              </a>
+
+              <a
+                className="dashboard-nav-button"
+                href={buildVizierUrl(activeRecord)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                VizieR
+              </a>
+
               {copied && <span className="copy-status">Copied: {copied}</span>}
             </div>
           </div>
@@ -1099,7 +1208,9 @@ export default function CandidateInvestigationCockpit({
 
                     <div>
                       <strong>{id || "N/A"}</strong>
-                      <small>{text(item.record.hidden_companion_classification)}</small>
+                      <small>
+                        {text(item.record.hidden_companion_classification)}
+                      </small>
                     </div>
 
                     <div>
@@ -1157,8 +1268,8 @@ export default function CandidateInvestigationCockpit({
                 value={Math.min(
                   1,
                   Math.abs(
-                    normalizeNumber(activeRecord.approximate_space_velocity, 0)
-                  ) / 220
+                    normalizeNumber(activeRecord.approximate_space_velocity, 0),
+                  ) / 220,
                 )}
                 note="Approximate kinematic intensity."
               />
@@ -1172,10 +1283,10 @@ export default function CandidateInvestigationCockpit({
             </div>
 
             {!activePairs.length && (
-              <div className="coherence-warning">
+              <p>
                 No possible pair involvement is currently attached to this
                 candidate. The cockpit does not generate runtime pair candidates.
-              </div>
+              </p>
             )}
 
             {!!activePairs.length && (
@@ -1281,12 +1392,12 @@ export default function CandidateInvestigationCockpit({
           <span>candidate-level only</span>
         </div>
 
-        <div className="coherence-warning">
-          This cockpit is a prioritization interface. It does not confirm planets,
-          binaries, hidden companions, exotic objects, or new physical mechanisms.
-          The ∇𝒦 notation is used only as Codex Alpha informational context and
-          not as a direct physical measurement.
-        </div>
+        <p>
+          This cockpit is a prioritization interface. It does not confirm
+          planets, binaries, hidden companions, exotic objects, or new physical
+          mechanisms. The ∇𝒦 notation is used only as Codex Alpha informational
+          context and not as a direct physical measurement.
+        </p>
       </div>
     </section>
   );

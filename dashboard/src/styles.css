@@ -4241,3 +4241,417 @@ h1 {
     flex-basis: 100% !important;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   Candidate Signal Map 3D
+   Fourth Analysis Interface
+   ────────────────────────────────────────────────────────────── */
+
+.csm3d-shell {
+  position: relative;
+  width: 100%;
+  min-height: 660px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 245, 255, 0.16);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(57, 255, 20, 0.12), transparent 32%),
+    radial-gradient(circle at 78% 18%, rgba(0, 245, 255, 0.12), transparent 34%),
+    radial-gradient(circle at 50% 100%, rgba(192, 132, 252, 0.08), transparent 42%),
+    #000814;
+  box-shadow:
+    inset 0 0 90px rgba(0, 245, 255, 0.045),
+    0 0 34px rgba(0, 245, 255, 0.08);
+}
+
+.csm3d-topbar {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.12);
+  background: rgba(2, 6, 23, 0.74);
+  backdrop-filter: blur(12px);
+}
+
+.csm3d-title {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  color: #dff7ff;
+  font-weight: 900;
+  font-size: 0.84rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.csm3d-axis-btns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.csm3d-btn,
+.csm3d-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 7px 11px;
+  border: 1px solid rgba(0, 245, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.82);
+  color: #dff7ff;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.csm3d-btn:hover,
+.csm3d-pill:hover {
+  transform: translateY(-1px);
+  border-color: rgba(0, 245, 255, 0.48);
+  background: rgba(0, 245, 255, 0.12);
+  box-shadow: 0 0 18px rgba(0, 245, 255, 0.14);
+}
+
+.csm3d-btn.on,
+.csm3d-pill.on {
+  border-color: rgba(57, 255, 20, 0.7);
+  background: rgba(57, 255, 20, 0.13);
+  color: #39ff14;
+  box-shadow:
+    0 0 22px rgba(57, 255, 20, 0.18),
+    inset 0 0 14px rgba(57, 255, 20, 0.08);
+}
+
+.csm3d-controls {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.08);
+  background: rgba(2, 6, 23, 0.52);
+}
+
+.csm3d-ctrl-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.csm3d-ctrl-label {
+  color: var(--dim);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.csm3d-slider {
+  width: 160px;
+  accent-color: #39ff14;
+}
+
+.csm3d-slider-val {
+  min-width: 48px;
+  color: #39ff14;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.csm3d-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 470px;
+  min-height: 470px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at center, rgba(0, 245, 255, 0.055), transparent 42%),
+    #000814;
+}
+
+.csm3d-canvas-wrap canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
+}
+
+.csm3d-overlay {
+  position: absolute;
+  z-index: 9;
+  left: 18px;
+  top: 132px;
+  width: min(320px, calc(100% - 36px));
+  padding: 14px;
+  border: 1px solid rgba(57, 255, 20, 0.28);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(57, 255, 20, 0.11), transparent 44%),
+    rgba(2, 6, 23, 0.88);
+  box-shadow:
+    0 0 28px rgba(57, 255, 20, 0.13),
+    inset 0 0 18px rgba(57, 255, 20, 0.035);
+  backdrop-filter: blur(12px);
+}
+
+.csm3d-ov-id {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 900;
+  word-break: break-all;
+}
+
+.csm3d-ov-stellar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 9px;
+  color: #b7d9e8;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.csm3d-stellar-dot {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  box-shadow: 0 0 14px currentColor;
+}
+
+.csm3d-ov-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.csm3d-ov-row {
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid rgba(0, 245, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.62);
+}
+
+.csm3d-ov-row span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--dim);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.csm3d-ov-row strong {
+  display: block;
+  color: #ffffff;
+  font-size: 0.78rem;
+  word-break: break-word;
+}
+
+.csm3d-ov-tier {
+  margin-top: 12px;
+  padding: 8px 10px;
+  border: 1px solid rgba(57, 255, 20, 0.24);
+  border-radius: 999px;
+  background: rgba(57, 255, 20, 0.08);
+  color: #39ff14;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.csm3d-ax-labels {
+  position: relative;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid rgba(0, 245, 255, 0.08);
+  border-bottom: 1px solid rgba(0, 245, 255, 0.08);
+  background: rgba(2, 6, 23, 0.62);
+}
+
+.csm3d-ax-labels span {
+  min-width: 0;
+  color: #8fb9c8;
+  font-size: 0.7rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.csm3d-footer {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  background: rgba(2, 6, 23, 0.74);
+}
+
+.csm3d-legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.csm3d-leg-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #b7d9e8;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.csm3d-leg-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  box-shadow: 0 0 12px currentColor;
+}
+
+.csm3d-pair-line {
+  width: 28px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(0, 210, 255, 0.75);
+  box-shadow: 0 0 12px rgba(0, 210, 255, 0.55);
+}
+
+.csm3d-gradient-bar {
+  width: 160px;
+  height: 10px;
+  border: 1px solid rgba(0, 245, 255, 0.18);
+  border-radius: 999px;
+  box-shadow: 0 0 14px rgba(0, 245, 255, 0.12);
+}
+
+.csm3d-grad-label {
+  color: #b7d9e8;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.csm3d-hint {
+  color: #39ff14;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.csm3d-note {
+  position: relative;
+  z-index: 6;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(255, 224, 51, 0.13);
+  background: rgba(255, 224, 51, 0.045);
+  color: #fff7c2;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+/* Safety with existing cockpit panels */
+.cockpit-constellation-panel .csm3d-shell {
+  margin-top: 0;
+}
+
+@media (max-width: 1180px) {
+  .csm3d-topbar {
+    flex-direction: column;
+  }
+
+  .csm3d-axis-btns {
+    justify-content: flex-start;
+  }
+
+  .csm3d-controls {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .csm3d-canvas-wrap {
+    height: 430px;
+    min-height: 430px;
+  }
+
+  .csm3d-overlay {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: calc(100% - 28px);
+    margin: 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  .csm3d-shell {
+    min-height: 760px;
+  }
+
+  .csm3d-btn,
+  .csm3d-pill {
+    width: 100%;
+  }
+
+  .csm3d-axis-btns,
+  .csm3d-ctrl-group {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .csm3d-slider {
+    width: 100%;
+  }
+
+  .csm3d-canvas-wrap {
+    height: 360px;
+    min-height: 360px;
+  }
+
+  .csm3d-ov-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .csm3d-ax-labels {
+    grid-template-columns: 1fr;
+  }
+
+  .csm3d-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .csm3d-gradient-bar {
+    width: 100%;
+  }
+}

@@ -535,63 +535,6 @@ function AdvancedAnalysisLayer({
   );
 }
 
-function FourthInterfaceStatus({
-  allSources,
-  centrality,
-  candidateCrossmatchResults,
-  possibleBinaryPairs,
-}) {
-  return (
-    <section className="panel" style={{ marginTop: 22 }}>
-      <div className="panel-header">
-        <h2>Fourth Analysis Interface Status</h2>
-        <span>route stable</span>
-      </div>
-
-      <div className="coherence-warning">
-        The Candidate Investigation Cockpit is active. This interface operates
-        on a reduced top-50 anomaly pool and keeps all classifications at
-        candidate level. Metrics are internal prioritization proxies and require
-        external validation.
-      </div>
-
-      <div className="details-list details-list-grid">
-        <p>
-          <span>Gaia sources loaded</span>
-          <strong>
-            {Array.isArray(allSources) ? allSources.length : "not array"}
-          </strong>
-        </p>
-
-        <p>
-          <span>Structural records</span>
-          <strong>
-            {Array.isArray(centrality) ? centrality.length : "not array"}
-          </strong>
-        </p>
-
-        <p>
-          <span>Crossmatch records</span>
-          <strong>
-            {Array.isArray(candidateCrossmatchResults)
-              ? candidateCrossmatchResults.length
-              : "not array"}
-          </strong>
-        </p>
-
-        <p>
-          <span>Attached pair candidates</span>
-          <strong>
-            {Array.isArray(possibleBinaryPairs)
-              ? possibleBinaryPairs.length
-              : "not array"}
-          </strong>
-        </p>
-      </div>
-    </section>
-  );
-}
-
 /* ─── App ────────────────────────────────────────────────────────────────── */
 
 function App() {
@@ -791,13 +734,6 @@ function App() {
           }}
           aria-hidden={!["validation", "investigation"].includes(currentPage)}
         >
-          <FourthInterfaceStatus
-            allSources={allSources}
-            centrality={centrality}
-            candidateCrossmatchResults={candidateCrossmatchResults}
-            possibleBinaryPairs={possibleBinaryPairs}
-          />
-
           <CandidateInvestigationCockpit
             allSources={allSources}
             graphCentrality={centrality}
