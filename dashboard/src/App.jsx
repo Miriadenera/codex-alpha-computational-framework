@@ -396,7 +396,7 @@ function NavigationActions({ currentPage, setCurrentPage }) {
         </>
       )}
 
-      {currentPage === "validation" && (
+      {["validation", "investigation"].includes(currentPage) && (
         <>
           <button
             type="button"
@@ -561,44 +561,46 @@ function App() {
 
   useEffect(() => {
     async function loadDashboardData() {
+      let summaryData, allSourcesData, nodesData, edgesData, centralityData;
       try {
-        const [
-          summaryData,
-          allSourcesData,
-          nodesData,
-          edgesData,
-          centralityData,
-          featureContributionsData,
-          emergentStructuresData,
-          candidateCrossmatchData,
-          possibleBinaryPairsData,
-          reportText,
-        ] = await Promise.all([
-          loadJson(DATA_BASE + "/summary.json"),
-          loadJson(DATA_BASE + "/anomalies.json"),
-          loadJson(DATA_BASE + "/graph_nodes.json"),
-          loadJson(DATA_BASE + "/graph_edges.json"),
-          loadJson(DATA_BASE + "/graph_centrality.json"),
-          loadJson(DATA_BASE + "/feature_contributions.json"),
-          loadJson(DATA_BASE + "/emergent_structures.json"),
-          loadOptionalJson(DATA_BASE + "/candidate_crossmatch_results.json", []),
-          loadOptionalJson(DATA_BASE + "/possible_binary_pairs.json", []),
-          loadText(DATA_BASE + "/report.md"),
-        ]);
-
-        setSummary(summaryData);
-        setAllSources(allSourcesData);
-        setNodes(nodesData);
-        setEdges(edgesData);
-        setCentrality(centralityData);
-        setFeatureContributions(featureContributionsData);
-        setEmergentStructures(emergentStructuresData);
-        setCandidateCrossmatchResults(candidateCrossmatchData);
-        setPossibleBinaryPairs(possibleBinaryPairsData);
-        setReport(reportText);
+        [summaryData, allSourcesData, nodesData, edgesData, centralityData] =
+          await Promise.all([
+            loadJson(DATA_BASE + "/summary.json"),
+            loadJson(DATA_BASE + "/anomalies.json"),
+            loadJson(DATA_BASE + "/graph_nodes.json"),
+            loadJson(DATA_BASE + "/graph_edges.json"),
+            loadJson(DATA_BASE + "/graph_centrality.json"),
+          ]);
       } catch (err) {
         setError(err.message);
+        return;
       }
+
+      setSummary(summaryData);
+      setAllSources(allSourcesData);
+      setNodes(nodesData);
+      setEdges(edgesData);
+      setCentrality(centralityData);
+
+      const [
+        featureContributionsData,
+        emergentStructuresData,
+        candidateCrossmatchData,
+        possibleBinaryPairsData,
+        reportText,
+      ] = await Promise.all([
+        loadOptionalJson(DATA_BASE + "/feature_contributions.json", []),
+        loadOptionalJson(DATA_BASE + "/emergent_structures.json", []),
+        loadOptionalJson(DATA_BASE + "/candidate_crossmatch_results.json", []),
+        loadOptionalJson(DATA_BASE + "/possible_binary_pairs.json", []),
+        loadText(DATA_BASE + "/report.md").catch(() => ""),
+      ]);
+
+      setFeatureContributions(featureContributionsData);
+      setEmergentStructures(emergentStructuresData);
+      setCandidateCrossmatchResults(candidateCrossmatchData);
+      setPossibleBinaryPairs(possibleBinaryPairsData);
+      setReport(reportText);
     }
 
     loadDashboardData();
@@ -670,7 +672,7 @@ function App() {
         />
       )}
 
-      {!error && currentPage === "validation" && (
+      {!error && ["validation", "investigation"].includes(currentPage) && (
         <CandidateInvestigationCockpit
           allSources={allSources}
           graphCentrality={centrality}
