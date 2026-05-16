@@ -4,19 +4,30 @@
   "private": true,
   "description": "Local interactive dashboard for the Codex Alpha Computational Framework.",
   "type": "module",
+
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
+
   "dependencies": {
-    "@vitejs/plugin-react": "^5.0.0",
-    "vite": "^7.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "vite": "^7.3.3",
+
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+
     "lucide-react": "^0.468.0",
-    "react-force-graph-3d": "^1.25.0",
-    "three": "^0.171.0"
+
+    "react-force-graph-3d": "^1.29.1",
+
+    "three": "0.184.0"
   },
+
+  "overrides": {
+    "three": "0.184.0"
+  },
+
   "devDependencies": {}
 }
