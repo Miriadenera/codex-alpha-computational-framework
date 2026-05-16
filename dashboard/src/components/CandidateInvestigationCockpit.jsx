@@ -1,56 +1,49 @@
 import React, { useMemo, useState } from "react";
 
 const GAIA_ARCHIVE_BASE = "https://gea.esac.esa.int/archive/";
-const ESASKY_BASE = "https://sky.esa.int/esasky/";
-const SIMBAD_BASE = "https://simbad.cds.unistra.fr/simbad/";
+const SIMBAD_BASE = "https://simbad.u-strasbg.fr/simbad/";
 const VIZIER_BASE = "https://vizier.cds.unistra.fr/viz-bin/VizieR";
+const ESASKY_BASE = "https://sky.esa.int/";
 
 function normalizeNumber(value, fallback = null) {
+  if (value === null || value === undefined || value === "") return fallback;
   const number = Number(value);
-
-  if (value === null || value === undefined || value === "" || Number.isNaN(number)) {
-    return fallback;
-  }
-
-  return number;
+  return Number.isFinite(number) ? number : fallback;
 }
 
-function formatNumber(value, digits = 6) {
-  const number = normalizeNumber(value, null);
-
-  if (number === null) {
-    return "N/A";
-  }
-
-  return number.toFixed(digits);
+function clamp01(value) {
+  const n = normalizeNumber(value, 0);
+  if (n >= 0 && n <= 1) return n;
+  return Math.max(0, Math.min(1, n / 100));
 }
 
-function formatCompact(value, digits = 3) {
-  const number = normalizeNumber(value, null);
+function formatNumber(value, digits = 4) {
+  const n = normalizeNumber(value, null);
+  if (n === null) return "N/A";
+  if (Math.abs(n) >= 10000) return n.toExponential(3);
+  return n.toFixed(digits);
+}
 
-  if (number === null) {
-    return "N/A";
-  }
-
-  if (Math.abs(number) >= 1000) {
-    return number.toExponential(2);
-  }
-
-  return number.toFixed(digits);
+function text(value) {
+  if (value === null || value === undefined || value === "") return "N/A";
+  return String(value);
 }
 
 function getSourceId(source) {
-  return String(source?.SOURCE_ID ?? source?.source_id ?? source?.id ?? "");
+  return String(
+    source?.SOURCE_ID ??
+      source?.source_id ??
+      source?.sourceId ??
+      source?.id ??
+      ""
+  );
 }
 
 function firstAvailable(source, keys, fallback = null) {
-  if (!source) {
-    return fallback;
-  }
+  if (!source) return fallback;
 
   for (const key of keys) {
     const value = source[key];
-
     if (value !== undefined && value !== null && value !== "") {
       return value;
     }
@@ -61,399 +54,87 @@ function firstAvailable(source, keys, fallback = null) {
 
 function buildMapBySourceId(items = []) {
   const map = new Map();
-  const sourceItems = Array.isArray(items) ? items : [];
+  const array = Array.isArray(items) ? items : [];
 
-  sourceItems.forEach((item) => {
-    const sourceId = getSourceId(item);
-
-    if (sourceId) {
-      map.set(sourceId, item);
-    }
-  });
-
-  return map;
-}
-
-function buildPairCountMap(pairs) {
-  const map = new Map();
-  const pairItems = Array.isArray(pairs) ? pairs : [];
-
-  for (const pair of pairItems) {
-    if (pair?.source_a) {
-      map.set(pair.source_a, (map.get(pair.source_a) ?? 0) + 1);
-    }
-
-    if (pair?.source_b) {
-      map.set(pair.source_b, (map.get(pair.source_b) ?? 0) + 1);
-    }
-  }
-
-  return map;
-}
-
-function buildCrossmatchMap(items) {
-  const map = new Map();
-  const crossmatchItems = Array.isArray(items) ? items : [];
-
-  for (const item of crossmatchItems) {
-    const sourceId = String(
-      item?.SOURCE_ID ?? item?.source_id ?? item?.gaia_source_id ?? item?.id ?? "",
-    );
-
-    if (sourceId) {
-      map.set(sourceId, item);
-    }
+  for (const item of array) {
+    const id = getSourceId(item);
+    if (id) map.set(id, item);
   }
 
   return map;
 }
 
 function computeDistancePc(parallaxMas) {
-  const parallax = normalizeNumber(parallaxMas, null);
-
-  if (parallax === null || parallax <= 0) {
-    return null;
-  }
-
-  return 1000 / parallax;
+  const p = normalizeNumber(parallaxMas, null);
+  if (p === null || p <= 0) return null;
+  return 1000 / p;
 }
 
 function computeProperMotionTotal(pmra, pmdec) {
   const a = normalizeNumber(pmra, null);
   const d = normalizeNumber(pmdec, null);
-
-  if (a === null || d === null) {
-    return null;
-  }
-
+  if (a === null || d === null) return null;
   return Math.sqrt(a * a + d * d);
 }
 
 function computeTangentialVelocity(pmTotal, parallaxMas) {
   const mu = normalizeNumber(pmTotal, null);
-  const parallax = normalizeNumber(parallaxMas, null);
-
-  if (mu === null || parallax === null || parallax <= 0) {
-    return null;
-  }
-
-  return 4.74047 * (mu / parallax);
+  const p = normalizeNumber(parallaxMas, null);
+  if (mu === null || p === null || p <= 0) return null;
+  return 4.74047 * (mu / p);
 }
 
-function computeSpaceVelocity(tangentialVelocity, radialVelocity) {
+function computeApproximateSpaceVelocity(tangentialVelocity, radialVelocity) {
   const vt = normalizeNumber(tangentialVelocity, null);
-  const vr = normalizeNumber(radialVelocity, null);
+  const rv = normalizeNumber(radialVelocity, null);
 
-  if (vt === null && vr === null) {
-    return null;
-  }
+  if (vt === null && rv === null) return null;
+  if (vt === null) return Math.abs(rv);
+  if (rv === null) return Math.abs(vt);
 
-  if (vt === null) {
-    return Math.abs(vr);
-  }
-
-  if (vr === null) {
-    return Math.abs(vt);
-  }
-
-  return Math.sqrt(vt * vt + vr * vr);
+  return Math.sqrt(vt * vt + rv * rv);
 }
 
-function computeAngularSeparationArcsec(a, b) {
-  const ra1 = normalizeNumber(a?.ra, null);
-  const dec1 = normalizeNumber(a?.dec, null);
-  const ra2 = normalizeNumber(b?.ra, null);
-  const dec2 = normalizeNumber(b?.dec, null);
+function estimateColorIndex(source) {
+  const bpRp = normalizeNumber(firstAvailable(source, ["bp_rp", "BP_RP"]), null);
+  if (bpRp !== null) return bpRp;
 
-  if (ra1 === null || dec1 === null || ra2 === null || dec2 === null) {
-    return null;
-  }
-
-  const degToRad = Math.PI / 180;
-  const r1 = ra1 * degToRad;
-  const d1 = dec1 * degToRad;
-  const r2 = ra2 * degToRad;
-  const d2 = dec2 * degToRad;
-
-  const sinDDec = Math.sin((d2 - d1) / 2);
-  const sinDRa = Math.sin((r2 - r1) / 2);
-
-  const h =
-    sinDDec * sinDDec +
-    Math.cos(d1) * Math.cos(d2) * sinDRa * sinDRa;
-
-  const angleRad = 2 * Math.asin(Math.min(1, Math.sqrt(h)));
-
-  return angleRad * (180 / Math.PI) * 3600;
-}
-
-function computePairScore(a, b) {
-  const angularArcsec = computeAngularSeparationArcsec(a, b);
-
-  if (angularArcsec === null) {
-    return null;
-  }
-
-  const parallaxA = normalizeNumber(a.parallax, null);
-  const parallaxB = normalizeNumber(b.parallax, null);
-  const pmraA = normalizeNumber(a.pmra, null);
-  const pmraB = normalizeNumber(b.pmra, null);
-  const pmdecA = normalizeNumber(a.pmdec, null);
-  const pmdecB = normalizeNumber(b.pmdec, null);
-
-  const parallaxDiff =
-    parallaxA === null || parallaxB === null
-      ? null
-      : Math.abs(parallaxA - parallaxB);
-
-  const parallaxMean =
-    parallaxA === null || parallaxB === null
-      ? null
-      : (Math.abs(parallaxA) + Math.abs(parallaxB)) / 2;
-
-  const parallaxRelativeDiff =
-    parallaxDiff === null || parallaxMean === null || parallaxMean === 0
-      ? null
-      : parallaxDiff / parallaxMean;
-
-  const pmDiff =
-    pmraA === null || pmraB === null || pmdecA === null || pmdecB === null
-      ? null
-      : Math.sqrt((pmraA - pmraB) ** 2 + (pmdecA - pmdecB) ** 2);
-
-  const angularTerm = Math.max(0, 1 - angularArcsec / 60);
-
-  const parallaxTerm =
-    parallaxRelativeDiff === null
-      ? 0.25
-      : Math.max(0, 1 - parallaxRelativeDiff / 0.35);
-
-  const properMotionTerm =
-    pmDiff === null ? 0.25 : Math.max(0, 1 - pmDiff / 35);
-
-  const hiddenTerm =
-    (normalizeNumber(a.hidden_companion_index, 0) +
-      normalizeNumber(b.hidden_companion_index, 0)) /
-    2;
-
-  const score =
-    0.42 * angularTerm +
-    0.28 * parallaxTerm +
-    0.22 * properMotionTerm +
-    0.08 * hiddenTerm;
-
-  return {
-    angular_arcsec: angularArcsec,
-    parallax_difference: parallaxDiff,
-    parallax_relative_difference: parallaxRelativeDiff,
-    proper_motion_difference: pmDiff,
-    binary_pair_score: score,
-  };
-}
-
-function classifyPair(pair) {
-  if (!pair) {
-    return "Not available";
-  }
-
-  if (
-    pair.binary_pair_score >= 0.78 &&
-    pair.angular_arcsec <= 15 &&
-    (pair.parallax_relative_difference === null ||
-      pair.parallax_relative_difference <= 0.18) &&
-    (pair.proper_motion_difference === null ||
-      pair.proper_motion_difference <= 12)
-  ) {
-    return "Strong comoving-pair candidate";
-  }
-
-  if (
-    pair.binary_pair_score >= 0.58 &&
-    pair.angular_arcsec <= 35 &&
-    (pair.parallax_relative_difference === null ||
-      pair.parallax_relative_difference <= 0.28)
-  ) {
-    return "Possible wide-binary candidate";
-  }
-
-  if (pair.binary_pair_score >= 0.42 && pair.angular_arcsec <= 60) {
-    return "Weak proximity-pair candidate";
-  }
-
-  return "Low pair significance";
-}
-
-function computeDynamicsIndex(source) {
-  const pmTotal = computeProperMotionTotal(source.pmra, source.pmdec);
-  const tangentialVelocity = computeTangentialVelocity(pmTotal, source.parallax);
-  const spaceVelocity = computeSpaceVelocity(
-    tangentialVelocity,
-    source.radial_velocity,
+  const bp = normalizeNumber(
+    firstAvailable(source, ["phot_bp_mean_mag", "PHOT_BP_MEAN_MAG"]),
+    null
   );
 
-  const anomaly = normalizeNumber(source.anomaly_score, 0);
-  const structural = normalizeNumber(source.structural_importance_score, 0);
-  const featureZ = Math.abs(normalizeNumber(source.dominant_feature_zscore, 0));
-
-  const velocityTerm =
-    spaceVelocity === null ? 0 : Math.min(1, Math.abs(spaceVelocity) / 180);
-
-  const properMotionTerm =
-    pmTotal === null ? 0 : Math.min(1, Math.abs(pmTotal) / 120);
-
-  const featureTerm = Math.min(1, featureZ / 8);
-
-  return (
-    0.32 * anomaly +
-    0.22 * structural +
-    0.18 * velocityTerm +
-    0.14 * properMotionTerm +
-    0.14 * featureTerm
+  const rp = normalizeNumber(
+    firstAvailable(source, ["phot_rp_mean_mag", "PHOT_RP_MEAN_MAG"]),
+    null
   );
+
+  if (bp !== null && rp !== null) return bp - rp;
+
+  return normalizeNumber(firstAvailable(source, ["gaia_color_index"]), null);
 }
 
-function classifyDynamics(source, dynamicsIndex) {
-  const pmTotal = computeProperMotionTotal(source.pmra, source.pmdec);
-  const tangentialVelocity = computeTangentialVelocity(pmTotal, source.parallax);
-  const spaceVelocity = computeSpaceVelocity(
-    tangentialVelocity,
-    source.radial_velocity,
-  );
+function classifyDynamics(record) {
+  const dynamics = normalizeNumber(record.dynamics_index, 0);
+  const velocity = normalizeNumber(record.approximate_space_velocity, 0);
+  const pmTotal = normalizeNumber(record.proper_motion_total, 0);
 
-  if (dynamicsIndex >= 0.62) {
-    return "High-priority dynamical follow-up";
-  }
+  if (dynamics >= 0.72) return "High-priority dynamical candidate";
+  if (dynamics >= 0.52) return "Moderate-priority dynamical candidate";
+  if (velocity > 140) return "High-velocity candidate";
+  if (pmTotal > 90) return "High proper-motion candidate";
 
-  if (dynamicsIndex >= 0.46) {
-    return "Moderate dynamical interest";
-  }
-
-  if (spaceVelocity !== null && spaceVelocity > 120) {
-    return "High-velocity stellar candidate";
-  }
-
-  if (pmTotal !== null && pmTotal > 80) {
-    return "High proper-motion source";
-  }
-
-  return "Ordinary kinematic profile";
+  return "Candidate-level kinematic profile";
 }
 
-function computeHiddenCompanionIndex(source) {
-  const ruwe = normalizeNumber(source.ruwe, null);
-  const astrometricExcessNoise = normalizeNumber(
-    source.astrometric_excess_noise,
-    null,
-  );
-  const visibilityPeriods = normalizeNumber(
-    source.visibility_periods_used,
-    null,
-  );
+function classifyHiddenCompanion(record) {
+  const value = normalizeNumber(record.hidden_companion_index, 0);
 
-  const hasDirectAstrometricQuality =
-    ruwe !== null || astrometricExcessNoise !== null || visibilityPeriods !== null;
+  if (value >= 0.7) return "High unresolved-companion suspicion proxy";
+  if (value >= 0.45) return "Moderate unresolved-companion suspicion proxy";
+  if (value >= 0.25) return "Weak unresolved-companion suspicion proxy";
 
-  const pmTotal = computeProperMotionTotal(source.pmra, source.pmdec);
-  const tangentialVelocity = computeTangentialVelocity(pmTotal, source.parallax);
-  const spaceVelocity = computeSpaceVelocity(
-    tangentialVelocity,
-    source.radial_velocity,
-  );
-
-  const anomaly = normalizeNumber(source.anomaly_score, 0);
-  const structural = normalizeNumber(source.structural_importance_score, 0);
-  const featureZ = Math.abs(normalizeNumber(source.dominant_feature_zscore, 0));
-
-  const ruweTerm =
-    ruwe === null ? 0 : Math.min(1, Math.max(0, (ruwe - 1.0) / 1.0));
-
-  const excessNoiseTerm =
-    astrometricExcessNoise === null
-      ? 0
-      : Math.min(1, Math.max(0, astrometricExcessNoise / 2.0));
-
-  const visibilityPenalty =
-    visibilityPeriods === null
-      ? 0
-      : visibilityPeriods < 8
-        ? 0.35
-        : visibilityPeriods < 12
-          ? 0.15
-          : 0;
-
-  const kinematicTerm =
-    spaceVelocity === null ? 0 : Math.min(1, Math.abs(spaceVelocity) / 220);
-
-  const fallbackTerm =
-    0.35 * anomaly +
-    0.25 * structural +
-    0.2 * Math.min(1, featureZ / 8) +
-    0.2 * kinematicTerm;
-
-  if (!hasDirectAstrometricQuality) {
-    return {
-      value: fallbackTerm * 0.45,
-      status: "Indirect proxy only",
-      hasDirectAstrometricQuality: false,
-    };
-  }
-
-  const directScore =
-    0.42 * ruweTerm +
-    0.32 * excessNoiseTerm +
-    0.16 * visibilityPenalty +
-    0.1 * fallbackTerm;
-
-  return {
-    value: Math.min(1, directScore),
-    status: "Astrometric-quality proxy",
-    hasDirectAstrometricQuality: true,
-  };
-}
-
-function classifyHiddenCompanion(result) {
-  if (!result) {
-    return "Not available";
-  }
-
-  if (!result.hasDirectAstrometricQuality) {
-    if (result.value >= 0.28) {
-      return "Weak indirect multiplicity hint";
-    }
-
-    return "No direct astrometric-quality fields";
-  }
-
-  if (result.value >= 0.7) {
-    return "High unresolved-companion suspicion";
-  }
-
-  if (result.value >= 0.45) {
-    return "Moderate unresolved-companion suspicion";
-  }
-
-  if (result.value >= 0.25) {
-    return "Weak unresolved-companion suspicion";
-  }
-
-  return "Low unresolved-companion suspicion";
-}
-
-function estimateColourIndex(source) {
-  const bpRp = normalizeNumber(source.bp_rp, null);
-
-  if (bpRp !== null) {
-    return bpRp;
-  }
-
-  const bp = normalizeNumber(source.phot_bp_mean_mag, null);
-  const rp = normalizeNumber(source.phot_rp_mean_mag, null);
-
-  if (bp !== null && rp !== null) {
-    return bp - rp;
-  }
-
-  return null;
+  return "Low unresolved-companion suspicion proxy";
 }
 
 function enrichSource(source, maps) {
@@ -461,101 +142,144 @@ function enrichSource(source, maps) {
 
   const merged = {
     ...source,
-    ...(maps.emergentMap.get(sourceId) ?? {}),
     ...(maps.centralityMap.get(sourceId) ?? {}),
     ...(maps.featureMap.get(sourceId) ?? {}),
-    SOURCE_ID: sourceId,
-    source_id: sourceId,
+    ...(maps.emergentMap.get(sourceId) ?? {}),
   };
 
+  const parallax = firstAvailable(merged, ["parallax", "PARALLAX"]);
+  const pmra = firstAvailable(merged, ["pmra", "PMRA"]);
+  const pmdec = firstAvailable(merged, ["pmdec", "PMDEC"]);
+  const radialVelocity = firstAvailable(merged, [
+    "radial_velocity",
+    "RADIAL_VELOCITY",
+    "rv",
+  ]);
+
   const distancePc =
-    normalizeNumber(merged.distance_pc, null) ??
-    computeDistancePc(merged.parallax);
+    normalizeNumber(
+      firstAvailable(merged, ["distance_pc", "distancePc", "distance_estimate"]),
+      null
+    ) ?? computeDistancePc(parallax);
 
   const properMotionTotal =
-    normalizeNumber(merged.proper_motion_total, null) ??
-    computeProperMotionTotal(merged.pmra, merged.pmdec);
+    normalizeNumber(
+      firstAvailable(merged, ["proper_motion_total", "properMotionTotal"]),
+      null
+    ) ?? computeProperMotionTotal(pmra, pmdec);
 
   const tangentialVelocity =
-    normalizeNumber(merged.tangential_velocity, null) ??
-    computeTangentialVelocity(properMotionTotal, merged.parallax);
+    normalizeNumber(
+      firstAvailable(merged, ["tangential_velocity", "tangentialVelocity"]),
+      null
+    ) ?? computeTangentialVelocity(properMotionTotal, parallax);
 
   const approximateSpaceVelocity =
-    normalizeNumber(merged.approximate_space_velocity, null) ??
-    computeSpaceVelocity(tangentialVelocity, merged.radial_velocity);
+    normalizeNumber(
+      firstAvailable(merged, [
+        "approximate_space_velocity",
+        "approximateSpaceVelocity",
+      ]),
+      null
+    ) ?? computeApproximateSpaceVelocity(tangentialVelocity, radialVelocity);
+
+  const anomalyScore = normalizeNumber(
+    firstAvailable(merged, ["anomaly_score", "anomalyScore"]),
+    0
+  );
+
+  const structuralImportance = normalizeNumber(
+    firstAvailable(merged, [
+      "structural_importance_score",
+      "structural_importance",
+      "structuralImportance",
+      "pagerank",
+      "degree",
+    ]),
+    0
+  );
+
+  const hiddenCompanionIndex = normalizeNumber(
+    firstAvailable(merged, [
+      "hidden_companion_index",
+      "hiddenCompanionIndex",
+      "hidden_companion_suspicion_index",
+    ]),
+    0
+  );
 
   const dynamicsIndex =
-    normalizeNumber(merged.dynamics_index, null) ?? computeDynamicsIndex(merged);
+    normalizeNumber(
+      firstAvailable(merged, ["dynamics_index", "dynamicsIndex"]),
+      null
+    ) ??
+    Math.min(
+      1,
+      0.36 * clamp01(anomalyScore) +
+        0.26 * clamp01(structuralImportance) +
+        0.24 * clamp01(hiddenCompanionIndex) +
+        0.14 *
+          Math.min(1, Math.abs(normalizeNumber(approximateSpaceVelocity, 0)) / 220)
+    );
 
-  const hiddenCompanionResult = computeHiddenCompanionIndex(merged);
+  const colorIndex = estimateColorIndex(merged);
 
   const enriched = {
     ...merged,
+
+    SOURCE_ID: sourceId,
+
+    parallax,
+    pmra,
+    pmdec,
+    radial_velocity: radialVelocity,
+
     distance_pc: distancePc,
     proper_motion_total: properMotionTotal,
     tangential_velocity: tangentialVelocity,
     approximate_space_velocity: approximateSpaceVelocity,
+
+    anomaly_score: anomalyScore,
+    structural_importance_score: structuralImportance,
+
     dynamics_index: dynamicsIndex,
+    hidden_companion_index: hiddenCompanionIndex,
+    gaia_color_index: colorIndex,
+
     dynamics_classification:
-      merged.dynamics_classification ?? classifyDynamics(merged, dynamicsIndex),
-    hidden_companion_index:
-      normalizeNumber(merged.hidden_companion_index, null) ??
-      hiddenCompanionResult.value,
-    hidden_companion_status:
-      merged.hidden_companion_status ?? hiddenCompanionResult.status,
+      merged.dynamics_classification ?? classifyDynamics({
+        ...merged,
+        dynamics_index: dynamicsIndex,
+        proper_motion_total: properMotionTotal,
+        approximate_space_velocity: approximateSpaceVelocity,
+      }),
+
     hidden_companion_classification:
       merged.hidden_companion_classification ??
-      classifyHiddenCompanion(hiddenCompanionResult),
-    has_direct_astrometric_quality:
-      merged.has_direct_astrometric_quality ??
-      hiddenCompanionResult.hasDirectAstrometricQuality,
-    gaia_color_index:
-      normalizeNumber(merged.gaia_color_index, null) ?? estimateColourIndex(merged),
+      classifyHiddenCompanion({
+        ...merged,
+        hidden_companion_index: hiddenCompanionIndex,
+      }),
   };
 
   return enriched;
 }
 
-function buildGeneratedPairCandidates(records, maxPairs = 120) {
-  // Disabled at runtime: retained only for reference. Do not call during render.
-  const candidates = [];
-
-  for (let i = 0; i < records.length; i++) {
-    for (let j = i + 1; j < records.length; j++) {
-      const a = records[i];
-      const b = records[j];
-      const pair = computePairScore(a, b);
-
-      if (!pair) {
-        continue;
-      }
-
-      const classification = classifyPair(pair);
-
-      if (classification === "Low pair significance") {
-        continue;
-      }
-
-      candidates.push({
-        pair_id: `${getSourceId(a)}__${getSourceId(b)}`,
-        source_a: getSourceId(a),
-        source_b: getSourceId(b),
-        source_id_a: getSourceId(a),
-        source_id_b: getSourceId(b),
-        record_a: a,
-        record_b: b,
-        pair_classification: classification,
-        ...pair,
-      });
-    }
-  }
-
-  return candidates
-    .sort((a, b) => b.binary_pair_score - a.binary_pair_score)
-    .slice(0, maxPairs);
+function anomalyPriorityScore(record) {
+  return (
+    0.34 * clamp01(record.anomaly_score) +
+    0.24 * clamp01(record.dynamics_index) +
+    0.22 * clamp01(record.hidden_companion_index) +
+    0.14 * clamp01(record.structural_importance_score) +
+    0.06 *
+      Math.min(
+        1,
+        Math.abs(normalizeNumber(record.approximate_space_velocity, 0)) / 240
+      )
+  );
 }
 
-function normalizeInputPair(pair, recordMap) {
+function normalizePair(pair) {
   const sourceA = String(
     pair?.source_a ??
       pair?.source_id_a ??
@@ -563,7 +287,7 @@ function normalizeInputPair(pair, recordMap) {
       pair?.primary_source_id ??
       pair?.sourceA ??
       pair?.a ??
-      "",
+      ""
   );
 
   const sourceB = String(
@@ -573,198 +297,162 @@ function normalizeInputPair(pair, recordMap) {
       pair?.secondary_source_id ??
       pair?.sourceB ??
       pair?.b ??
-      "",
+      ""
   );
-
-  const recordA = pair?.record_a ?? recordMap.get(sourceA);
-  const recordB = pair?.record_b ?? recordMap.get(sourceB);
 
   return {
     ...pair,
     source_a: sourceA,
     source_b: sourceB,
-    source_id_a: sourceA,
-    source_id_b: sourceB,
-    record_a: recordA,
-    record_b: recordB,
+    binary_pair_score: normalizeNumber(
+      pair?.binary_pair_score ?? pair?.pair_score ?? pair?.score,
+      0
+    ),
     pair_classification:
-      pair?.pair_classification ?? pair?.classification ?? "Pair candidate",
-    binary_pair_score: normalizeNumber(pair?.binary_pair_score, null),
+      pair?.pair_classification ??
+      pair?.classification ??
+      "Possible pair candidate, not confirmed",
     angular_arcsec: normalizeNumber(pair?.angular_arcsec, null),
+    proper_motion_difference: normalizeNumber(pair?.proper_motion_difference, null),
     parallax_relative_difference: normalizeNumber(
       pair?.parallax_relative_difference,
-      null,
+      null
     ),
-    proper_motion_difference: normalizeNumber(pair?.proper_motion_difference, null),
   };
+}
+
+function buildPairCountMap(pairs) {
+  const map = new Map();
+
+  for (const pair of pairs) {
+    if (pair.source_a) {
+      map.set(pair.source_a, (map.get(pair.source_a) ?? 0) + 1);
+    }
+
+    if (pair.source_b) {
+      map.set(pair.source_b, (map.get(pair.source_b) ?? 0) + 1);
+    }
+  }
+
+  return map;
 }
 
 function findCrossmatch(source, crossmatchResults = []) {
   const sourceId = getSourceId(source);
-
-  if (!sourceId) {
-    return null;
-  }
+  if (!sourceId || !Array.isArray(crossmatchResults)) return null;
 
   return (
     crossmatchResults.find((item) => {
-      const itemId = String(
+      const id = String(
         item?.SOURCE_ID ??
           item?.source_id ??
+          item?.sourceId ??
           item?.gaia_source_id ??
           item?.id ??
-          "",
+          ""
       );
 
-      return itemId === sourceId;
+      return id === sourceId;
     }) ?? null
   );
 }
 
-function computeRiskVector(source, pairCount, crossmatch) {
-  const dynamics = normalizeNumber(source.dynamics_index, 0);
-  const hidden = normalizeNumber(source.hidden_companion_index, 0);
-  const anomaly = normalizeNumber(source.anomaly_score, 0);
-  const structural = normalizeNumber(source.structural_importance_score, 0);
-  const velocity = normalizeNumber(source.approximate_space_velocity, 0);
-  const pairTerm = Math.min(1, pairCount / 3);
-  const crossmatchTerm = crossmatch ? 0.12 : 0;
+function crossmatchStatus(crossmatch) {
+  if (!crossmatch) return "N/A";
 
-  const investigationScore = Math.min(
-    1,
-    0.26 * dynamics +
-      0.2 * hidden +
-      0.18 * anomaly +
-      0.14 * structural +
-      0.12 * Math.min(1, velocity / 220) +
-      0.08 * pairTerm +
-      crossmatchTerm,
-  );
+  const simbad = firstAvailable(crossmatch, [
+    "simbad",
+    "SIMBAD",
+    "simbad_status",
+    "simbad_main_id",
+  ]);
 
-  let tier = "Routine validation";
+  const vizier = firstAvailable(crossmatch, [
+    "vizier",
+    "VIZIER",
+    "vizier_status",
+    "vizier_catalogs",
+  ]);
 
-  if (investigationScore >= 0.72) {
-    tier = "Priority investigation target";
-  } else if (investigationScore >= 0.52) {
-    tier = "Strong follow-up candidate";
-  } else if (investigationScore >= 0.34) {
-    tier = "Moderate follow-up candidate";
-  }
+  const nss = firstAvailable(crossmatch, [
+    "nss",
+    "NSS",
+    "gaia_nss",
+    "nss_status",
+    "non_single_star",
+  ]);
 
-  return {
-    investigationScore,
-    tier,
-    components: [
-      {
-        label: "Dynamics",
-        value: dynamics,
-        note: "kinematic follow-up pressure",
-      },
-      {
-        label: "Hidden companion",
-        value: hidden,
-        note: "unresolved-multiplicity pressure",
-      },
-      {
-        label: "Anomaly",
-        value: anomaly,
-        note: "pipeline anomaly intensity",
-      },
-      {
-        label: "Structure",
-        value: structural,
-        note: "graph/informational relevance",
-      },
-      {
-        label: "Velocity",
-        value: Math.min(1, velocity / 220),
-        note: "space-velocity pressure",
-      },
-      {
-        label: "Pair field",
-        value: pairTerm,
-        note: "local relation pressure",
-      },
-    ],
-  };
+  return [
+    simbad ? `SIMBAD: ${text(simbad)}` : null,
+    vizier ? `VizieR: ${text(vizier)}` : null,
+    nss ? `NSS: ${text(nss)}` : null,
+  ]
+    .filter(Boolean)
+    .join(" | ") || "Crossmatch attached";
 }
 
 function buildGaiaArchiveUrl(source) {
-  const sourceId = getSourceId(source);
-
-  return `${GAIA_ARCHIVE_BASE}?target=${encodeURIComponent(`Gaia DR3 ${sourceId}`)}`;
-}
-
-function buildEsaSkyUrl(source) {
-  const ra = normalizeNumber(source.ra, null);
-  const dec = normalizeNumber(source.dec, null);
-
-  if (ra === null || dec === null) {
-    return ESASKY_BASE;
-  }
-
-  return `${ESASKY_BASE}?target=${encodeURIComponent(`${ra} ${dec}`)}&hips=Digitized%20Sky%20Survey%202%20color`;
+  const id = getSourceId(source);
+  if (!id) return GAIA_ARCHIVE_BASE;
+  return `${GAIA_ARCHIVE_BASE}?target=${encodeURIComponent(`Gaia DR3 ${id}`)}`;
 }
 
 function buildSimbadUrl(source) {
-  const ra = normalizeNumber(source.ra, null);
-  const dec = normalizeNumber(source.dec, null);
+  const ra = normalizeNumber(firstAvailable(source, ["ra", "RA"]), null);
+  const dec = normalizeNumber(firstAvailable(source, ["dec", "DEC"]), null);
 
-  if (ra === null || dec === null) {
-    return SIMBAD_BASE;
-  }
+  if (ra === null || dec === null) return SIMBAD_BASE;
 
   return `${SIMBAD_BASE}sim-coo?Coord=${encodeURIComponent(
-    `${ra.toFixed(10)} ${dec.toFixed(10)}`,
-  )}&CooFrame=ICRS&CooEpoch=2000&CooEqui=2000&Radius=5&Radius.unit=arcsec`;
+    `${ra.toFixed(10)} ${dec.toFixed(10)}`
+  )}&Radius=5&Radius.unit=arcsec`;
 }
 
 function buildVizierUrl(source) {
-  const ra = normalizeNumber(source.ra, null);
-  const dec = normalizeNumber(source.dec, null);
+  const ra = normalizeNumber(firstAvailable(source, ["ra", "RA"]), null);
+  const dec = normalizeNumber(firstAvailable(source, ["dec", "DEC"]), null);
 
-  if (ra === null || dec === null) {
-    return VIZIER_BASE;
-  }
+  if (ra === null || dec === null) return VIZIER_BASE;
 
   return `${VIZIER_BASE}?-c=${encodeURIComponent(
-    `${ra.toFixed(10)} ${dec.toFixed(10)}`,
-  )}&-c.rs=5&-c.u=arcsec`;
+    `${ra.toFixed(10)} ${dec.toFixed(10)}`
+  )}&-c.rs=5`;
+}
+
+function buildEsaSkyUrl(source) {
+  const ra = normalizeNumber(firstAvailable(source, ["ra", "RA"]), null);
+  const dec = normalizeNumber(firstAvailable(source, ["dec", "DEC"]), null);
+
+  if (ra === null || dec === null) return ESASKY_BASE;
+
+  return `${ESASKY_BASE}?target=${encodeURIComponent(
+    `${ra.toFixed(10)} ${dec.toFixed(10)}`
+  )}&hips=Digitized%20Sky%20Survey%202%20color`;
 }
 
 function buildGaiaAdql(source) {
-  const sourceId = getSourceId(source);
-
-  if (!sourceId) {
-    return "";
-  }
+  const id = getSourceId(source);
+  if (!id) return "";
 
   return `SELECT *
 FROM gaiadr3.gaia_source
-WHERE source_id = ${sourceId}`;
+WHERE source_id = ${id};`;
 }
 
 function buildNssAdql(source) {
-  const sourceId = getSourceId(source);
+  const id = getSourceId(source);
+  if (!id) return "";
 
-  if (!sourceId) {
-    return "";
-  }
-
-  return `SELECT TOP 20
-  source_id,
-  nss_solution_type
+  return `SELECT *
 FROM gaiadr3.nss_two_body_orbit
-WHERE source_id = ${sourceId}`;
+WHERE source_id = ${id};`;
 }
 
 function buildNeighbourAdql(source) {
-  const ra = normalizeNumber(source.ra, null);
-  const dec = normalizeNumber(source.dec, null);
+  const ra = normalizeNumber(firstAvailable(source, ["ra", "RA"]), null);
+  const dec = normalizeNumber(firstAvailable(source, ["dec", "DEC"]), null);
 
-  if (ra === null || dec === null) {
-    return "";
-  }
+  if (ra === null || dec === null) return "";
 
   return `SELECT TOP 100
   source_id,
@@ -773,65 +461,77 @@ function buildNeighbourAdql(source) {
   parallax,
   pmra,
   pmdec,
-  radial_velocity,
   phot_g_mean_mag,
   bp_rp
 FROM gaiadr3.gaia_source
 WHERE 1 = CONTAINS(
   POINT('ICRS', ra, dec),
   CIRCLE('ICRS', ${ra.toFixed(10)}, ${dec.toFixed(10)}, 0.0166667)
-)`;
+);`;
 }
 
-function buildMissionBriefing(source, pairs, riskVector, crossmatch) {
-  const sourceId = getSourceId(source);
+function buildMissionBriefing(record, activePairs, crossmatch) {
+  if (!record) return "";
+
   const lines = [];
 
-  lines.push(`# Candidate Investigation Briefing`);
+  lines.push("CODEX ALPHA CANDIDATE INVESTIGATION COCKPIT");
   lines.push("");
-  lines.push(`SOURCE_ID: ${sourceId}`);
-  lines.push(`Investigation tier: ${riskVector.tier}`);
-  lines.push(`Investigation score: ${formatNumber(riskVector.investigationScore, 6)}`);
+  lines.push(`SOURCE_ID: ${getSourceId(record) || "N/A"}`);
   lines.push("");
-  lines.push(`## Primary evidence`);
-  lines.push(`- Dynamics classification: ${source.dynamics_classification ?? "N/A"}`);
-  lines.push(`- Dynamics index: ${formatNumber(source.dynamics_index, 6)}`);
+  lines.push("Candidate-level interpretation:");
   lines.push(
-    `- Hidden companion classification: ${
-      source.hidden_companion_classification ?? "N/A"
-    }`,
+    "This source is selected from the top-50 anomaly pool using Gaia-derived dashboard proxies. It is not a confirmed planet host, binary system, exotic object, or new physical mechanism."
+  );
+  lines.push("");
+  lines.push(`Anomaly score: ${formatNumber(record.anomaly_score, 6)}`);
+  lines.push(`Dynamics index: ${formatNumber(record.dynamics_index, 6)}`);
+  lines.push(
+    `Hidden companion index: ${formatNumber(record.hidden_companion_index, 6)}`
   );
   lines.push(
-    `- Hidden companion index: ${formatNumber(source.hidden_companion_index, 6)}`,
+    `Structural importance: ${formatNumber(
+      record.structural_importance_score,
+      6
+    )}`
   );
-  lines.push(`- Approximate space velocity: ${formatNumber(source.approximate_space_velocity, 6)} km/s`);
-  lines.push(`- Pair relations attached: ${pairs.length}`);
-  lines.push(`- Automatic crossmatch attached: ${crossmatch ? "yes" : "no"}`);
-  lines.push("");
-  lines.push(`## Immediate operational plan`);
-  lines.push(`1. Verify Gaia DR3 identity and astrometric parameters.`);
-  lines.push(`2. Inspect SIMBAD and VizieR around the source coordinates.`);
-  lines.push(`3. Run Gaia NSS query for non-single-star solutions.`);
-  lines.push(`4. Compare the candidate against local neighbours within 60 arcsec.`);
-  lines.push(`5. Treat every internal score as a prioritization proxy, not as proof.`);
-  lines.push("");
-  lines.push(`## Codex Alpha note`);
   lines.push(
-    `The source can be used as an internal node in the Codex Alpha computational workflow, but no direct physical measurement of $\\nabla\\mathcal{K}$ is implied by these dashboard proxies.`,
+    `Approximate space velocity: ${formatNumber(
+      record.approximate_space_velocity,
+      6
+    )}`
+  );
+  lines.push("");
+  lines.push(`Dynamics classification: ${text(record.dynamics_classification)}`);
+  lines.push(
+    `Hidden companion classification: ${text(
+      record.hidden_companion_classification
+    )}`
+  );
+  lines.push(
+    `Possible pair involvement: ${
+      activePairs.length
+        ? `${activePairs.length} possible pair candidate(s), not confirmed`
+        : "N/A"
+    }`
+  );
+  lines.push(`Crossmatch: ${crossmatchStatus(crossmatch)}`);
+  lines.push("");
+  lines.push("Next validation steps:");
+  lines.push("1. Verify the Gaia DR3 source directly in Gaia Archive.");
+  lines.push("2. Check SIMBAD and VizieR object context.");
+  lines.push("3. Check Gaia NSS, RUWE, astrometric excess noise and radial velocity.");
+  lines.push(
+    "4. Compare parallax and proper motion with nearby sources before any comoving-pair interpretation."
+  );
+  lines.push(
+    "5. Treat ∇𝒦 language as internal framework context only, not as a direct physical measurement."
   );
 
   return lines.join("\n");
 }
 
-function getPairOtherSource(pair, sourceId) {
-  if (pair.source_a === sourceId) {
-    return pair.source_b;
-  }
-
-  return pair.source_a;
-}
-
-function InvestigationMetric({ label, value, subtitle }) {
+function MetricCard({ label, value, subtitle }) {
   return (
     <div className="cockpit-metric">
       <span>{label}</span>
@@ -858,149 +558,184 @@ function EvidenceGauge({ label, value, note }) {
         />
       </div>
 
-      <small>{note}</small>
+      {note && <small>{note}</small>}
     </div>
   );
 }
 
-function CandidateConstellation({
-  activeRecord,
-  pairRelations,
-  recordMap,
-  onSelect,
-}) {
-  const sourceId = getSourceId(activeRecord);
-
-  const satellites = pairRelations
-    .map((pair) => {
-      const otherId = getPairOtherSource(pair, sourceId);
-      const otherRecord = recordMap.get(otherId);
-
-      return {
-        pair,
-        otherId,
-        otherRecord,
-      };
-    })
-    .slice(0, 8);
-
-  return (
-    <div className="candidate-constellation">
-      <div className="constellation-radar-ring ring-one" />
-      <div className="constellation-radar-ring ring-two" />
-      <div className="constellation-radar-ring ring-three" />
-
-      <button
-        type="button"
-        className="constellation-core"
-        onClick={() => onSelect(activeRecord)}
-      >
-        <span>Selected Source</span>
-        <strong>{sourceId}</strong>
-      </button>
-
-      {satellites.map((item, index) => {
-        const angle = (Math.PI * 2 * index) / Math.max(1, satellites.length);
-        const radius = index % 2 === 0 ? 38 : 31;
-        const x = 50 + Math.cos(angle) * radius;
-        const y = 50 + Math.sin(angle) * radius;
-        const score = normalizeNumber(item.pair.binary_pair_score, 0);
-
-        return (
-          <button
-            key={`${item.otherId}-${index}`}
-            type="button"
-            className="constellation-satellite"
-            style={{
-              left: `${x}%`,
-              top: `${y}%`,
-              "--satellite-score": Math.max(0.18, Math.min(1, score)),
-            }}
-            onClick={() => {
-              if (item.otherRecord) {
-                onSelect(item.otherRecord);
-              }
-            }}
-            title={item.pair.pair_classification}
-          >
-            <span>{item.pair.pair_classification}</span>
-            <strong>{item.otherId}</strong>
-            <small>score {formatNumber(item.pair.binary_pair_score, 3)}</small>
-          </button>
-        );
-      })}
-
-      {!satellites.length && (
-        <div className="constellation-empty">
-          <strong>No local pair relation attached</strong>
-          <span>
-            The selected source has no pair candidate under the active internal
-            thresholds.
-          </span>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function InvestigationTimeline({ riskVector, activeRecord, pairRelations }) {
-  const hasDirectQuality = Boolean(activeRecord?.has_direct_astrometric_quality);
-  const hasPairs = pairRelations.length > 0;
-  const hasRadialVelocity =
-    normalizeNumber(activeRecord?.radial_velocity, null) !== null;
-
-  const steps = [
+function HexagonStatsChart({ record }) {
+  const metrics = [
     {
-      label: "Gaia identity lock",
-      status: "ready",
-      text: "Verify source_id, position, parallax and proper motion directly in Gaia DR3.",
+      label: "Anomaly",
+      value: clamp01(record?.anomaly_score),
+      raw: formatNumber(record?.anomaly_score, 3),
     },
     {
-      label: "Astrometric-quality scan",
-      status: hasDirectQuality ? "ready" : "limited",
-      text: hasDirectQuality
-        ? "Direct quality fields are available for stronger unresolved-companion triage."
-        : "Direct quality fields are missing here; the hidden-companion layer remains indirect.",
+      label: "Dynamics",
+      value: clamp01(record?.dynamics_index),
+      raw: formatNumber(record?.dynamics_index, 3),
     },
     {
-      label: "Pair-field interrogation",
-      status: hasPairs ? "ready" : "limited",
-      text: hasPairs
-        ? "At least one possible comoving or wide-binary relation is attached."
-        : "No local pair relation is attached under the current pair-scoring thresholds.",
+      label: "Hidden",
+      value: clamp01(record?.hidden_companion_index),
+      raw: formatNumber(record?.hidden_companion_index, 3),
     },
     {
-      label: "Velocity consistency",
-      status: hasRadialVelocity ? "ready" : "limited",
-      text: hasRadialVelocity
-        ? "Radial velocity is available, allowing a stronger space-velocity estimate."
-        : "Radial velocity is missing, so space velocity relies on tangential motion only.",
+      label: "Velocity",
+      value: Math.min(
+        1,
+        Math.abs(normalizeNumber(record?.approximate_space_velocity, 0)) / 220
+      ),
+      raw: formatNumber(record?.approximate_space_velocity, 2),
     },
     {
-      label: "External validation",
-      status: riskVector.investigationScore >= 0.52 ? "priority" : "planned",
-      text:
-        riskVector.investigationScore >= 0.52
-          ? "This object deserves a priority external validation pass."
-          : "External validation is still required before any physical interpretation.",
+      label: "Structure",
+      value: clamp01(record?.structural_importance_score),
+      raw: formatNumber(record?.structural_importance_score, 3),
+    },
+    {
+      label: "Color",
+      value: Math.min(
+        1,
+        Math.abs(normalizeNumber(record?.gaia_color_index, 0)) / 3.5
+      ),
+      raw: formatNumber(record?.gaia_color_index, 3),
     },
   ];
 
-  return (
-    <div className="investigation-timeline">
-      {steps.map((step, index) => (
-        <div
-          className={`timeline-step timeline-step-${step.status}`}
-          key={step.label}
-        >
-          <div className="timeline-marker">{index + 1}</div>
+  const cx = 170;
+  const cy = 160;
+  const radius = 104;
 
-          <div>
-            <strong>{step.label}</strong>
-            <p>{step.text}</p>
-          </div>
-        </div>
-      ))}
+  function point(index, scale = 1) {
+    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / metrics.length;
+    return {
+      x: cx + Math.cos(angle) * radius * scale,
+      y: cy + Math.sin(angle) * radius * scale,
+    };
+  }
+
+  const polygonPoints = metrics
+    .map((metric, index) => {
+      const p = point(index, Math.max(0.08, metric.value));
+      return `${p.x},${p.y}`;
+    })
+    .join(" ");
+
+  const outerPoints = metrics
+    .map((_, index) => {
+      const p = point(index, 1);
+      return `${p.x},${p.y}`;
+    })
+    .join(" ");
+
+  const midPoints = metrics
+    .map((_, index) => {
+      const p = point(index, 0.5);
+      return `${p.x},${p.y}`;
+    })
+    .join(" ");
+
+  return (
+    <div className="candidate-explanation-card">
+      <span>Top-50 anomaly stat profile</span>
+      <strong>Hexagonal proxy chart</strong>
+
+      <svg
+        viewBox="0 0 340 330"
+        width="100%"
+        height="330"
+        role="img"
+        aria-label="Candidate hexagonal proxy chart"
+      >
+        <polygon
+          points={outerPoints}
+          fill="none"
+          stroke="rgba(0,245,255,0.45)"
+          strokeWidth="1.5"
+        />
+
+        <polygon
+          points={midPoints}
+          fill="none"
+          stroke="rgba(0,245,255,0.18)"
+          strokeWidth="1"
+        />
+
+        {metrics.map((_, index) => {
+          const p = point(index, 1);
+          return (
+            <line
+              key={`axis-${index}`}
+              x1={cx}
+              y1={cy}
+              x2={p.x}
+              y2={p.y}
+              stroke="rgba(0,245,255,0.18)"
+              strokeWidth="1"
+            />
+          );
+        })}
+
+        <polygon
+          points={polygonPoints}
+          fill="rgba(57,255,20,0.25)"
+          stroke="rgba(57,255,20,0.9)"
+          strokeWidth="2"
+        />
+
+        {metrics.map((metric, index) => {
+          const p = point(index, Math.max(0.08, metric.value));
+          return (
+            <circle
+              key={`dot-${metric.label}`}
+              cx={p.x}
+              cy={p.y}
+              r="4"
+              fill="#39ff14"
+            />
+          );
+        })}
+
+        {metrics.map((metric, index) => {
+          const labelPoint = point(index, 1.23);
+          return (
+            <g key={`label-${metric.label}`}>
+              <text
+                x={labelPoint.x}
+                y={labelPoint.y}
+                textAnchor="middle"
+                fill="#dff7ff"
+                fontSize="12"
+                fontWeight="700"
+              >
+                {metric.label}
+              </text>
+              <text
+                x={labelPoint.x}
+                y={labelPoint.y + 15}
+                textAnchor="middle"
+                fill="#39ff14"
+                fontSize="11"
+              >
+                {metric.raw}
+              </text>
+            </g>
+          );
+        })}
+
+        <circle
+          cx={cx}
+          cy={cy}
+          r="3"
+          fill="rgba(255,255,255,0.85)"
+        />
+      </svg>
+
+      <p>
+        All axes are normalized dashboard proxies. This plot is for prioritization
+        only and does not confirm an astrophysical classification.
+      </p>
     </div>
   );
 }
@@ -1010,32 +745,31 @@ function QueryCard({ title, query, onCopy }) {
     <div className="cockpit-query-card">
       <div className="cockpit-query-header">
         <span>{title}</span>
-
         <button type="button" onClick={() => onCopy(title, query)}>
           Copy
         </button>
       </div>
 
       <pre>
-        <code>{query || "No query available for this source."}</code>
+        <code>{query || "N/A"}</code>
       </pre>
     </div>
   );
 }
 
-function CandidateInvestigationCockpit({
+export default function CandidateInvestigationCockpit({
   allSources = [],
+  selectedSource = null,
   graphCentrality = [],
   featureContributions = [],
   emergentStructures = [],
   candidateCrossmatchResults = [],
   possibleBinaryPairs = [],
-  selectedSource,
-  onSourceSelect,
-  setCurrentPage,
+  onSourceSelect = () => {},
+  setCurrentPage = () => {},
 }) {
-  const [copied, setCopied] = useState(null);
   const [focusMode, setFocusMode] = useState("mission");
+  const [copied, setCopied] = useState(null);
 
   const maps = useMemo(
     () => ({
@@ -1043,168 +777,120 @@ function CandidateInvestigationCockpit({
       featureMap: buildMapBySourceId(featureContributions),
       emergentMap: buildMapBySourceId(emergentStructures),
     }),
-    [graphCentrality, featureContributions, emergentStructures],
+    [graphCentrality, featureContributions, emergentStructures]
   );
 
-  const records = useMemo(() => {
+  const anomalyPool = useMemo(() => {
     const sourceArray = Array.isArray(allSources) ? allSources : [];
-    return sourceArray.map((source) => enrichSource(source, maps));
+
+    return sourceArray
+      .map((source) => enrichSource(source, maps))
+      .sort((a, b) => anomalyPriorityScore(b) - anomalyPriorityScore(a))
+      .slice(0, 50);
   }, [allSources, maps]);
 
-  const recordMap = useMemo(() => buildMapBySourceId(records), [records]);
+  const recordMap = useMemo(() => buildMapBySourceId(anomalyPool), [anomalyPool]);
 
-  const crossmatchMap = useMemo(
-    () => buildCrossmatchMap(candidateCrossmatchResults),
-    [candidateCrossmatchResults],
-  );
+  const pairCandidates = useMemo(() => {
+    const pairArray = Array.isArray(possibleBinaryPairs) ? possibleBinaryPairs : [];
 
-  const normalizedInputPairs = useMemo(() => {
-    const inputPairs = Array.isArray(possibleBinaryPairs) ? possibleBinaryPairs : [];
-
-    return inputPairs
-      .slice(0, 80)
-      .map((pair) => normalizeInputPair(pair, recordMap))
+    return pairArray
+      .slice(0, 120)
+      .map(normalizePair)
       .filter((pair) => pair.source_a && pair.source_b);
-  }, [possibleBinaryPairs, recordMap]);
-
-  // Runtime pair generation intentionally disabled.
-  // The previous O(n²) candidate builder could freeze the fourth page.
-  // This cockpit now uses only pair candidates already produced upstream.
-  const pairCandidates = normalizedInputPairs;
+  }, [possibleBinaryPairs]);
 
   const pairCountMap = useMemo(
     () => buildPairCountMap(pairCandidates),
-    [pairCandidates],
+    [pairCandidates]
   );
 
-  const selectedSourceId = selectedSource ? getSourceId(selectedSource) : null;
+  const selectedSourceId = getSourceId(selectedSource);
 
   const activeRecord = useMemo(() => {
     if (selectedSourceId && recordMap.has(selectedSourceId)) {
       return recordMap.get(selectedSourceId);
     }
 
-    return (
-      records
-        .slice(0, 160)
-        .sort(
-          (a, b) =>
-            normalizeNumber(b.dynamics_index, 0) -
-            normalizeNumber(a.dynamics_index, 0),
-        )[0] ?? null
-    );
-  }, [records, recordMap, selectedSourceId]);
+    return anomalyPool[0] ?? null;
+  }, [selectedSourceId, recordMap, anomalyPool]);
 
-  const activeSourceId = activeRecord ? getSourceId(activeRecord) : "";
+  const activeSourceId = getSourceId(activeRecord);
 
   const activePairs = useMemo(() => {
-    if (!activeSourceId) {
-      return [];
-    }
+    if (!activeSourceId) return [];
 
     return pairCandidates
-      .filter((pair) => pair.source_a === activeSourceId || pair.source_b === activeSourceId)
-      .slice(0, 16);
+      .filter(
+        (pair) => pair.source_a === activeSourceId || pair.source_b === activeSourceId
+      )
+      .slice(0, 12);
   }, [pairCandidates, activeSourceId]);
 
-  const crossmatch = useMemo(() => {
-    if (!activeSourceId) {
-      return null;
-    }
-
-    return crossmatchMap.get(activeSourceId) ?? findCrossmatch(activeRecord, candidateCrossmatchResults);
-  }, [activeRecord, activeSourceId, crossmatchMap, candidateCrossmatchResults]);
-
-  const riskVector = useMemo(() => {
-    if (!activeRecord) {
-      return {
-        investigationScore: 0,
-        tier: "No target selected",
-        components: [],
-      };
-    }
-
-    return computeRiskVector(activeRecord, activePairs.length, crossmatch);
-  }, [activeRecord, activePairs, crossmatch]);
-
-  const missionBriefing = useMemo(() => {
-    if (!activeRecord) {
-      return "";
-    }
-
-    return buildMissionBriefing(activeRecord, activePairs, riskVector, crossmatch);
-  }, [activeRecord, activePairs, riskVector, crossmatch]);
+  const crossmatch = useMemo(
+    () => findCrossmatch(activeRecord, candidateCrossmatchResults),
+    [activeRecord, candidateCrossmatchResults]
+  );
 
   const topTargets = useMemo(() => {
-    return records
-      .slice()
-      .sort((a, b) => {
-        const scoreA =
-          normalizeNumber(a.dynamics_index, 0) +
-          normalizeNumber(a.hidden_companion_index, 0) +
-          normalizeNumber(a.anomaly_score, 0) +
-          normalizeNumber(a.structural_importance_score, 0);
+    return anomalyPool.slice(0, 12).map((record) => {
+      const id = getSourceId(record);
+      const pairCount = pairCountMap.get(id) ?? 0;
 
-        const scoreB =
-          normalizeNumber(b.dynamics_index, 0) +
-          normalizeNumber(b.hidden_companion_index, 0) +
-          normalizeNumber(b.anomaly_score, 0) +
-          normalizeNumber(b.structural_importance_score, 0);
+      return {
+        record,
+        score: anomalyPriorityScore(record),
+        pairCount,
+      };
+    });
+  }, [anomalyPool, pairCountMap]);
 
-        return scoreB - scoreA;
-      })
-      .slice(0, 48)
-      .map((record) => {
-        const sourceId = getSourceId(record);
-        const pairCount = pairCountMap.get(sourceId) ?? 0;
-        const localCrossmatch = crossmatchMap.get(sourceId) ?? null;
-        const localRisk = computeRiskVector(record, pairCount, localCrossmatch);
+  const missionBriefing = useMemo(
+    () => buildMissionBriefing(activeRecord, activePairs, crossmatch),
+    [activeRecord, activePairs, crossmatch]
+  );
 
-        return {
-          record,
-          pairCount,
-          risk: localRisk,
-        };
-      })
-      .sort((a, b) => b.risk.investigationScore - a.risk.investigationScore)
-      .slice(0, 12);
-  }, [records, pairCountMap, crossmatchMap]);
-
-  async function copyText(label, text) {
+  async function copyText(label, value) {
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(value);
       setCopied(label);
-      window.setTimeout(() => setCopied(null), 1600);
+      window.setTimeout(() => setCopied(null), 1500);
     } catch {
       setCopied("Copy failed");
-      window.setTimeout(() => setCopied(null), 1600);
+      window.setTimeout(() => setCopied(null), 1500);
     }
   }
 
   function handleSelect(record) {
-    if (onSourceSelect) {
-      onSourceSelect(record);
-    }
+    onSourceSelect?.(record);
   }
 
   if (!activeRecord) {
     return (
-      <section className="advanced-page-shell">
-        <div className="panel advanced-hero-panel">
-          <div className="eyebrow">Fourth Analysis Interface</div>
+      <section className="investigation-cockpit-shell">
+        <div className="panel cockpit-hero-panel">
+          <div className="panel-header">
+            <h2>Candidate Investigation Cockpit</h2>
+            <span>No candidate pool available</span>
+          </div>
 
-          <h2>Candidate Investigation Cockpit</h2>
+          <div className="coherence-warning">
+            No Gaia sources were received by the fourth analysis interface.
+          </div>
 
-          <p>
-            No Gaia source is currently available. Load the dashboard dataset
-            before opening the investigation cockpit.
-          </p>
-
-          <div className="advanced-actions">
+          <div className="candidate-action-row">
             <button
               type="button"
               className="dashboard-nav-button"
-              onClick={() => setCurrentPage?.("dynamics")}
+              onClick={() => setCurrentPage("dashboard")}
+            >
+              Back to Framework Home
+            </button>
+
+            <button
+              type="button"
+              className="dashboard-nav-button"
+              onClick={() => setCurrentPage("dynamics")}
             >
               Back to Astrometric Dynamics Lab
             </button>
@@ -1219,24 +905,31 @@ function CandidateInvestigationCockpit({
   const neighbourAdql = buildNeighbourAdql(activeRecord);
 
   return (
-    <section className="advanced-page-shell investigation-cockpit-shell">
-      <div className="panel advanced-hero-panel cockpit-hero-panel">
-        <div className="eyebrow">Fourth Analysis Interface</div>
+    <section className="investigation-cockpit-shell">
+      <div className="panel cockpit-hero-panel">
+        <div className="panel-header">
+          <h2>Candidate Investigation Cockpit</h2>
+          <span>Top-50 anomaly pool only</span>
+        </div>
 
-        <h2>Candidate Investigation Cockpit</h2>
+        <div className="coherence-warning">
+          This interface analyzes only the 50 highest-priority Gaia anomaly
+          candidates. All labels are proxy-based and require external validation.
+        </div>
 
-        <p>
-          A mission-control layer for turning a selected Gaia candidate into a
-          concrete investigation target: evidence pressure, pair-field context,
-          validation sequence, external catalogue links and ready-to-copy ADQL
-          queries.
-        </p>
-
-        <div className="advanced-actions">
+        <div className="candidate-action-row">
           <button
             type="button"
-            className="dashboard-nav-button dashboard-nav-button-accent"
-            onClick={() => setCurrentPage?.("dynamics")}
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("dashboard")}
+          >
+            Back to Framework Home
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("dynamics")}
           >
             Back to Astrometric Dynamics Lab
           </button>
@@ -1244,71 +937,86 @@ function CandidateInvestigationCockpit({
           <button
             type="button"
             className="dashboard-nav-button"
-            onClick={() => setCurrentPage?.("advanced")}
+            onClick={() => setCurrentPage("advanced")}
           >
-            Advanced Analysis Layer
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage?.("dashboard")}
-          >
-            Operational Dashboard
+            Back to Advanced Analysis Layer
           </button>
         </div>
       </div>
 
-      <section className="cockpit-command-grid">
+      <div className="cockpit-command-grid" style={{ marginTop: 22 }}>
         <div className="panel cockpit-target-panel">
           <div className="cockpit-target-header">
             <div>
-              <span className="candidate-id">Active Target</span>
-              <h2>{activeSourceId}</h2>
-              <p>{riskVector.tier}</p>
+              <p>Active candidate</p>
+              <h2>{activeSourceId || "N/A"}</h2>
+              <p>{text(activeRecord.dynamics_classification)}</p>
             </div>
 
             <div className="cockpit-score-core">
-              <span>Investigation score</span>
-              <strong>{formatNumber(riskVector.investigationScore, 4)}</strong>
+              <div>
+                <span>Priority</span>
+                <strong>{formatNumber(anomalyPriorityScore(activeRecord), 4)}</strong>
+              </div>
             </div>
           </div>
 
           <div className="cockpit-metric-grid">
-            <InvestigationMetric
+            <MetricCard
+              label="Anomaly score"
+              value={formatNumber(activeRecord.anomaly_score, 4)}
+              subtitle="Internal anomaly proxy"
+            />
+
+            <MetricCard
               label="Dynamics index"
               value={formatNumber(activeRecord.dynamics_index, 4)}
               subtitle={activeRecord.dynamics_classification}
             />
 
-            <InvestigationMetric
+            <MetricCard
               label="Hidden companion"
               value={formatNumber(activeRecord.hidden_companion_index, 4)}
               subtitle={activeRecord.hidden_companion_classification}
             />
 
-            <InvestigationMetric
-              label="Space velocity"
-              value={`${formatNumber(activeRecord.approximate_space_velocity, 3)} km/s`}
-              subtitle="approximate"
-            />
-
-            <InvestigationMetric
-              label="Pair relations"
-              value={activePairs.length}
-              subtitle="local candidate links"
-            />
-
-            <InvestigationMetric
+            <MetricCard
               label="Distance"
               value={`${formatNumber(activeRecord.distance_pc, 3)} pc`}
-              subtitle="from parallax when available"
+              subtitle="Parallax-derived if available"
             />
 
-            <InvestigationMetric
-              label="BP-RP"
+            <MetricCard
+              label="Tangential velocity"
+              value={`${formatNumber(activeRecord.tangential_velocity, 3)} km/s`}
+              subtitle="Requires parallax and proper motion"
+            />
+
+            <MetricCard
+              label="Approx. space velocity"
+              value={`${formatNumber(
+                activeRecord.approximate_space_velocity,
+                3
+              )} km/s`}
+              subtitle="Incomplete if radial velocity is missing"
+            />
+
+            <MetricCard
+              label="BP-RP / color"
               value={formatNumber(activeRecord.gaia_color_index, 4)}
-              subtitle="Gaia colour proxy"
+              subtitle="Gaia photometric proxy"
+            />
+
+            <MetricCard
+              label="Possible pair links"
+              value={activePairs.length ? `${activePairs.length}` : "N/A"}
+              subtitle="Not confirmed"
+            />
+
+            <MetricCard
+              label="Crossmatch"
+              value={crossmatch ? "Attached" : "N/A"}
+              subtitle={crossmatchStatus(crossmatch)}
             />
           </div>
 
@@ -1318,7 +1026,7 @@ function CandidateInvestigationCockpit({
               className={focusMode === "mission" ? "active" : ""}
               onClick={() => setFocusMode("mission")}
             >
-              Mission view
+              Mission
             </button>
 
             <button
@@ -1326,7 +1034,7 @@ function CandidateInvestigationCockpit({
               className={focusMode === "evidence" ? "active" : ""}
               onClick={() => setFocusMode("evidence")}
             >
-              Evidence view
+              Evidence
             </button>
 
             <button
@@ -1334,52 +1042,27 @@ function CandidateInvestigationCockpit({
               className={focusMode === "queries" ? "active" : ""}
               onClick={() => setFocusMode("queries")}
             >
-              Query view
+              Queries
             </button>
           </div>
         </div>
 
         <div className="panel cockpit-constellation-panel">
-          <div className="panel-header">
-            <div>
-              <h2>Relation Field</h2>
-              <span>Possible local connections</span>
-            </div>
-          </div>
-
-          <CandidateConstellation
-            activeRecord={activeRecord}
-            pairRelations={activePairs}
-            recordMap={recordMap}
-            onSelect={handleSelect}
-          />
+          <HexagonStatsChart record={activeRecord} />
         </div>
-      </section>
+      </div>
 
       {focusMode === "mission" && (
-        <section className="cockpit-two-column">
-          <div className="panel cockpit-evidence-panel">
-            <div className="panel-header">
-              <div>
-                <h2>Mission Timeline</h2>
-                <span>Validation sequence</span>
-              </div>
-            </div>
-
-            <InvestigationTimeline
-              riskVector={riskVector}
-              activeRecord={activeRecord}
-              pairRelations={activePairs}
-            />
-          </div>
-
+        <div className="cockpit-two-column" style={{ marginTop: 22 }}>
           <div className="panel cockpit-briefing-panel">
             <div className="panel-header">
-              <div>
-                <h2>Mission Briefing</h2>
-                <span>Export-ready scientific summary</span>
-              </div>
+              <h2>Mission Briefing</h2>
+              <span>copy-ready</span>
+            </div>
 
+            <pre className="cockpit-briefing-text">{missionBriefing}</pre>
+
+            <div className="candidate-action-row">
               <button
                 type="button"
                 className="dashboard-nav-button"
@@ -1387,102 +1070,153 @@ function CandidateInvestigationCockpit({
               >
                 Copy briefing
               </button>
+
+              {copied && <span className="copy-status">Copied: {copied}</span>}
+            </div>
+          </div>
+
+          <div className="panel cockpit-target-list-panel">
+            <div className="panel-header">
+              <h2>Top Candidate Queue</h2>
+              <span>{topTargets.length}/50 shown</span>
             </div>
 
-            <pre className="cockpit-briefing-text">{missionBriefing}</pre>
+            <div className="cockpit-target-queue">
+              {topTargets.map((item, index) => {
+                const id = getSourceId(item.record);
+                const selected = id === activeSourceId;
+
+                return (
+                  <button
+                    key={id || index}
+                    type="button"
+                    className={`cockpit-target-row ${
+                      selected ? "cockpit-target-row-selected" : ""
+                    }`}
+                    onClick={() => handleSelect(item.record)}
+                  >
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+
+                    <div>
+                      <strong>{id || "N/A"}</strong>
+                      <small>{text(item.record.hidden_companion_classification)}</small>
+                    </div>
+
+                    <div>
+                      <strong>{formatNumber(item.score, 4)}</strong>
+                      <small>Priority</small>
+                    </div>
+
+                    <div>
+                      <strong>{item.pairCount || "N/A"}</strong>
+                      <small>Pairs</small>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </section>
+        </div>
       )}
 
       {focusMode === "evidence" && (
-        <section className="cockpit-two-column">
+        <div className="cockpit-two-column" style={{ marginTop: 22 }}>
           <div className="panel cockpit-evidence-panel">
             <div className="panel-header">
-              <div>
-                <h2>Evidence Pressure Vector</h2>
-                <span>Internal prioritization map</span>
-              </div>
+              <h2>Evidence Vector</h2>
+              <span>proxy-only</span>
             </div>
 
             <div className="evidence-gauge-grid">
-              {riskVector.components.map((component) => (
-                <EvidenceGauge
-                  key={component.label}
-                  label={component.label}
-                  value={component.value}
-                  note={component.note}
-                />
-              ))}
+              <EvidenceGauge
+                label="Anomaly"
+                value={clamp01(activeRecord.anomaly_score)}
+                note="Internal anomaly score. Not a physical classification."
+              />
+
+              <EvidenceGauge
+                label="Dynamics"
+                value={clamp01(activeRecord.dynamics_index)}
+                note="Kinematic prioritization proxy."
+              />
+
+              <EvidenceGauge
+                label="Hidden companion suspicion"
+                value={clamp01(activeRecord.hidden_companion_index)}
+                note="Heuristic flag, not a confirmed companion."
+              />
+
+              <EvidenceGauge
+                label="Structural importance"
+                value={clamp01(activeRecord.structural_importance_score)}
+                note="Graph/ranking-derived importance proxy."
+              />
+
+              <EvidenceGauge
+                label="Velocity extremeness"
+                value={Math.min(
+                  1,
+                  Math.abs(
+                    normalizeNumber(activeRecord.approximate_space_velocity, 0)
+                  ) / 220
+                )}
+                note="Approximate kinematic intensity."
+              />
             </div>
           </div>
 
           <div className="panel cockpit-pair-panel">
             <div className="panel-header">
-              <div>
-                <h2>Pair Candidate Details</h2>
-                <span>Comoving / wide-binary triage</span>
-              </div>
+              <h2>Possible Pair Involvement</h2>
+              <span>not confirmed</span>
             </div>
 
             {!activePairs.length && (
-              <div className="empty-selection">
-                No local pair candidate is attached to this selected source.
+              <div className="coherence-warning">
+                No possible pair involvement is currently attached to this
+                candidate. The cockpit does not generate runtime pair candidates.
               </div>
             )}
 
             {!!activePairs.length && (
               <div className="cockpit-pair-list">
-                {activePairs.slice(0, 8).map((pair) => {
-                  const otherId = getPairOtherSource(pair, activeSourceId);
-                  const otherRecord = recordMap.get(otherId);
+                {activePairs.map((pair, index) => {
+                  const otherId =
+                    pair.source_a === activeSourceId ? pair.source_b : pair.source_a;
 
                   return (
-                    <button
-                      key={pair.pair_id ?? `${pair.source_a}-${pair.source_b}`}
-                      type="button"
-                      className="cockpit-pair-card"
-                      onClick={() => {
-                        if (otherRecord) {
-                          handleSelect(otherRecord);
-                        }
-                      }}
-                    >
+                    <div className="cockpit-pair-card" key={pair.pair_id ?? index}>
                       <span>{pair.pair_classification}</span>
-                      <strong>{otherId}</strong>
-
+                      <strong>{otherId || "N/A"}</strong>
                       <small>
-                        score {formatNumber(pair.binary_pair_score, 4)} · sep{" "}
-                        {formatNumber(pair.angular_arcsec, 3)} arcsec · PM diff{" "}
+                        Score {formatNumber(pair.binary_pair_score, 4)} | Sep{" "}
+                        {formatNumber(pair.angular_arcsec, 3)} arcsec | PM diff{" "}
                         {formatNumber(pair.proper_motion_difference, 3)}
                       </small>
-                    </button>
+                    </div>
                   );
                 })}
               </div>
             )}
           </div>
-        </section>
+        </div>
       )}
 
       {focusMode === "queries" && (
-        <section className="panel cockpit-query-panel">
+        <div className="panel cockpit-query-panel" style={{ marginTop: 22 }}>
           <div className="panel-header">
-            <div>
-              <h2>Validation Query Console</h2>
-              <span>Gaia Archive-ready ADQL snippets</span>
-            </div>
-
-            {copied && <span className="copy-status">Copied: {copied}</span>}
+            <h2>Validation Queries</h2>
+            <span>external validation required</span>
           </div>
 
           <div className="candidate-action-row">
             <a
-              className="dashboard-nav-button dashboard-nav-button-accent"
+              className="dashboard-nav-button"
               href={buildGaiaArchiveUrl(activeRecord)}
               target="_blank"
               rel="noreferrer"
             >
-              Open Gaia Archive
+              Gaia Archive
             </a>
 
             <a
@@ -1491,7 +1225,7 @@ function CandidateInvestigationCockpit({
               target="_blank"
               rel="noreferrer"
             >
-              Open ESASky
+              ESA Sky
             </a>
 
             <a
@@ -1500,7 +1234,7 @@ function CandidateInvestigationCockpit({
               target="_blank"
               rel="noreferrer"
             >
-              Open SIMBAD
+              SIMBAD
             </a>
 
             <a
@@ -1509,69 +1243,51 @@ function CandidateInvestigationCockpit({
               target="_blank"
               rel="noreferrer"
             >
-              Open VizieR
+              VizieR
             </a>
           </div>
 
           <div className="cockpit-query-grid">
-            <QueryCard title="Gaia source query" query={sourceAdql} onCopy={copyText} />
-            <QueryCard title="Gaia NSS query" query={nssAdql} onCopy={copyText} />
+            <QueryCard
+              title="Gaia source query"
+              query={sourceAdql}
+              onCopy={copyText}
+            />
+
+            <QueryCard
+              title="Gaia NSS query"
+              query={nssAdql}
+              onCopy={copyText}
+            />
+
             <QueryCard
               title="Neighbourhood query"
               query={neighbourAdql}
               onCopy={copyText}
             />
           </div>
-        </section>
+
+          {copied && (
+            <p className="copy-status" style={{ marginTop: 14 }}>
+              Copied: {copied}
+            </p>
+          )}
+        </div>
       )}
 
-      <section className="panel cockpit-target-list-panel">
+      <div className="panel cockpit-briefing-panel" style={{ marginTop: 22 }}>
         <div className="panel-header">
-          <div>
-            <h2>Priority Target Queue</h2>
-            <span>Best next objects to interrogate</span>
-          </div>
-
-          <span className="source-table-count">{topTargets.length} queued targets</span>
+          <h2>Scientific Caution</h2>
+          <span>candidate-level only</span>
         </div>
 
-        <div className="cockpit-target-queue">
-          {topTargets.map((item, index) => {
-            const sourceId = getSourceId(item.record);
-            const selected = sourceId === activeSourceId;
-
-            return (
-              <button
-                key={sourceId}
-                type="button"
-                className={`cockpit-target-row ${
-                  selected ? "cockpit-target-row-selected" : ""
-                }`}
-                onClick={() => handleSelect(item.record)}
-              >
-                <span>{String(index + 1).padStart(2, "0")}</span>
-
-                <div>
-                  <strong>{sourceId}</strong>
-                  <small>{item.risk.tier}</small>
-                </div>
-
-                <div>
-                  <strong>{formatCompact(item.risk.investigationScore, 4)}</strong>
-                  <small>score</small>
-                </div>
-
-                <div>
-                  <strong>{item.pairCount}</strong>
-                  <small>pairs</small>
-                </div>
-              </button>
-            );
-          })}
+        <div className="coherence-warning">
+          This cockpit is a prioritization interface. It does not confirm planets,
+          binaries, hidden companions, exotic objects, or new physical mechanisms.
+          The ∇𝒦 notation is used only as Codex Alpha informational context and
+          not as a direct physical measurement.
         </div>
-      </section>
+      </div>
     </section>
   );
 }
-
-export default CandidateInvestigationCockpit;

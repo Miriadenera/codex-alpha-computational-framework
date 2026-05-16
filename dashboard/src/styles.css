@@ -4071,3 +4071,173 @@ h1 {
     width: 100%;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   Fourth page hard visibility / layout recovery patch
+   Candidate Investigation Cockpit
+   ────────────────────────────────────────────────────────────── */
+
+.investigation-cockpit-shell {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 60vh !important;
+  margin-top: 22px !important;
+  padding-bottom: 40px !important;
+  overflow: visible !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 1 !important;
+}
+
+.investigation-cockpit-shell > * {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.cockpit-hero-panel,
+.cockpit-target-panel,
+.cockpit-constellation-panel,
+.cockpit-evidence-panel,
+.cockpit-briefing-panel,
+.cockpit-pair-panel,
+.cockpit-query-panel,
+.cockpit-target-list-panel {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.cockpit-command-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr) !important;
+  gap: 22px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 22px !important;
+  overflow: visible !important;
+}
+
+.cockpit-two-column {
+  display: grid !important;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr) !important;
+  gap: 22px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+.cockpit-target-header {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 22px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+.cockpit-target-header h2 {
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+.cockpit-metric-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.cockpit-metric,
+.candidate-explanation-card,
+.evidence-gauge,
+.cockpit-query-card,
+.cockpit-pair-card,
+.cockpit-target-row {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+.cockpit-briefing-text,
+.cockpit-pair-list,
+.cockpit-query-card pre {
+  overflow: auto !important;
+  max-width: 100% !important;
+}
+
+/* Hexagonal chart safety */
+.cockpit-constellation-panel svg,
+.candidate-explanation-card svg {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 280px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Prevent fourth page from being visually swallowed by previous panels */
+.investigation-cockpit-shell .panel {
+  margin-bottom: 22px !important;
+}
+
+/* Defensive fallback: if some old constellation classes are still used */
+.candidate-constellation {
+  display: block !important;
+  position: relative !important;
+  min-height: 520px !important;
+  overflow: visible !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Strong mobile/tablet recovery */
+@media (max-width: 1280px) {
+  .cockpit-command-grid,
+  .cockpit-two-column {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cockpit-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .investigation-cockpit-shell {
+    margin-top: 16px !important;
+  }
+
+  .cockpit-command-grid,
+  .cockpit-two-column,
+  .cockpit-metric-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cockpit-target-header {
+    flex-direction: column !important;
+  }
+
+  .cockpit-score-core {
+    width: 118px !important;
+    height: 118px !important;
+  }
+
+  .cockpit-mode-switch {
+    border-radius: 18px !important;
+  }
+
+  .cockpit-mode-switch button {
+    flex-basis: 100% !important;
+  }
+}

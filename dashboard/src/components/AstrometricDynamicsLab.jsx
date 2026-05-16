@@ -1149,15 +1149,33 @@ function StellarVelocitySpace3D({
     );
   }
 
-  useEffect(() => {
-    window.setTimeout(resetCamera, 120);
-  }, []);
-
-  useEffect(() => {
-    if (activeRecord) {
-      window.setTimeout(focusSelectedStar, 120);
+ useEffect(() => {
+  const timer = window.setTimeout(() => {
+    if (graphRef.current) {
+      resetCamera();
     }
-  }, [activeRecord]);
+  }, 120);
+
+  return () => {
+    window.clearTimeout(timer);
+  };
+}, []);
+
+useEffect(() => {
+  if (!activeRecord) {
+    return;
+  }
+
+  const timer = window.setTimeout(() => {
+    if (graphRef.current) {
+      focusSelectedStar();
+    }
+  }, 120);
+
+  return () => {
+    window.clearTimeout(timer);
+  };
+}, [activeRecord]);
 
   if (!plotRecords.length) {
     return (
