@@ -12,6 +12,69 @@ import StellarReconstructionStudio from "./components/StellarReconstructionStudi
 const DATA_BASE = "/data";
 const CODEX_ALPHA_WEBSITE = "https://www.codexalpha.org";
 
+/* ─── WebGL / ForceGraph3D compatibility patch ────────────────────────────── */
+
+function installForceGraphCompatibilityPatch() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const safeRequestAnimationFrame =
+    typeof window.requestAnimationFrame === "function"
+      ? window.requestAnimationFrame.bind(window)
+      : (callback) => window.setTimeout(callback, 16);
+
+  const safeCancelAnimationFrame =
+    typeof window.cancelAnimationFrame === "function"
+      ? window.cancelAnimationFrame.bind(window)
+      : (id) => window.clearTimeout(id);
+
+  if (typeof window.requestAnimationFrame !== "function") {
+    window.requestAnimationFrame = safeRequestAnimationFrame;
+  }
+
+  if (typeof window.cancelAnimationFrame !== "function") {
+    window.cancelAnimationFrame = safeCancelAnimationFrame;
+  }
+
+  const canvasPrototype = window.HTMLCanvasElement?.prototype;
+
+  if (!canvasPrototype || canvasPrototype.__codexForceGraphPatched) {
+    return;
+  }
+
+  const originalGetContext = canvasPrototype.getContext;
+
+  canvasPrototype.getContext = function patchedGetContext(type, ...args) {
+    const context = originalGetContext.call(this, type, ...args);
+
+    if (
+      context &&
+      (type === "webgl" ||
+        type === "webgl2" ||
+        type === "experimental-webgl")
+    ) {
+      try {
+        if (typeof context.requestAnimationFrame !== "function") {
+          context.requestAnimationFrame = safeRequestAnimationFrame;
+        }
+
+        if (typeof context.cancelAnimationFrame !== "function") {
+          context.cancelAnimationFrame = safeCancelAnimationFrame;
+        }
+      } catch {
+        // Some WebGL contexts may reject dynamic properties.
+      }
+    }
+
+    return context;
+  };
+
+  canvasPrototype.__codexForceGraphPatched = true;
+}
+
+installForceGraphCompatibilityPatch();
+
 async function loadJson(path) {
   const response = await fetch(path);
 
@@ -328,6 +391,20 @@ function MetricCard({ label, value, subtitle }) {
 }
 
 function NavigationActions({ currentPage, setCurrentPage }) {
+  const pageOrder = ["dashboard", "advanced", "dynamics", "validation", "stellar"];
+
+  const normalizedPage =
+    currentPage === "investigation" ? "validation" : currentPage;
+
+  const currentIndex = pageOrder.includes(normalizedPage)
+    ? pageOrder.indexOf(normalizedPage)
+    : 0;
+
+  const previousPage = currentIndex > 0 ? pageOrder[currentIndex - 1] : null;
+
+  const nextPage =
+    currentIndex < pageOrder.length - 1 ? pageOrder[currentIndex + 1] : null;
+
   return (
     <div className="dashboard-nav-actions">
       <a
@@ -339,160 +416,24 @@ function NavigationActions({ currentPage, setCurrentPage }) {
         Back to Website
       </a>
 
-      {currentPage === "dashboard" && (
-        <>
-          <button
-            type="button"
-            className="dashboard-nav-button dashboard-nav-button-accent"
-            onClick={() => setCurrentPage("advanced")}
-          >
-            Advanced Analysis Layer
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("stellar")}
-          >
-            Stellar Reconstruction
-          </button>
-        </>
+      {previousPage && (
+        <button
+          type="button"
+          className="dashboard-nav-button"
+          onClick={() => setCurrentPage(previousPage)}
+        >
+          ← Previous
+        </button>
       )}
 
-      {currentPage === "advanced" && (
-        <>
-          <button
-            type="button"
-            className="dashboard-nav-button dashboard-nav-button-accent"
-            onClick={() => setCurrentPage("dashboard")}
-          >
-            Operational Dashboard
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("dynamics")}
-          >
-            Astrometric Dynamics Lab
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("stellar")}
-          >
-            Stellar Reconstruction
-          </button>
-        </>
-      )}
-
-      {currentPage === "dynamics" && (
-        <>
-          <button
-            type="button"
-            className="dashboard-nav-button dashboard-nav-button-accent"
-            onClick={() => setCurrentPage("advanced")}
-          >
-            Advanced Analysis Layer
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("dashboard")}
-          >
-            Operational Dashboard
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("validation")}
-          >
-            Continue Analysis
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("stellar")}
-          >
-            Stellar Reconstruction
-          </button>
-        </>
-      )}
-
-      {["validation", "investigation"].includes(currentPage) && (
-        <>
-          <button
-            type="button"
-            className="dashboard-nav-button dashboard-nav-button-accent"
-            onClick={() => setCurrentPage("dynamics")}
-          >
-            Back to Dynamics Lab
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("advanced")}
-          >
-            Advanced Analysis Layer
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("dashboard")}
-          >
-            Operational Dashboard
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("stellar")}
-          >
-            Stellar Reconstruction
-          </button>
-        </>
-      )}
-
-      {currentPage === "stellar" && (
-        <>
-          <button
-            type="button"
-            className="dashboard-nav-button dashboard-nav-button-accent"
-            onClick={() => setCurrentPage("validation")}
-          >
-            Candidate Cockpit
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("dynamics")}
-          >
-            Astrometric Dynamics Lab
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("advanced")}
-          >
-            Advanced Analysis Layer
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("dashboard")}
-          >
-            Operational Dashboard
-          </button>
-        </>
+      {nextPage && (
+        <button
+          type="button"
+          className="dashboard-nav-button dashboard-nav-button-accent"
+          onClick={() => setCurrentPage(nextPage)}
+        >
+          Next →
+        </button>
       )}
     </div>
   );

@@ -5800,3 +5800,12 @@ h1 {
     padding: 9px 10px;
   }
 }
+
+.dashboard-nav-button-static {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.82;
+  border-color: rgba(0, 211, 255, 0.18);
+  background: rgba(5, 17, 31, 0.72);
+  color: var(--muted);
+}
