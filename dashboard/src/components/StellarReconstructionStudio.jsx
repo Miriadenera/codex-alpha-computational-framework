@@ -321,7 +321,6 @@ export default function StellarReconstructionStudio({
   emergentStructures = [],
   candidateCrossmatchResults = [],
   possibleBinaryPairs = [],
-  setCurrentPage = () => {},
   onSourceSelect = () => {},
 }) {
   const [activeTab, setActiveTab] = useState("model");
@@ -397,14 +396,6 @@ export default function StellarReconstructionStudio({
     }
   }
 
-  function handleSelectFallback() {
-    const fallback = findBestFallbackSource(allSources);
-
-    if (fallback) {
-      onSourceSelect?.(fallback);
-    }
-  }
-
   if (!fullRecord || !starModel) {
     return (
       <section className="stellar-studio-shell">
@@ -424,38 +415,9 @@ export default function StellarReconstructionStudio({
             Dynamics Lab or Candidate Investigation Cockpit.
           </p>
 
-          <div className="candidate-action-row">
-            <button
-              type="button"
-              className="dashboard-nav-button"
-              onClick={() => setCurrentPage("dashboard")}
-            >
-              Back to Framework Home
-            </button>
-
-            <button
-              type="button"
-              className="dashboard-nav-button"
-              onClick={() => setCurrentPage("dynamics")}
-            >
-              Back to Dynamics Lab
-            </button>
-
-            <button
-              type="button"
-              className="dashboard-nav-button"
-              onClick={() => setCurrentPage("validation")}
-            >
-              Back to Investigation Cockpit
-            </button>
-
-            <button
-              type="button"
-              className="dashboard-nav-button dashboard-nav-button-accent"
-              onClick={handleSelectFallback}
-            >
-              Load first available source
-            </button>
+          <div className="navigation-notice">
+            To move through the framework, use only the Previous and Next
+            controls at the top of the page.
           </div>
         </div>
       </section>
@@ -485,38 +447,9 @@ export default function StellarReconstructionStudio({
           </div>
         </div>
 
-        <div className="stellar-studio-nav-row">
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("dashboard")}
-          >
-            Framework Home
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("advanced")}
-          >
-            Advanced Layer
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("dynamics")}
-          >
-            Dynamics Lab
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button dashboard-nav-button-accent"
-            onClick={() => setCurrentPage("validation")}
-          >
-            Investigation Cockpit
-          </button>
+        <div className="navigation-notice">
+          To move through the framework, use only the Previous and Next controls
+          at the top of the page.
         </div>
       </div>
 

@@ -1149,33 +1149,33 @@ function StellarVelocitySpace3D({
     );
   }
 
- useEffect(() => {
-  const timer = window.setTimeout(() => {
-    if (graphRef.current) {
-      resetCamera();
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      if (graphRef.current) {
+        resetCamera();
+      }
+    }, 120);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!activeRecord) {
+      return;
     }
-  }, 120);
 
-  return () => {
-    window.clearTimeout(timer);
-  };
-}, []);
+    const timer = window.setTimeout(() => {
+      if (graphRef.current) {
+        focusSelectedStar();
+      }
+    }, 120);
 
-useEffect(() => {
-  if (!activeRecord) {
-    return;
-  }
-
-  const timer = window.setTimeout(() => {
-    if (graphRef.current) {
-      focusSelectedStar();
-    }
-  }, 120);
-
-  return () => {
-    window.clearTimeout(timer);
-  };
-}, [activeRecord]);
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [activeRecord]);
 
   if (!plotRecords.length) {
     return (
@@ -1960,22 +1960,9 @@ function AstrometricDynamicsLab({
           comoving binary pairs.
         </p>
 
-        <div className="advanced-actions">
-          <button
-            type="button"
-            className="dashboard-nav-button dashboard-nav-button-accent"
-            onClick={() => setCurrentPage("advanced")}
-          >
-            Back to Advanced Analysis Layer
-          </button>
-
-          <button
-            type="button"
-            className="dashboard-nav-button"
-            onClick={() => setCurrentPage("dashboard")}
-          >
-            Back to Operational Dashboard
-          </button>
+        <div className="navigation-notice">
+          To move through the framework, use only the Previous and Next controls
+          at the top of the page.
         </div>
       </div>
 
@@ -2349,14 +2336,9 @@ function AstrometricDynamicsLab({
           NSS checks and follow-up triage.
         </div>
 
-        <div className="advanced-actions">
-          <button
-            type="button"
-            className="dashboard-nav-button dashboard-nav-button-accent"
-            onClick={() => setCurrentPage("validation")}
-          >
-            Continue Analysis
-          </button>
+        <div className="navigation-notice">
+          To continue to the Candidate Investigation Cockpit, use the Next
+          button at the top of the page.
         </div>
       </section>
     </section>

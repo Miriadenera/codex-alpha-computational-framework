@@ -5809,3 +5809,14 @@ h1 {
   background: rgba(5, 17, 31, 0.72);
   color: var(--muted);
 }
+
+.navigation-notice {
+  margin-top: 18px;
+  padding: 12px 14px;
+  border: 1px solid rgba(0, 211, 255, 0.18);
+  border-radius: 16px;
+  background: rgba(5, 17, 31, 0.72);
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
