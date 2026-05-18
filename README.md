@@ -29,7 +29,7 @@ Closed Beta Research Demonstrator
 
 The framework is currently transitioning from an advanced alpha prototype to a closed beta demonstrator.
 
-The core workflow is already operational on a Gaia DR3 demo dataset. Current development is focused on documentation, hardening, reproducibility, larger dataset ingestion, AI-assisted scoring, improved candidate validation and future cloud scalability.
+The core workflow is already operational on a Gaia DR3 demo dataset. Current development is focused on documentation, hardening, reproducibility, larger dataset ingestion, AI-assisted scoring, improved candidate validation, CDS-oriented validation interoperability and future cloud scalability.
 
 ## Scientific Purpose
 
@@ -218,6 +218,7 @@ The dossier is intended for:
 - validation planning
 - ESA BIC demonstration material
 - reproducible candidate-level review
+- structured handoff toward external catalogue validation services
 
 ## Scientific Caution
 
@@ -287,6 +288,18 @@ Typical validation steps include:
 5. Treat all internal scores as prioritization proxies, not final classifications.
 6. Use the exported dossier as a structured research note, not as a discovery claim.
 7. Validate any suspected binary, companion or unusual object interpretation through independent astrophysical methods.
+
+## CDS Validation Ecosystem Direction
+
+The Codex Alpha Computational Framework is designed to act as a pre-validation intelligence layer before external astronomical validation.
+
+It does not replace CDS Portal, SIMBAD, VizieR, Aladin or X-Match.
+
+The long-term objective is to support structured candidate handoff toward established astronomical validation services, helping researchers move from Gaia candidate prioritization to catalogue inspection, object identification, sky visualization and cross-match workflows.
+
+The framework aims to become interoperable with the CDS validation ecosystem, including CDS Portal, SIMBAD, VizieR, Aladin and X-Match, while maintaining a clear distinction between internal candidate prioritization and external catalogue-based validation.
+
+No official CDS integration or partnership is claimed by this repository.
 
 ## Current Data Mode
 
@@ -456,6 +469,7 @@ The framework currently combines:
 - synthetic stellar reconstruction viewer
 - procedural Three.js stellar rendering
 - candidate-level dossier export system
+- future-oriented CDS ecosystem interoperability design
 
 ## AI Direction
 
@@ -473,6 +487,7 @@ Future AI development may include:
 - human-in-the-loop scientific review
 - AI-assisted candidate triage across larger Gaia-derived datasets
 - AI-assisted report generation with explicit uncertainty tracking
+- AI-assisted preparation of CDS-oriented validation workflows
 
 The AI layer is intended to assist researchers, not replace scientific validation.
 
@@ -489,6 +504,7 @@ Focus:
 - strengthen Gaia DR3 candidate validation workflow
 - improve binary / comoving-pair probability scoring
 - harden the fifth stellar reconstruction and dossier interface
+- document CDS-oriented validation handoff workflows
 - prepare a technical whitepaper or preprint
 - document the framework for ESA BIC and research partners
 
@@ -511,6 +527,9 @@ Focus:
 - create researcher-oriented export formats
 - improve automated validation planning
 - introduce uncertainty-aware ranking and reporting
+- develop interoperability with the CDS validation ecosystem, including CDS Portal, SIMBAD, VizieR, Aladin and X-Match
+- support structured candidate handoff from Codex Alpha candidate dossiers to external catalogue validation workflows
+- prepare Gaia-derived candidates for SIMBAD, VizieR, Aladin and X-Match inspection without claiming official CDS integration
 
 Target outcome:
 
@@ -530,6 +549,8 @@ Focus:
 - integrate advanced visualization and reporting
 - expand beyond Gaia-only workflows
 - explore institutional partnerships
+- support multi-catalogue validation workflows connected to established astronomical services
+- provide structured interoperability patterns for external catalogue inspection and cross-match systems
 
 Target outcome:
 
@@ -548,6 +569,8 @@ Focus:
 - provide premium analytics and support services
 - build a sustainable open-core research/business model
 - support research teams with explainable candidate-intelligence tools
+- provide institutional-grade candidate triage before external catalogue validation
+- offer validation-oriented workflows compatible with established astronomical data infrastructures
 
 Target outcome:
 
@@ -575,6 +598,7 @@ Potential applications include:
 - institutional data-intelligence tools
 - candidate dossier generation
 - validation-oriented astronomical triage
+- structured preparation for CDS Portal, SIMBAD, VizieR, Aladin and X-Match inspection
 
 The current closed-beta demonstrator is designed to show technical feasibility, scientific caution and future scalability.
 
@@ -592,8 +616,11 @@ Possible development paths include:
 - multi-catalogue space-data analytics
 - candidate intelligence dashboards
 - white-label scientific data-analysis tools
+- validation-oriented candidate triage services
 
 The long-term objective is to evolve the framework into a scalable platform for explainable astronomical candidate intelligence.
+
+The intended position is not to replace established scientific infrastructures such as CDS Portal, SIMBAD, VizieR, Aladin or X-Match. The business value is in preparing, ranking, documenting and structuring Gaia-derived candidates before external catalogue validation.
 
 ## Website
 
@@ -626,5 +653,7 @@ The current framework is a closed-beta demonstrator and should be interpreted as
 Outputs such as anomaly rankings, structural graph scores, hidden-companion indicators, possible pair involvement, synthetic stellar reconstruction and coherence-inspired proxies are not final astrophysical classifications.
 
 All candidate interpretations require independent validation through external catalogues, Gaia Archive, SIMBAD, VizieR, Gaia NSS where applicable, and expert scientific review.
+
+References to CDS Portal, SIMBAD, VizieR, Aladin and X-Match describe intended validation-oriented interoperability and external workflow direction. They do not imply official CDS endorsement, partnership or integration.
 
 No claim of new physical discovery is made by the framework alone.
