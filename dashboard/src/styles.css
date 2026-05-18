@@ -4655,3 +4655,1148 @@ h1 {
     width: 100%;
   }
 }
+
+/* ============================================================
+   Stellar Reconstruction & Full Dossier
+   Fifth Analysis Interface
+   ============================================================ */
+
+.stellar-studio-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+}
+
+.stellar-studio-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 245, 255, 0.18);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(57, 255, 20, 0.12), transparent 28%),
+    radial-gradient(circle at 85% 20%, rgba(0, 210, 255, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(4, 16, 35, 0.95), rgba(2, 7, 18, 0.98));
+}
+
+.stellar-studio-hero::before {
+  content: "";
+  position: absolute;
+  inset: -80px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.12) 0 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(0, 210, 255, 0.18) 0 1px, transparent 1.5px);
+  background-size: 90px 90px, 140px 140px;
+  opacity: 0.18;
+  transform: rotate(7deg);
+}
+
+.stellar-studio-hero-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+  align-items: flex-start;
+}
+
+.stellar-studio-hero h2 {
+  margin: 6px 0 10px;
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  color: #f4fcff;
+  letter-spacing: -0.035em;
+}
+
+.stellar-studio-hero p {
+  max-width: 880px;
+  margin: 0;
+  color: rgba(224, 246, 255, 0.82);
+  line-height: 1.6;
+}
+
+.stellar-studio-source-chip {
+  min-width: 260px;
+  padding: 16px 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(57, 255, 20, 0.26);
+  background:
+    radial-gradient(circle at top left, rgba(57, 255, 20, 0.18), transparent 60%),
+    rgba(0, 14, 22, 0.72);
+  box-shadow: 0 0 36px rgba(57, 255, 20, 0.08);
+}
+
+.stellar-studio-source-chip span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: rgba(178, 232, 255, 0.68);
+}
+
+.stellar-studio-source-chip strong {
+  display: block;
+  max-width: 320px;
+  overflow-wrap: anywhere;
+  color: #39ff14;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.stellar-studio-nav-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.stellar-studio-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.85fr) minmax(520px, 1.55fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+.stellar-source-summary-panel {
+  min-height: 100%;
+}
+
+.stellar-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.stellar-summary-metric {
+  padding: 13px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(136, 220, 255, 0.15);
+  background:
+    linear-gradient(180deg, rgba(14, 34, 55, 0.82), rgba(5, 16, 27, 0.82));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.stellar-summary-metric span {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: rgba(184, 230, 255, 0.62);
+}
+
+.stellar-summary-metric strong {
+  display: block;
+  color: #effdff;
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+.stellar-summary-metric small {
+  display: block;
+  margin-top: 5px;
+  color: rgba(210, 235, 245, 0.58);
+  line-height: 1.35;
+}
+
+.stellar-studio-tabs,
+.stellar-dossier-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.stellar-studio-tabs button,
+.stellar-dossier-tabs button {
+  border: 1px solid rgba(0, 210, 255, 0.18);
+  border-radius: 999px;
+  padding: 9px 14px;
+  color: rgba(224, 246, 255, 0.8);
+  background: rgba(4, 19, 32, 0.72);
+  cursor: pointer;
+  font-weight: 700;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.stellar-studio-tabs button:hover,
+.stellar-dossier-tabs button:hover {
+  border-color: rgba(0, 210, 255, 0.48);
+  color: #ffffff;
+}
+
+.stellar-studio-tabs button.active,
+.stellar-dossier-tabs button.active {
+  border-color: rgba(57, 255, 20, 0.58);
+  color: #39ff14;
+  background: rgba(57, 255, 20, 0.09);
+  box-shadow: 0 0 22px rgba(57, 255, 20, 0.08);
+}
+
+.stellar-viewer-panel {
+  padding: 0;
+  overflow: hidden;
+  min-height: 680px;
+  border: 1px solid rgba(0, 210, 255, 0.2);
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 179, 71, 0.1), transparent 32%),
+    linear-gradient(180deg, rgba(2, 8, 18, 0.98), rgba(0, 4, 10, 0.98));
+}
+
+.stellar-studio-two-column {
+  display: grid;
+  grid-template-columns: minmax(360px, 1.08fr) minmax(360px, 0.92fr);
+  gap: 22px;
+  align-items: start;
+}
+
+/* ============================================================
+   Star Twin Viewer 3D
+   ============================================================ */
+
+.star-twin-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 680px;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(255, 160, 60, 0.16), transparent 30%),
+    radial-gradient(circle at 20% 10%, rgba(0, 210, 255, 0.12), transparent 34%),
+    #010711;
+}
+
+.star-twin-header {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px 12px;
+  pointer-events: none;
+}
+
+.star-twin-header h2 {
+  margin: 4px 0 6px;
+  color: #f4fcff;
+  font-size: clamp(1.1rem, 2vw, 1.65rem);
+  overflow-wrap: anywhere;
+}
+
+.star-twin-header p {
+  margin: 0;
+  color: rgba(225, 245, 255, 0.72);
+  line-height: 1.45;
+}
+
+.star-twin-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 210px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 195, 100, 0.22);
+  background: rgba(0, 11, 20, 0.64);
+  backdrop-filter: blur(10px);
+}
+
+.star-twin-status strong {
+  display: block;
+  color: #ffffff;
+  font-size: 0.86rem;
+}
+
+.star-twin-status small {
+  color: rgba(220, 240, 248, 0.62);
+}
+
+.star-twin-color-dot {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+}
+
+.star-twin-main {
+  position: relative;
+  flex: 1;
+  min-height: 440px;
+}
+
+.star-twin-canvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.star-twin-canvas canvas {
+  display: block;
+}
+
+.star-twin-floating-panel {
+  position: absolute;
+  z-index: 4;
+  left: 22px;
+  bottom: 22px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 10px;
+  width: min(440px, calc(100% - 44px));
+  pointer-events: none;
+}
+
+.star-twin-floating-panel > div {
+  padding: 12px 13px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 210, 255, 0.18);
+  background: rgba(1, 11, 22, 0.7);
+  backdrop-filter: blur(12px);
+}
+
+.star-twin-floating-panel span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(180, 230, 255, 0.62);
+}
+
+.star-twin-floating-panel strong {
+  color: #effdff;
+  font-size: 0.92rem;
+}
+
+.star-twin-controls {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: center;
+  padding: 14px 18px 18px;
+  border-top: 1px solid rgba(0, 210, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(1, 7, 16, 0.55), rgba(1, 7, 16, 0.92));
+}
+
+.star-twin-button {
+  border: 1px solid rgba(0, 210, 255, 0.24);
+  border-radius: 999px;
+  padding: 8px 13px;
+  color: rgba(230, 248, 255, 0.82);
+  background: rgba(3, 20, 34, 0.76);
+  cursor: pointer;
+  font-weight: 800;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.star-twin-button:hover {
+  border-color: rgba(0, 210, 255, 0.55);
+  color: #ffffff;
+}
+
+.star-twin-button.active {
+  border-color: rgba(57, 255, 20, 0.55);
+  color: #39ff14;
+  background: rgba(57, 255, 20, 0.08);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.06);
+}
+
+.star-twin-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 210px;
+  color: rgba(230, 248, 255, 0.72);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.star-twin-range input {
+  width: 110px;
+  accent-color: #39ff14;
+}
+
+.star-twin-range span {
+  min-width: 42px;
+  color: #39ff14;
+  font-variant-numeric: tabular-nums;
+}
+
+.star-twin-note {
+  position: relative;
+  z-index: 5;
+  padding: 12px 18px 18px;
+  color: rgba(220, 240, 248, 0.64);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  background: rgba(0, 5, 12, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================================
+   Stellar Inference Panel
+   ============================================================ */
+
+.stellar-inference-panel {
+  overflow: hidden;
+}
+
+.stellar-confidence-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stellar-confidence-badge.medium {
+  color: #39ff14;
+  border: 1px solid rgba(57, 255, 20, 0.38);
+  background: rgba(57, 255, 20, 0.08);
+}
+
+.stellar-confidence-badge.limited {
+  color: #ffd37a;
+  border: 1px solid rgba(255, 211, 122, 0.36);
+  background: rgba(255, 180, 50, 0.08);
+}
+
+.stellar-confidence-badge.low {
+  color: #ff8c8c;
+  border: 1px solid rgba(255, 110, 110, 0.36);
+  background: rgba(255, 60, 60, 0.08);
+}
+
+.stellar-inference-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.65fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.stellar-inference-class-card,
+.stellar-inference-color-card {
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 210, 255, 0.15);
+  background:
+    radial-gradient(circle at top left, rgba(0, 210, 255, 0.1), transparent 60%),
+    rgba(5, 18, 30, 0.76);
+}
+
+.stellar-inference-class-card span,
+.stellar-inference-color-card span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(180, 230, 255, 0.64);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+
+.stellar-inference-class-card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #ffffff;
+  font-size: 1.08rem;
+}
+
+.stellar-inference-class-card p {
+  margin: 0;
+  color: rgba(220, 240, 248, 0.72);
+  line-height: 1.55;
+}
+
+.stellar-color-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stellar-color-swatch {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+}
+
+.stellar-color-row strong {
+  display: block;
+  color: #effdff;
+}
+
+.stellar-color-row small {
+  color: rgba(220, 240, 248, 0.58);
+}
+
+.stellar-inference-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.stellar-inference-metric {
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(136, 220, 255, 0.14);
+  background:
+    linear-gradient(180deg, rgba(15, 35, 55, 0.72), rgba(4, 14, 24, 0.78));
+}
+
+.stellar-inference-metric span {
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(180, 230, 255, 0.64);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stellar-inference-metric strong {
+  display: block;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.stellar-inference-metric strong small {
+  color: rgba(230, 248, 255, 0.68);
+  font-size: 0.78rem;
+}
+
+.stellar-inference-metric p {
+  margin: 7px 0 0;
+  color: rgba(220, 240, 248, 0.56);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.stellar-proxy-section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.stellar-proxy-bar {
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(57, 255, 20, 0.13);
+  background: rgba(5, 18, 28, 0.72);
+}
+
+.stellar-proxy-bar-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.stellar-proxy-bar-header span {
+  color: rgba(220, 240, 248, 0.72);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.stellar-proxy-bar-header strong {
+  color: #39ff14;
+  font-variant-numeric: tabular-nums;
+}
+
+.stellar-proxy-track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(180, 230, 255, 0.1);
+}
+
+.stellar-proxy-fill {
+  height: 100%;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, rgba(0, 210, 255, 0.78), rgba(57, 255, 20, 0.95));
+  box-shadow: 0 0 18px rgba(57, 255, 20, 0.18);
+}
+
+.stellar-proxy-bar small {
+  display: block;
+  margin-top: 8px;
+  color: rgba(220, 240, 248, 0.56);
+  line-height: 1.35;
+}
+
+.stellar-inference-notes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.stellar-inference-notes > div,
+.stellar-inference-caution,
+.stellar-model-warning,
+.stellar-export-caution {
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 211, 122, 0.18);
+  background:
+    radial-gradient(circle at top left, rgba(255, 211, 122, 0.1), transparent 55%),
+    rgba(22, 15, 4, 0.42);
+}
+
+.stellar-inference-notes h3,
+.stellar-validation-preview h3 {
+  margin: 0 0 8px;
+  color: #fff4d6;
+  font-size: 1rem;
+}
+
+.stellar-inference-notes p,
+.stellar-inference-notes li,
+.stellar-inference-caution,
+.stellar-model-warning,
+.stellar-export-caution {
+  color: rgba(244, 236, 210, 0.8);
+  line-height: 1.58;
+}
+
+.stellar-inference-notes ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+/* ============================================================
+   Full Stellar Dossier
+   ============================================================ */
+
+.stellar-dossier-panel {
+  overflow: hidden;
+}
+
+.stellar-dossier-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.stellar-dossier-section,
+.stellar-context-card {
+  border-radius: 22px;
+  border: 1px solid rgba(0, 210, 255, 0.14);
+  background:
+    radial-gradient(circle at top left, rgba(0, 210, 255, 0.08), transparent 58%),
+    rgba(4, 16, 28, 0.74);
+  overflow: hidden;
+}
+
+.stellar-dossier-section-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 15px 16px;
+  border-bottom: 1px solid rgba(0, 210, 255, 0.11);
+}
+
+.stellar-dossier-section-header h3 {
+  margin: 0;
+  color: #effdff;
+  font-size: 1.02rem;
+}
+
+.stellar-dossier-section-header span {
+  color: rgba(180, 230, 255, 0.58);
+  font-size: 0.76rem;
+  text-align: right;
+}
+
+.stellar-dossier-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.stellar-dossier-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.45fr) minmax(0, 0.55fr);
+  gap: 12px;
+  padding: 11px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.stellar-dossier-row:last-child {
+  border-bottom: 0;
+}
+
+.stellar-dossier-row > span {
+  color: rgba(180, 230, 255, 0.62);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.stellar-dossier-row strong {
+  display: block;
+  color: #f4fcff;
+  font-size: 0.84rem;
+  overflow-wrap: anywhere;
+}
+
+.stellar-dossier-row small {
+  display: block;
+  margin-top: 5px;
+  color: rgba(220, 240, 248, 0.55);
+  line-height: 1.35;
+}
+
+.stellar-dossier-context,
+.stellar-dossier-validation {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.stellar-context-card {
+  padding-bottom: 16px;
+}
+
+.stellar-context-card > p {
+  margin: 16px;
+  color: rgba(224, 246, 255, 0.74);
+  line-height: 1.6;
+}
+
+.stellar-pair-list {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+
+.stellar-pair-card {
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(57, 255, 20, 0.16);
+  background:
+    linear-gradient(180deg, rgba(8, 28, 36, 0.78), rgba(3, 14, 22, 0.82));
+}
+
+.stellar-pair-card div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.stellar-pair-card span {
+  color: rgba(180, 230, 255, 0.62);
+  font-size: 0.76rem;
+}
+
+.stellar-pair-card strong {
+  color: #39ff14;
+  overflow-wrap: anywhere;
+}
+
+.stellar-pair-card p {
+  margin: 8px 0;
+  color: rgba(224, 246, 255, 0.76);
+}
+
+.stellar-pair-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stellar-pair-metrics span {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(0, 210, 255, 0.08);
+  border: 1px solid rgba(0, 210, 255, 0.12);
+  color: rgba(220, 245, 255, 0.74);
+  font-size: 0.72rem;
+}
+
+.stellar-validation-list {
+  margin: 16px;
+  padding-left: 24px;
+  color: rgba(224, 246, 255, 0.78);
+  line-height: 1.65;
+}
+
+.stellar-validation-list li {
+  margin-bottom: 8px;
+}
+
+/* ============================================================
+   Studio Interpretation / Export
+   ============================================================ */
+
+.stellar-interpretation-panel p {
+  color: rgba(224, 246, 255, 0.76);
+  line-height: 1.65;
+}
+
+.stellar-validation-preview {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 210, 255, 0.14);
+  background: rgba(3, 16, 28, 0.64);
+}
+
+.stellar-validation-preview ol {
+  margin: 8px 0 0;
+  padding-left: 22px;
+  color: rgba(224, 246, 255, 0.72);
+  line-height: 1.6;
+}
+
+.stellar-validation-preview li {
+  margin-bottom: 7px;
+}
+
+.stellar-export-panel p {
+  color: rgba(224, 246, 255, 0.74);
+  line-height: 1.6;
+}
+
+.stellar-export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.stellar-export-button {
+  border: 1px solid rgba(0, 210, 255, 0.24);
+  border-radius: 999px;
+  padding: 10px 15px;
+  color: rgba(230, 248, 255, 0.84);
+  background: rgba(4, 19, 32, 0.76);
+  cursor: pointer;
+  font-weight: 850;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.stellar-export-button:hover {
+  border-color: rgba(0, 210, 255, 0.56);
+  color: #ffffff;
+}
+
+.stellar-export-button.accent {
+  border-color: rgba(57, 255, 20, 0.5);
+  color: #39ff14;
+  background: rgba(57, 255, 20, 0.08);
+}
+
+.stellar-copy-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(57, 255, 20, 0.38);
+  background: rgba(57, 255, 20, 0.08);
+  color: #39ff14;
+  font-size: 0.75rem;
+  font-weight: 850;
+}
+
+.stellar-export-preview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.stellar-export-preview {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 210, 255, 0.14);
+  background: rgba(1, 8, 16, 0.88);
+}
+
+.stellar-export-preview-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+}
+
+.stellar-export-preview-header span {
+  color: rgba(224, 246, 255, 0.74);
+  font-weight: 850;
+}
+
+.stellar-export-preview-header button {
+  border: 1px solid rgba(57, 255, 20, 0.32);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: #39ff14;
+  background: rgba(57, 255, 20, 0.07);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.stellar-export-preview pre {
+  margin: 0;
+  max-height: 430px;
+  overflow: auto;
+  padding: 15px;
+  color: rgba(230, 248, 255, 0.78);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.stellar-studio-caution-panel p {
+  color: rgba(224, 246, 255, 0.74);
+  line-height: 1.65;
+}
+
+.stellar-studio-empty-panel p {
+  color: rgba(224, 246, 255, 0.76);
+  line-height: 1.65;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 1180px) {
+  .stellar-studio-grid,
+  .stellar-studio-two-column {
+    grid-template-columns: 1fr;
+  }
+
+  .stellar-viewer-panel,
+  .star-twin-shell {
+    min-height: 620px;
+  }
+
+  .stellar-inference-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stellar-dossier-grid,
+  .stellar-export-preview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .stellar-studio-hero-main {
+    flex-direction: column;
+  }
+
+  .stellar-studio-source-chip {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .stellar-summary-grid,
+  .stellar-inference-summary,
+  .stellar-inference-grid,
+  .stellar-proxy-section,
+  .stellar-inference-notes {
+    grid-template-columns: 1fr;
+  }
+
+  .stellar-viewer-panel,
+  .star-twin-shell {
+    min-height: 560px;
+  }
+
+  .star-twin-header {
+    flex-direction: column;
+    pointer-events: none;
+  }
+
+  .star-twin-status {
+    width: 100%;
+  }
+
+  .star-twin-floating-panel {
+    grid-template-columns: 1fr;
+    width: min(260px, calc(100% - 32px));
+    left: 16px;
+    bottom: 16px;
+  }
+
+  .star-twin-controls {
+    align-items: stretch;
+  }
+
+  .star-twin-range {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .star-twin-range input {
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .stellar-dossier-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .stellar-pair-card div:first-child {
+    flex-direction: column;
+  }
+}
+
+/* ────────────────────────────────────────────────
+   Stellar Reconstruction Studio — Top-50 anomaly queue
+   Safe additive CSS block
+──────────────────────────────────────────────── */
+
+.stellar-top50-box {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 211, 255, 0.16);
+}
+
+.stellar-top50-box .panel-header {
+  margin-bottom: 12px;
+}
+
+.stellar-top50-box .panel-header h3 {
+  margin: 4px 0 0;
+  font-size: 0.98rem;
+  color: var(--text);
+}
+
+.stellar-top50-box .panel-header span {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stellar-top50-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(45, 255, 26, 0.65) rgba(4, 14, 26, 0.7);
+}
+
+.stellar-top50-list::-webkit-scrollbar {
+  width: 7px;
+}
+
+.stellar-top50-list::-webkit-scrollbar-track {
+  background: rgba(4, 14, 26, 0.7);
+  border-radius: 999px;
+}
+
+.stellar-top50-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(45, 255, 26, 0.85),
+    rgba(0, 211, 255, 0.55)
+  );
+  border-radius: 999px;
+}
+
+.stellar-top50-row {
+  min-height: 54px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 8% 40%, rgba(0, 211, 255, 0.08), transparent 32%),
+    rgba(5, 17, 31, 0.82);
+  border: 1px solid rgba(0, 211, 255, 0.18);
+  transition:
+    transform 0.16s ease,
+    border-color 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.stellar-top50-row:hover {
+  transform: translateY(-1px);
+  border-color: rgba(45, 255, 26, 0.55);
+  background:
+    radial-gradient(circle at 8% 40%, rgba(45, 255, 26, 0.10), transparent 34%),
+    rgba(7, 23, 38, 0.95);
+  box-shadow: 0 0 18px rgba(0, 211, 255, 0.10);
+}
+
+.stellar-top50-row.active {
+  background:
+    radial-gradient(circle at 8% 40%, rgba(45, 255, 26, 0.16), transparent 36%),
+    linear-gradient(135deg, rgba(8, 28, 25, 0.95), rgba(5, 17, 31, 0.95));
+}
+
+.stellar-top50-row strong {
+  color: var(--text);
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.stellar-top50-row small {
+  color: var(--muted);
+  font-size: 0.66rem;
+  line-height: 1.25;
+}
+
+.stellar-mini-star {
+  position: relative;
+}
+
+.stellar-mini-star::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(7px);
+  opacity: 0.36;
+  z-index: -1;
+}
+
+.stellar-source-summary-panel {
+  align-self: start;
+}
+
+.stellar-source-summary-panel .stellar-summary-grid {
+  margin-bottom: 14px;
+}
+
+@media (max-width: 1100px) {
+  .stellar-top50-list {
+    max-height: 280px !important;
+  }
+
+  .stellar-top50-row {
+    grid-template-columns: 30px 22px minmax(0, 1fr) 66px !important;
+    gap: 8px !important;
+    padding: 9px 10px;
+  }
+}

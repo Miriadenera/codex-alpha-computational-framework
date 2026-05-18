@@ -7,6 +7,7 @@ import CoherenceGradientModule from "./components/CoherenceGradientModule.jsx";
 import CandidateRegistry from "./components/CandidateRegistry.jsx";
 import AstrometricDynamicsLab from "./components/AstrometricDynamicsLab.jsx";
 import CandidateInvestigationCockpit from "./components/CandidateInvestigationCockpit.jsx";
+import StellarReconstructionStudio from "./components/StellarReconstructionStudio.jsx";
 
 const DATA_BASE = "/data";
 const CODEX_ALPHA_WEBSITE = "https://www.codexalpha.org";
@@ -45,24 +46,20 @@ async function loadOptionalJson(path, fallback = []) {
   }
 }
 
-async function loadOptionalText(path, fallback = "") {
-  try {
-    const response = await fetch(path);
+async function loadText(path) {
+  const response = await fetch(path);
 
-    if (!response.ok) {
-      return fallback;
-    }
-
-    return response.text();
-  } catch {
-    return fallback;
+  if (!response.ok) {
+    throw new Error("Unable to load " + path);
   }
+
+  return response.text();
 }
 
 function formatNumber(value, digits = 6) {
   const number = Number(value);
 
-  if (!Number.isFinite(number)) {
+  if (Number.isNaN(number)) {
     return "N/A";
   }
 
@@ -72,7 +69,7 @@ function formatNumber(value, digits = 6) {
 function formatGaiaValue(value, digits = 10) {
   const number = Number(value);
 
-  if (!Number.isFinite(number)) {
+  if (Number.isNaN(number)) {
     return "N/A";
   }
 
@@ -343,13 +340,23 @@ function NavigationActions({ currentPage, setCurrentPage }) {
       </a>
 
       {currentPage === "dashboard" && (
-        <button
-          type="button"
-          className="dashboard-nav-button dashboard-nav-button-accent"
-          onClick={() => setCurrentPage("advanced")}
-        >
-          Advanced Analysis Layer
-        </button>
+        <>
+          <button
+            type="button"
+            className="dashboard-nav-button dashboard-nav-button-accent"
+            onClick={() => setCurrentPage("advanced")}
+          >
+            Advanced Analysis Layer
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("stellar")}
+          >
+            Stellar Reconstruction
+          </button>
+        </>
       )}
 
       {currentPage === "advanced" && (
@@ -368,6 +375,14 @@ function NavigationActions({ currentPage, setCurrentPage }) {
             onClick={() => setCurrentPage("dynamics")}
           >
             Astrometric Dynamics Lab
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("stellar")}
+          >
+            Stellar Reconstruction
           </button>
         </>
       )}
@@ -397,6 +412,14 @@ function NavigationActions({ currentPage, setCurrentPage }) {
           >
             Continue Analysis
           </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("stellar")}
+          >
+            Stellar Reconstruction
+          </button>
         </>
       )}
 
@@ -408,6 +431,50 @@ function NavigationActions({ currentPage, setCurrentPage }) {
             onClick={() => setCurrentPage("dynamics")}
           >
             Back to Dynamics Lab
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("advanced")}
+          >
+            Advanced Analysis Layer
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("dashboard")}
+          >
+            Operational Dashboard
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("stellar")}
+          >
+            Stellar Reconstruction
+          </button>
+        </>
+      )}
+
+      {currentPage === "stellar" && (
+        <>
+          <button
+            type="button"
+            className="dashboard-nav-button dashboard-nav-button-accent"
+            onClick={() => setCurrentPage("validation")}
+          >
+            Candidate Cockpit
+          </button>
+
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => setCurrentPage("dynamics")}
+          >
+            Astrometric Dynamics Lab
           </button>
 
           <button
@@ -540,19 +607,6 @@ function AdvancedAnalysisLayer({
 function App() {
   const [currentPage, setCurrentPage] = useState("dashboard");
 
-  /*
-    Important:
-    Pages containing ForceGraph3D / WebGL must not be unmounted during normal
-    navigation, because react-force-graph-3d can crash inside WebGLRenderer.dispose().
-    We mount pages once and then hide/show them with CSS display.
-  */
-  const [mountedPages, setMountedPages] = useState({
-    dashboard: true,
-    advanced: false,
-    dynamics: false,
-    validation: false,
-  });
-
   const [summary, setSummary] = useState(null);
   const [allSources, setAllSources] = useState([]);
   const [nodes, setNodes] = useState([]);
@@ -560,30 +614,11 @@ function App() {
   const [centrality, setCentrality] = useState([]);
   const [featureContributions, setFeatureContributions] = useState([]);
   const [emergentStructures, setEmergentStructures] = useState([]);
-  const [candidateCrossmatchResults, setCandidateCrossmatchResults] = useState(
-    [],
-  );
+  const [candidateCrossmatchResults, setCandidateCrossmatchResults] = useState([]);
   const [possibleBinaryPairs, setPossibleBinaryPairs] = useState([]);
   const [report, setReport] = useState("");
   const [selectedNode, setSelectedNode] = useState(null);
   const [error, setError] = useState(null);
-
-  const normalizedPage = ["validation", "investigation"].includes(currentPage)
-    ? "validation"
-    : currentPage;
-
-  useEffect(() => {
-    setMountedPages((previous) => {
-      if (previous[normalizedPage]) {
-        return previous;
-      }
-
-      return {
-        ...previous,
-        [normalizedPage]: true,
-      };
-    });
-  }, [normalizedPage]);
 
   useEffect(() => {
     window.scrollTo({
@@ -602,22 +637,12 @@ function App() {
           nodesData,
           edgesData,
           centralityData,
-          featureContributionsData,
-          emergentStructuresData,
-          candidateCrossmatchData,
-          possibleBinaryPairsData,
-          reportText,
         ] = await Promise.all([
           loadJson(DATA_BASE + "/summary.json"),
           loadJson(DATA_BASE + "/anomalies.json"),
           loadJson(DATA_BASE + "/graph_nodes.json"),
           loadJson(DATA_BASE + "/graph_edges.json"),
           loadJson(DATA_BASE + "/graph_centrality.json"),
-          loadOptionalJson(DATA_BASE + "/feature_contributions.json", []),
-          loadOptionalJson(DATA_BASE + "/emergent_structures.json", []),
-          loadOptionalJson(DATA_BASE + "/candidate_crossmatch_results.json", []),
-          loadOptionalJson(DATA_BASE + "/possible_binary_pairs.json", []),
-          loadOptionalText(DATA_BASE + "/report.md", ""),
         ]);
 
         setSummary(summaryData);
@@ -625,21 +650,26 @@ function App() {
         setNodes(Array.isArray(nodesData) ? nodesData : []);
         setEdges(Array.isArray(edgesData) ? edgesData : []);
         setCentrality(Array.isArray(centralityData) ? centralityData : []);
-        setFeatureContributions(
-          Array.isArray(featureContributionsData)
-            ? featureContributionsData
-            : [],
-        );
-        setEmergentStructures(
-          Array.isArray(emergentStructuresData) ? emergentStructuresData : [],
-        );
-        setCandidateCrossmatchResults(
-          Array.isArray(candidateCrossmatchData) ? candidateCrossmatchData : [],
-        );
-        setPossibleBinaryPairs(
-          Array.isArray(possibleBinaryPairsData) ? possibleBinaryPairsData : [],
-        );
-        setReport(typeof reportText === "string" ? reportText : "");
+
+        const [
+          featureContributionsData,
+          emergentStructuresData,
+          candidateCrossmatchData,
+          possibleBinaryPairsData,
+          reportText,
+        ] = await Promise.all([
+          loadOptionalJson(DATA_BASE + "/feature_contributions.json", []),
+          loadOptionalJson(DATA_BASE + "/emergent_structures.json", []),
+          loadOptionalJson(DATA_BASE + "/candidate_crossmatch_results.json", []),
+          loadOptionalJson(DATA_BASE + "/possible_binary_pairs.json", []),
+          loadText(DATA_BASE + "/report.md").catch(() => ""),
+        ]);
+
+        setFeatureContributions(featureContributionsData);
+        setEmergentStructures(emergentStructuresData);
+        setCandidateCrossmatchResults(candidateCrossmatchData);
+        setPossibleBinaryPairs(possibleBinaryPairsData);
+        setReport(reportText);
       } catch (err) {
         setError(err?.message ?? String(err));
       }
@@ -678,81 +708,72 @@ function App() {
 
       {error && (
         <section className="error-box">
-          <strong>Dashboard data warning.</strong>
+          <strong>Dashboard data not available.</strong>
           <p>{error}</p>
           <p>
-            Core data may be missing or incomplete. Run{" "}
-            <code>python -m pipeline.run_full_pipeline</code> from the repository
-            root if the dashboard appears empty.
+            Run <code>python -m pipeline.run_full_pipeline</code> from the
+            repository root.
           </p>
         </section>
       )}
 
-      {mountedPages.advanced && (
-        <div
-          style={{ display: currentPage === "advanced" ? "block" : "none" }}
-          aria-hidden={currentPage !== "advanced"}
-        >
-          <AdvancedAnalysisLayer
-            setCurrentPage={setCurrentPage}
-            allSources={allSources}
-            featureContributions={featureContributions}
-            emergentStructures={emergentStructures}
-            graphCentrality={centrality}
-            candidateCrossmatchResults={candidateCrossmatchResults}
-            selectedNode={selectedNode}
-            setSelectedNode={setSelectedNode}
-          />
-        </div>
+      {!error && currentPage === "advanced" && (
+        <AdvancedAnalysisLayer
+          setCurrentPage={setCurrentPage}
+          allSources={allSources}
+          featureContributions={featureContributions}
+          emergentStructures={emergentStructures}
+          graphCentrality={centrality}
+          candidateCrossmatchResults={candidateCrossmatchResults}
+          selectedNode={selectedNode}
+          setSelectedNode={setSelectedNode}
+        />
       )}
 
-      {mountedPages.dynamics && (
-        <div
-          style={{ display: currentPage === "dynamics" ? "block" : "none" }}
-          aria-hidden={currentPage !== "dynamics"}
-        >
-          <AstrometricDynamicsLab
-            allSources={allSources}
-            graphCentrality={centrality}
-            featureContributions={featureContributions}
-            emergentStructures={emergentStructures}
-            candidateCrossmatchResults={candidateCrossmatchResults}
-            possibleBinaryPairs={possibleBinaryPairs}
-            selectedSource={selectedNode}
-            onSourceSelect={setSelectedNode}
-            setCurrentPage={setCurrentPage}
-          />
-        </div>
+      {!error && currentPage === "dynamics" && (
+        <AstrometricDynamicsLab
+          allSources={allSources}
+          graphCentrality={centrality}
+          featureContributions={featureContributions}
+          emergentStructures={emergentStructures}
+          candidateCrossmatchResults={candidateCrossmatchResults}
+          possibleBinaryPairs={possibleBinaryPairs}
+          selectedSource={selectedNode}
+          onSourceSelect={setSelectedNode}
+          setCurrentPage={setCurrentPage}
+        />
       )}
 
-      {mountedPages.validation && (
-        <div
-          style={{
-            display: ["validation", "investigation"].includes(currentPage)
-              ? "block"
-              : "none",
-          }}
-          aria-hidden={!["validation", "investigation"].includes(currentPage)}
-        >
-          <CandidateInvestigationCockpit
-            allSources={allSources}
-            graphCentrality={centrality}
-            featureContributions={featureContributions}
-            emergentStructures={emergentStructures}
-            candidateCrossmatchResults={candidateCrossmatchResults}
-            possibleBinaryPairs={possibleBinaryPairs}
-            selectedSource={selectedNode}
-            onSourceSelect={setSelectedNode}
-            setCurrentPage={setCurrentPage}
-          />
-        </div>
+      {!error && currentPage === "validation" && (
+        <CandidateInvestigationCockpit
+          allSources={allSources}
+          graphCentrality={centrality}
+          featureContributions={featureContributions}
+          emergentStructures={emergentStructures}
+          candidateCrossmatchResults={candidateCrossmatchResults}
+          possibleBinaryPairs={possibleBinaryPairs}
+          selectedSource={selectedNode}
+          onSourceSelect={setSelectedNode}
+          setCurrentPage={setCurrentPage}
+        />
       )}
 
-      {mountedPages.dashboard && (
-        <div
-          style={{ display: currentPage === "dashboard" ? "block" : "none" }}
-          aria-hidden={currentPage !== "dashboard"}
-        >
+      {!error && currentPage === "stellar" && (
+        <StellarReconstructionStudio
+          allSources={allSources}
+          selectedSource={selectedNode}
+          graphCentrality={centrality}
+          featureContributions={featureContributions}
+          emergentStructures={emergentStructures}
+          candidateCrossmatchResults={candidateCrossmatchResults}
+          possibleBinaryPairs={possibleBinaryPairs}
+          onSourceSelect={setSelectedNode}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
+
+      {!error && currentPage === "dashboard" && (
+        <>
           <section className="metrics-grid">
             <MetricCard
               label="Dataset"
@@ -762,20 +783,20 @@ function App() {
 
             <MetricCard
               label="Sources"
-              value={summary?.total_sources ?? allSources.length ?? "..."}
+              value={summary?.total_sources ?? "..."}
               subtitle="Total analyzed"
             />
 
             <MetricCard
               label="Anomalies"
-              value={summary?.anomalous_sources ?? allSources.length ?? "..."}
+              value={summary?.anomalous_sources ?? "..."}
               subtitle="Detected sources"
             />
 
             <MetricCard
               label="Graph"
-              value={(summary?.graph_nodes ?? nodes.length ?? "...") + " nodes"}
-              subtitle={(summary?.graph_edges ?? edges.length ?? "...") + " edges"}
+              value={(summary?.graph_nodes ?? "...") + " nodes"}
+              subtitle={(summary?.graph_edges ?? "...") + " edges"}
             />
           </section>
 
@@ -804,38 +825,23 @@ function App() {
                 </div>
 
                 <div className="node-list compact-node-list">
-                  {topCentralSources.map((source, index) => {
-                    const key =
-                      source.SOURCE_ID ??
-                      source.source_id ??
-                      source.id ??
-                      `central-${index}`;
+                  {topCentralSources.map((source) => (
+                    <button
+                      className="node-row node-button"
+                      key={source.SOURCE_ID}
+                      type="button"
+                      onClick={() => setSelectedNode(source)}
+                    >
+                      <div>
+                        <strong>{source.SOURCE_ID}</strong>
+                        <small>rank {source.structural_rank}</small>
+                      </div>
 
-                    return (
-                      <button
-                        className="node-row node-button"
-                        key={key}
-                        type="button"
-                        onClick={() => setSelectedNode(source)}
-                      >
-                        <div>
-                          <strong>
-                            {source.SOURCE_ID ??
-                              source.source_id ??
-                              source.id ??
-                              "N/A"}
-                          </strong>
-                          <small>
-                            rank {source.structural_rank ?? source.rank ?? "N/A"}
-                          </small>
-                        </div>
-
-                        <span>
-                          {formatNumber(source.structural_importance_score, 4)}
-                        </span>
-                      </button>
-                    );
-                  })}
+                      <span>
+                        {formatNumber(source.structural_importance_score, 4)}
+                      </span>
+                    </button>
+                  ))}
                 </div>
               </aside>
 
@@ -856,12 +862,7 @@ function App() {
                   <div className="details-list details-list-grid">
                     <p>
                       <span>SOURCE_ID</span>
-                      <strong>
-                        {selectedNode.source_id ??
-                          selectedNode.SOURCE_ID ??
-                          selectedNode.id ??
-                          "N/A"}
-                      </strong>
+                      <strong>{selectedNode.source_id ?? selectedNode.SOURCE_ID}</strong>
                     </p>
 
                     <p>
@@ -934,7 +935,7 @@ function App() {
 
             <div className="md-body">{renderedReport}</div>
           </section>
-        </div>
+        </>
       )}
     </main>
   );

@@ -1,79 +1,352 @@
 # Codex Alpha Computational Framework
 
-AI-assisted computational framework for exploratory analysis of large-scale cosmological structures, emergent correlations, relational graph structures, and high-dimensional astrophysical datasets.
+**Closed Beta Research Demonstrator for Gaia DR3 Candidate Prioritization, Astrometric Dynamics, Stellar Reconstruction and Exploratory Space-Data Intelligence**
 
-## Overview
+The **Codex Alpha Computational Framework** is an open-source research framework designed to support the exploratory analysis, prioritization and validation of candidate sources in large astronomical datasets, starting from **ESA Gaia DR3**.
 
-The Codex Alpha Computational Framework is an operational early-stage computational cosmology initiative focused on the development of AI-assisted tools for exploratory analysis of complex astrophysical and cosmological datasets.
+The current closed-beta demonstrator combines:
 
-The framework is designed to investigate statistically anomalous sources, emergent multidimensional structures, non-trivial correlations, and relational graph patterns within large-scale observational datasets through scalable computational infrastructure, statistical analysis, graph-based modeling, automated reporting, and local scientific visualization.
+- Gaia DR3 candidate data ingestion
+- anomaly ranking
+- graph-based structural analysis
+- astrometric dynamics
+- possible binary / comoving-pair prioritization
+- candidate investigation workflows
+- synthetic stellar reconstruction
+- full candidate dossier generation
+- external validation workflows
+- local-first interactive scientific visualization
 
-Rather than building a new observational infrastructure, the project aims to provide a new interpretative computational layer operating on existing cosmological data.
+The framework is not designed to claim direct astrophysical discoveries by itself.
 
-The current operational prototype already supports:
+Its purpose is to help researchers identify **which sources deserve further investigation**.
 
-- real ESA Gaia DR3 dataset integration
-- multidimensional astrophysical preprocessing
-- unsupervised anomaly detection
-- feature contribution analysis
-- anomaly family clustering
-- emergent local structure detection
-- relational graph construction
-- graph centrality analysis
-- exploratory 2D visualization
-- exploratory 3D structure projection
-- automatic Markdown report generation
-- local dashboard data export
-- offline-first interactive dashboard visualization
-- automated end-to-end execution pipelines
-- modular AI-assisted analysis architecture
+## Current Status
 
-## Installation and Usage
+```text
+Closed Beta Research Demonstrator
+```
 
-### Clone the repository
+The framework is currently transitioning from an advanced alpha prototype to a closed beta demonstrator.
+
+The core workflow is already operational on a Gaia DR3 demo dataset. Current development is focused on documentation, hardening, reproducibility, larger dataset ingestion, AI-assisted scoring, improved candidate validation and future cloud scalability.
+
+## Scientific Purpose
+
+Large astronomical catalogues such as Gaia DR3 contain an enormous number of sources and multidimensional parameters. The central problem is not only accessing the data, but identifying which sources are most worthy of deeper analysis.
+
+The Codex Alpha Computational Framework addresses this by combining multiple exploratory layers:
+
+```text
+Gaia DR3 data
+→ anomaly ranking
+→ graph structure
+→ astrometric dynamics
+→ candidate investigation
+→ stellar reconstruction
+→ candidate dossier
+→ external validation workflow
+```
+
+The framework helps prioritize candidates by combining:
+
+- statistical anomaly indicators
+- structural graph importance
+- astrometric quantities
+- kinematic proxies
+- hidden companion suspicion indicators
+- possible binary / comoving-pair involvement
+- crossmatch availability
+- validation-ready query generation
+- synthetic candidate-level visualization
+- exportable scientific dossier generation
+
+The current closed-beta version also includes a fifth reconstruction layer that converts the selected candidate into a full proxy-based stellar dossier and synthetic visual model.
+
+## What the Framework Does
+
+The current demonstrator provides five connected analysis interfaces.
+
+## 1. Operational Dashboard
+
+The first interface provides the global operational view of the dataset.
+
+It includes:
+
+- dataset summary cards
+- total analyzed sources
+- anomaly counts
+- graph node and edge counts
+- interactive 3D relational graph viewer
+- top structural source ranking
+- selected source inspection panel
+- interactive source table
+- automatic pipeline report viewer
+
+This page allows the user to quickly inspect the dataset, identify structurally important sources and synchronize source selection across the framework.
+
+## 2. Advanced Analysis Layer
+
+The second interface provides a broader interpretative layer.
+
+It includes:
+
+- Gaia physical map
+- relational knowledge graph
+- coherence-gradient-inspired proxy module
+- candidate registry
+- optional crossmatch result integration
+- access to the astrometric dynamics layer
+
+The goal of this interface is to move beyond isolated numerical anomalies and analyze candidate sources in their physical, relational and structural context.
+
+The framework uses the notation `∇𝒦` only as internal Codex Alpha theoretical context and not as a direct physical measurement.
+
+## 3. Astrometric Dynamics Lab
+
+The third interface focuses on astrometric and kinematic candidate behavior.
+
+It includes:
+
+- 3D stellar field visualization
+- hybrid Gaia / dynamics view
+- physical Gaia field mode
+- kinematic velocity-space mode
+- distance estimates
+- total proper motion
+- tangential velocity
+- approximate space velocity
+- dynamics index
+- hidden companion suspicion index
+- possible binary / comoving-pair candidates
+- dynamic candidate table
+- synchronized source selection
+
+This layer supports the identification of sources that may deserve further inspection because of unusual astrometric or kinematic behavior.
+
+All outputs are candidate-level indicators and require external astrophysical validation.
+
+## 4. Candidate Investigation Cockpit
+
+The fourth interface is the investigation layer for the top-priority candidate pool.
+
+It includes:
+
+- Candidate Signal Map 3D
+- active candidate profile
+- hexagonal proxy chart
+- anomaly score
+- dynamics index
+- hidden companion suspicion index
+- structural importance
+- distance estimate
+- tangential velocity
+- approximate space velocity
+- Gaia color proxy
+- possible pair involvement
+- crossmatch status
+- mission briefing
+- evidence vector
+- validation queries
+- Gaia Archive / SIMBAD / VizieR / ESA Sky links
+
+This interface is designed to help a researcher move from candidate selection to validation planning.
+
+## 5. Stellar Reconstruction & Full Dossier Studio
+
+The fifth interface provides a candidate-level stellar reconstruction and reporting layer for the globally selected Gaia source.
+
+It includes:
+
+- selected source summary
+- proxy-based stellar model
+- synthetic 3D stellar twin visualization
+- estimated visual temperature proxy
+- radius and luminosity proxies
+- activity and surface-contrast rendering proxies
+- corona and flare visualization controls
+- Top-50 anomaly queue
+- full stellar dossier generation
+- copy-ready scientific interpretation
+- downloadable TXT / Markdown / LaTeX / JSON reports
+- synchronized source selection from the anomaly queue
+
+This interface is designed to help researchers move from candidate prioritization to communication, documentation and validation planning.
+
+The synthetic 3D stellar twin is not a direct observational image of the selected star. It is a physically-informed procedural visualization constrained by available Gaia-derived observables and internal framework proxies.
+
+The rendered surface, corona, flare layers, background field and visual morphology do not confirm stellar type, activity, companions, binarity, planets or exotic physical mechanisms.
+
+## Candidate Dossier Generation
+
+For a selected source, the framework can support structured dossier generation including:
+
+- `SOURCE_ID`
+- Gaia coordinates
+- parallax
+- distance estimate
+- PMRA
+- PMDEC
+- radial velocity
+- anomaly score
+- anomaly rank
+- structural rank
+- structural importance
+- coherence proxy if available
+- SIMBAD / VizieR / NSS crossmatch if available
+- dynamics index
+- hidden companion suspicion index
+- possible binary / comoving-pair involvement
+- synthetic stellar reconstruction parameters
+- proxy-based temperature estimate
+- proxy-based radius estimate
+- proxy-based luminosity estimate
+- visual stellar type proxy
+- Top-50 anomaly queue context
+- cautious scientific interpretation
+- next validation steps
+- copy-ready report text
+- downloadable TXT / Markdown / LaTeX / JSON dossier exports
+
+The dossier is intended for:
+
+- internal research notes
+- candidate tracking
+- GitHub issues
+- collaborator communication
+- LaTeX-ready scientific documentation
+- validation planning
+- ESA BIC demonstration material
+- reproducible candidate-level review
+
+## Scientific Caution
+
+The framework does **not** confirm:
+
+- planets
+- binary systems
+- hidden companions
+- exotic objects
+- new physical mechanisms
+- direct physical measurements of `∇𝒦`
+- direct images of stellar surfaces
+- confirmed stellar activity or flare events
+
+Instead, the framework produces:
+
+```text
+candidate-level prioritization indicators
+```
+
+Terms such as:
+
+```text
+candidate
+proxy
+not confirmed
+requires external validation
+synthetic visualization
+candidate-level dossier
+```
+
+are used intentionally.
+
+The correct interpretation is:
+
+```text
+This source is interesting enough to deserve further validation.
+```
+
+not:
+
+```text
+This source is confirmed to be astrophysically unusual.
+```
+
+The synthetic stellar reconstruction layer is intended for research communication, triage and documentation. It is not a substitute for catalogue validation, spectroscopic analysis, photometric modelling, expert review or independent astrophysical confirmation.
+
+## External Validation Workflow
+
+The framework supports validation through links and query generation for:
+
+- Gaia Archive
+- Gaia NSS where applicable
+- SIMBAD
+- VizieR
+- ESA Sky
+- local neighbourhood queries
+- possible pair consistency checks
+- candidate-level dossier exports
+
+Typical validation steps include:
+
+1. Verify the Gaia DR3 source directly in Gaia Archive.
+2. Check SIMBAD and VizieR object context.
+3. Check Gaia NSS, RUWE, astrometric excess noise and radial velocity where available.
+4. Compare parallax and proper motion with nearby sources before any comoving-pair interpretation.
+5. Treat all internal scores as prioritization proxies, not final classifications.
+6. Use the exported dossier as a structured research note, not as a discovery claim.
+7. Validate any suspected binary, companion or unusual object interpretation through independent astrophysical methods.
+
+## Current Data Mode
+
+The current demonstrator uses a local Gaia DR3 demo dataset exported into the dashboard data package.
+
+The dashboard reads local files from:
+
+```text
+dashboard/public/data/
+```
+
+The current architecture is local-first and can run without external APIs for the core dashboard.
+
+External links are provided for validation and catalogue inspection.
+
+## Installation
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/Miriadenera/codex-alpha-computational-framework.git
 ```
 
-### Enter the project directory
+Enter the project directory:
 
 ```bash
 cd codex-alpha-computational-framework
 ```
 
-### Install required Python dependencies
+Install Python dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Execute the Full Gaia DR3 Analysis Pipeline
+## Run the Gaia DR3 Pipeline
 
-From the repository root, run:
+From the repository root:
 
 ```bash
 python -m pipeline.run_full_pipeline
 ```
 
-The full pipeline automatically performs:
+Important: run this command from the repository root, not from inside the `dashboard/` directory.
 
-1. ESA Gaia DR3 dataset loading
-2. Multidimensional feature extraction
-3. AI-assisted unsupervised anomaly detection
-4. Feature contribution analysis
-5. Multidimensional anomaly clustering
-6. Emergent local structure detection
-7. Relational graph construction
-8. Graph centrality analysis
-9. RA/DEC anomaly visualization
-10. Relational graph visualization
-11. Automatic Markdown report generation
-12. Dashboard-ready local data export
+Correct:
+
+```text
+codex-alpha-computational-framework> python -m pipeline.run_full_pipeline
+```
+
+Incorrect:
+
+```text
+codex-alpha-computational-framework/dashboard> python -m pipeline.run_full_pipeline
+```
 
 ## Run the Local Dashboard
 
-After running the full pipeline, enter the dashboard directory:
+Enter the dashboard directory:
 
 ```bash
 cd dashboard
@@ -85,52 +358,30 @@ Install dashboard dependencies:
 npm install
 ```
 
-Start the local dashboard:
+Start the local Vite dashboard:
 
 ```bash
 npm run dev
 ```
 
-The dashboard will be available locally through the Vite development server, usually at:
+Open:
 
 ```text
 http://localhost:5173/
 ```
 
-The dashboard is local-first and reads generated files from:
+## Build the Dashboard
 
-```text
-dashboard/public/data/
-```
-
-No external API is required.
-
-## Important Execution Notes
-
-The Python pipeline must be launched from the repository root:
+To verify the production build:
 
 ```bash
-cd codex-alpha-computational-framework
-python -m pipeline.run_full_pipeline
-```
-
-Do not launch the Python pipeline from inside the `dashboard/` directory, otherwise Python may not find the `pipeline` module.
-
-Correct:
-
-```text
-D:\PYTHON\codex-alpha-computational-framework> python -m pipeline.run_full_pipeline
-```
-
-Incorrect:
-
-```text
-D:\PYTHON\codex-alpha-computational-framework\dashboard> python -m pipeline.run_full_pipeline
+cd dashboard
+npm run build
 ```
 
 ## Current Pipeline Outputs
 
-The current operational prototype generates:
+The Python pipeline can generate outputs such as:
 
 ```text
 results/gaia_dr3_anomaly_results.csv
@@ -145,7 +396,7 @@ results/gaia_dr3_relational_graph.png
 results/gaia_dr3_pipeline_report.md
 ```
 
-The dashboard export layer generates:
+The dashboard export layer uses:
 
 ```text
 dashboard/public/data/summary.json
@@ -157,323 +408,223 @@ dashboard/public/data/graph_nodes.json
 dashboard/public/data/graph_edges.json
 dashboard/public/data/graph_centrality.json
 dashboard/public/data/report.md
+dashboard/public/data/candidate_crossmatch_results.json
+dashboard/public/data/possible_binary_pairs.json
 ```
 
-The generated outputs include:
+Some optional files may be absent in the local demo package.
 
-- ranked anomalous astrophysical sources
-- complete Gaia DR3 analyzed source table
-- feature contribution analysis
-- anomaly family clustering
-- emergent local structure candidates
-- relational graph nodes
-- relational graph edges
-- graph centrality ranking
-- exploratory RA/DEC visualization
-- relational graph visualization
-- complete automatic Markdown report
-- dashboard-ready JSON and Markdown data package
-
-## Local Dashboard Capabilities
-
-The current local dashboard provides an offline-first scientific interface for exploring pipeline outputs.
-
-Implemented dashboard capabilities include:
-
-- dataset summary cards
-- anomaly statistics
-- graph node and edge counts
-- top structural node inspection
-- selected source inspection panel
-- automatic pipeline report viewer
-- interactive 3D relational graph viewer
-- node click inspection
-- zoomable and rotatable 3D graph navigation
-- visualization of all 1000 Gaia sample sources
-- highlighted anomalous sources
-- graph edge visualization
-- node layout lock/unlock
-- adjustable field recentering
-- X/Y/Z graph shifting controls
-- anomaly brightness controls
-- Gaia source brightness controls
-- anomaly glow controls
-- link intensity controls
-- link thickness controls
-- fullscreen graph mode
-- local-only data loading
-
-The dashboard does not require external APIs.
-
-## Current Operational Capabilities
-
-Current implemented capabilities include:
-
-- ESA Gaia DR3 dataset integration
-- ESA VOTable support
-- multidimensional astrophysical preprocessing
-- unsupervised AI-assisted anomaly detection
-- statistical anomaly ranking
-- feature contribution analysis
-- multidimensional anomaly clustering
-- emergent local structure detection
-- relational graph construction
-- graph centrality analysis
-- RA/DEC exploratory visualization
-- 3D anomalous structure projection
-- automatic full pipeline reporting
-- dashboard-ready local data export
-- offline-first local dashboard
-- modular AI architecture
-- structured result generation
-- end-to-end automated pipeline execution
-
-## AI Architecture
-
-The AI layer of the framework is designed as a modular exploratory analysis infrastructure.
-
-Rather than enforcing predefined cosmological assumptions, the AI modules are intended to assist the identification of:
-
-- statistically anomalous astrophysical sources
-- emergent multidimensional structures
-- non-trivial correlations
-- anomaly families
-- local emergent structures
-- graph-based cosmological relationships
-- structurally important nodes inside relational graphs
-
-Current implementation includes:
-
-- Isolation Forest-based anomaly detection
-- feature interpretability layers
-- multidimensional clustering analysis
-- local emergent structure detection
-- graph-based similarity modeling
-- graph centrality analysis
-
-Future AI development may progressively integrate:
-
-- deep learning anomaly models
-- graph neural networks
-- adaptive exploratory pipelines
-- autonomous analysis systems
-- local open-source LLM assistance
-- distributed AI-assisted cosmological analysis
-
-## Emergent Structure Detection
-
-The framework includes an initial emergent structure detection layer.
-
-This module analyzes whether statistically anomalous astrophysical sources exhibit local multidimensional grouping behavior inside the analyzed feature space.
-
-The current implementation:
-
-- computes nearest-neighbor relationships
-- evaluates local multidimensional density
-- identifies candidate emergent structures
-- ranks statistically coherent local anomaly groups
-
-This represents a transition from isolated anomaly analysis toward exploratory relational cosmological analysis.
-
-The current system does not assign predefined physical meaning to detected structures.
-
-Instead, the framework identifies statistically interesting local configurations that may deserve additional investigation.
-
-## Relational Graph Analysis
-
-The framework includes a graph construction layer that models anomalous Gaia DR3 sources as nodes and multidimensional similarity relationships as edges.
-
-The relational graph layer currently generates:
-
-- graph node tables
-- graph edge tables
-- feature-space similarity weights
-- graph centrality rankings
-- structurally important source candidates
-
-Graph centrality analysis currently evaluates:
-
-- degree centrality
-- betweenness centrality
-- closeness centrality
-- weighted degree
-- structural importance score
-
-The graph is not a direct Gaia sky map.
-
-It is an exploratory similarity graph derived from multidimensional astrophysical features.
-
-## Automatic Pipeline Report
-
-The framework automatically generates a complete Markdown report at:
-
-```text
-results/gaia_dr3_pipeline_report.md
-```
-
-The dashboard receives a local copy at:
-
-```text
-dashboard/public/data/report.md
-```
-
-The report includes:
-
-- dataset summary
-- complete anomalous source table
-- complete feature contribution table
-- anomaly cluster summary
-- complete anomaly cluster assignments
-- complete emergent local structure candidates
-- complete graph node table
-- complete graph edge table
-- complete graph centrality table
-- complete Gaia DR3 sample source table
-- interpretation notes
-- generated output references
-
-Numerical values are exported without scientific notation where possible.
-
-## Core Objectives
-
-- analysis of multidimensional cosmological datasets
-- detection of emergent non-trivial correlations
-- exploratory anomaly detection
-- emergent structure identification
-- relational graph modeling of anomalous sources
-- topological and geometric analysis of large-scale structures
-- reduction of interpretative and retroactive selection bias
-- development of scalable AI-assisted scientific analysis pipelines
-- development of local-first scientific visualization tools
-- integration with HPC and distributed computational infrastructure
-
-## Research Direction
-
-The framework originates from the broader theoretical research project **Codex Alpha**, but its operational direction is computational and data-oriented.
-
-Current development focuses on:
-
-- exploratory cosmological analysis
-- anomaly detection
-- multidimensional astrophysical statistics
-- emergent structure identification
-- relational graph construction
-- graph-based astrophysical analysis
-- AI-assisted pattern recognition
-- scalable scientific computing infrastructure
-- local interactive scientific visualization
-
-The framework is intentionally designed to avoid imposing predefined cosmological target structures during exploratory analysis.
-
-## Development Status
-
-Current status:
-
-```text
-Operational Early Prototype Phase
-```
-
-The framework currently supports complete end-to-end execution on real ESA Gaia DR3 observational datasets.
-
-The current operational pipeline includes:
-
-- anomaly detection
-- feature analysis
-- multidimensional clustering
-- emergent local structure detection
-- relational graph construction
-- graph centrality analysis
-- automatic reporting
-- dashboard data export
-- local 3D dashboard visualization
-
-Ongoing development focuses on:
-
-- improved Gaia-like validation views
-- graph-based cosmological analysis
-- exploratory topology modules
-- autonomous AI-assisted workflows
-- local open-source assistant integration
-- distributed computation systems
-- scalable large-volume dataset analysis
-- advanced scientific visualization
-
-## Long-Term Vision
-
-The long-term objective is to evolve the framework into a scalable computational infrastructure capable of assisting cosmological and astrophysical research through advanced exploratory analysis of large-scale high-dimensional observational datasets.
-
-Potential future directions include:
-
-- distributed HPC infrastructure
-- AI-assisted cosmological analysis
-- autonomous exploratory pipelines
-- graph-based cosmological mapping
-- topological gravitational structure analysis
-- emergent pattern discovery
-- large-scale cosmological survey integration
-- advanced visualization systems
-- multidimensional relational cosmology frameworks
-- local AI-assisted scientific interfaces
-- open-source reproducible astrophysical analysis workflows
-
-## Website
-
-https://www.codexalpha.org/computational-framework
-
-## Related Research
-
-Codex Alpha Research:
-
-https://www.codexalpha.org
-
-DOI publications are available online through Zenodo.
+The dashboard is designed to degrade gracefully when optional validation files are not available.
 
 ## Repository Structure
 
 ```text
-ai/              -> AI-assisted cosmological analysis modules
+ai/              -> AI-assisted exploratory analysis modules
 analysis/        -> Statistical, clustering, centrality and structure analysis modules
-dashboard/       -> Local offline-first interactive visualization dashboard
-datasets/        -> ESA Gaia DR3 datasets and dataset loaders
+crossmatch/      -> Candidate crossmatch utilities
+dashboard/       -> Local interactive React/Vite dashboard
+datasets/        -> Gaia DR3 datasets and loaders
 docs/            -> Technical documentation and architecture notes
 examples/        -> End-to-end execution examples
-pipeline/        -> Full automated analysis pipelines
+pipeline/        -> Automated analysis pipelines
 prototypes/      -> Experimental prototype modules
 reports/         -> Automatic report generation modules
 results/         -> Generated outputs, reports and visualizations
-simulations/     -> Future computational simulations
+simulations/     -> Future computational simulation modules
 structures/      -> Relational graph construction modules
 visualization/   -> Exploratory 2D and 3D visualization modules
 ```
 
-## Quick Start
+## Technical Architecture
 
-Run the full computational pipeline:
+The framework currently combines:
 
-```bash
-python -m pipeline.run_full_pipeline
-```
+- Python data-processing pipeline
+- Gaia DR3 data ingestion
+- anomaly detection and ranking
+- feature contribution analysis
+- graph construction
+- graph centrality analysis
+- local dashboard export
+- React/Vite frontend
+- Three.js / WebGL visualizations
+- interactive candidate inspection
+- astrometric dynamics analysis
+- possible binary / comoving-pair prioritization
+- optional crossmatch integration
+- validation-oriented external links
+- synthetic stellar reconstruction viewer
+- procedural Three.js stellar rendering
+- candidate-level dossier export system
 
-Start the local dashboard:
+## AI Direction
 
-```bash
-cd dashboard
-npm install
-npm run dev
-```
+The current framework already supports AI-assisted exploratory analysis through anomaly detection and candidate prioritization.
 
-Open:
+Future AI development may include:
+
+- explainable candidate scoring
+- probabilistic binary / comoving-pair prioritization
+- graph neural network experiments
+- local open-source LLM assistance
+- automated candidate dossier interpretation
+- multi-catalogue anomaly detection
+- AI-assisted validation planning
+- human-in-the-loop scientific review
+- AI-assisted candidate triage across larger Gaia-derived datasets
+- AI-assisted report generation with explicit uncertainty tracking
+
+The AI layer is intended to assist researchers, not replace scientific validation.
+
+## Roadmap 2026–2029
+
+### 2026 — Closed Beta and Scientific Hardening
+
+Focus:
+
+- stabilize the closed beta demonstrator
+- improve documentation and reproducibility
+- reduce critical static-analysis findings
+- add minimal automated testing
+- strengthen Gaia DR3 candidate validation workflow
+- improve binary / comoving-pair probability scoring
+- harden the fifth stellar reconstruction and dossier interface
+- prepare a technical whitepaper or preprint
+- document the framework for ESA BIC and research partners
+
+Target outcome:
 
 ```text
-http://localhost:5173/
+stable closed-beta research demonstrator
 ```
+
+### 2027 — AI-Assisted Candidate Intelligence Layer
+
+Focus:
+
+- integrate explainable AI scoring
+- expand candidate dossier generation
+- support larger Gaia-derived datasets
+- prepare for Gaia DR4-compatible ingestion when applicable
+- add multi-catalogue validation modules
+- improve human-in-the-loop candidate review
+- create researcher-oriented export formats
+- improve automated validation planning
+- introduce uncertainty-aware ranking and reporting
+
+Target outcome:
+
+```text
+AI-assisted candidate intelligence platform
+```
+
+### 2028 — Scalable Cloud and Multi-Catalogue Platform
+
+Focus:
+
+- move from local-first demo to scalable architecture
+- add cloud-ready deployment
+- introduce API-based data ingestion
+- support larger survey datasets
+- implement collaborative candidate review
+- integrate advanced visualization and reporting
+- expand beyond Gaia-only workflows
+- explore institutional partnerships
+
+Target outcome:
+
+```text
+scalable space-data analytics platform
+```
+
+### 2029 — Institutional and Commercial Deployment
+
+Focus:
+
+- support institutional users
+- develop SaaS or licensed deployment options
+- expand beyond Gaia-only workflows
+- integrate additional astronomical surveys
+- provide premium analytics and support services
+- build a sustainable open-core research/business model
+- support research teams with explainable candidate-intelligence tools
+
+Target outcome:
+
+```text
+commercially and institutionally deployable space-data intelligence system
+```
+
+## ESA BIC Relevance
+
+The framework is relevant to space-data innovation because it addresses a concrete problem:
+
+```text
+how to transform large astronomical catalogues into explainable, prioritized and validation-ready candidate investigations
+```
+
+Potential applications include:
+
+- space-data analytics
+- Gaia candidate prioritization
+- astrometric anomaly investigation
+- binary / comoving-pair candidate screening
+- research workflow automation
+- AI-assisted catalogue exploration
+- scientific visualization
+- institutional data-intelligence tools
+- candidate dossier generation
+- validation-oriented astronomical triage
+
+The current closed-beta demonstrator is designed to show technical feasibility, scientific caution and future scalability.
+
+## Business Potential
+
+Possible development paths include:
+
+- open-source research framework
+- institutional licensing
+- hosted dashboard services
+- premium validation modules
+- AI-assisted candidate scoring services
+- custom data-analysis pipelines
+- research collaboration tools
+- multi-catalogue space-data analytics
+- candidate intelligence dashboards
+- white-label scientific data-analysis tools
+
+The long-term objective is to evolve the framework into a scalable platform for explainable astronomical candidate intelligence.
+
+## Website
+
+Codex Alpha Research:
+
+```text
+https://www.codexalpha.org
+```
+
+Computational Framework page:
+
+```text
+https://www.codexalpha.org/computational-framework
+```
+
+## Related Research
+
+The framework originates from the broader **Codex Alpha Research** project.
+
+Codex Alpha explores theoretical and computational approaches to information-based physical modeling, emergent structure and scientific data interpretation.
+
+This repository focuses on the operational, computational and data-oriented side of the project.
 
 ## Disclaimer
 
-This repository represents an operational early-stage research and prototyping initiative.
+This repository represents an active research and development project.
 
-The framework is under active computational and architectural development.
+The current framework is a closed-beta demonstrator and should be interpreted as an exploratory scientific tool.
 
-Current outputs represent exploratory statistical and AI-assisted analysis layers and do not constitute claims of new physical discoveries.
+Outputs such as anomaly rankings, structural graph scores, hidden-companion indicators, possible pair involvement, synthetic stellar reconstruction and coherence-inspired proxies are not final astrophysical classifications.
 
-Detected anomalies, relational graph structures, centrality rankings, and emergent local structures require additional astrophysical validation before any physical interpretation.
+All candidate interpretations require independent validation through external catalogues, Gaia Archive, SIMBAD, VizieR, Gaia NSS where applicable, and expert scientific review.
+
+No claim of new physical discovery is made by the framework alone.

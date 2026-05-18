@@ -576,7 +576,7 @@ function buildMissionBriefing(record, activePairs, crossmatch) {
   lines.push("");
   lines.push("Candidate-level interpretation:");
   lines.push(
-    "This source is selected from the top-50 anomaly pool using Gaia-derived dashboard proxies. It is not a confirmed planet host, binary system, exotic object, or new physical mechanism.",
+    "This source is selected from the dashboard candidate pool using Gaia-derived proxies. It is not a confirmed planet host, binary system, exotic object, or new physical mechanism.",
   );
   lines.push("");
   lines.push(`Anomaly score: ${formatNumber(record.anomaly_score, 6)}`);
@@ -746,7 +746,7 @@ function HexagonStatsChart({ record }) {
     <div className="candidate-explanation-card">
       <div className="panel-header">
         <div>
-          <div className="eyebrow">Top-50 anomaly stat profile</div>
+          <div className="eyebrow">Candidate stat profile</div>
           <h2>Hexagonal Proxy Chart</h2>
         </div>
         <span>candidate-level</span>
@@ -781,6 +781,7 @@ function HexagonStatsChart({ record }) {
 
         {axisAngles.map((angle, index) => {
           const [x, y] = point(angle, 1);
+
           return (
             <line
               key={`axis-${metrics[index].label}`}
@@ -877,6 +878,42 @@ export default function CandidateInvestigationCockpit({
 
   const recordMap = useMemo(() => buildMapBySourceId(anomalyPool), [anomalyPool]);
 
+  const selectedSourceId = getSourceId(selectedSource);
+
+  const externallySelectedRecord = useMemo(() => {
+    if (!selectedSourceId || !selectedSource) {
+      return null;
+    }
+
+    if (recordMap.has(selectedSourceId)) {
+      return recordMap.get(selectedSourceId);
+    }
+
+    return enrichSource(selectedSource, maps);
+  }, [selectedSourceId, selectedSource, recordMap, maps]);
+
+  const signalRecords = useMemo(() => {
+    if (!externallySelectedRecord) {
+      return anomalyPool;
+    }
+
+    const externalId = getSourceId(externallySelectedRecord);
+    const alreadyIncluded = anomalyPool.some(
+      (record) => getSourceId(record) === externalId,
+    );
+
+    if (alreadyIncluded) {
+      return anomalyPool;
+    }
+
+    return [externallySelectedRecord, ...anomalyPool];
+  }, [anomalyPool, externallySelectedRecord]);
+
+  const signalRecordMap = useMemo(
+    () => buildMapBySourceId(signalRecords),
+    [signalRecords],
+  );
+
   const pairCandidates = useMemo(() => {
     const pairArray = Array.isArray(possibleBinaryPairs) ? possibleBinaryPairs : [];
 
@@ -891,15 +928,13 @@ export default function CandidateInvestigationCockpit({
     [pairCandidates],
   );
 
-  const selectedSourceId = getSourceId(selectedSource);
-
   const activeRecord = useMemo(() => {
-    if (selectedSourceId && recordMap.has(selectedSourceId)) {
-      return recordMap.get(selectedSourceId);
+    if (selectedSourceId && signalRecordMap.has(selectedSourceId)) {
+      return signalRecordMap.get(selectedSourceId);
     }
 
-    return anomalyPool[0] ?? null;
-  }, [selectedSourceId, recordMap, anomalyPool]);
+    return anomalyPool[0] ?? signalRecords[0] ?? null;
+  }, [selectedSourceId, signalRecordMap, anomalyPool, signalRecords]);
 
   const activeSourceId = getSourceId(activeRecord);
 
@@ -965,7 +1000,7 @@ export default function CandidateInvestigationCockpit({
       return;
     }
 
-    const matchedRecord = recordMap.get(candidateId);
+    const matchedRecord = signalRecordMap.get(candidateId);
 
     if (matchedRecord) {
       handleSelect(matchedRecord);
@@ -1019,7 +1054,7 @@ export default function CandidateInvestigationCockpit({
     <section className="investigation-cockpit-shell">
       <div className="panel cockpit-constellation-panel">
         <CandidateSignalMap3D
-          records={anomalyPool}
+          records={signalRecords}
           possiblePairs={pairCandidates}
           onCandidateSelect={handleSignalMapSelect}
           selectedSourceId={activeSourceId}
