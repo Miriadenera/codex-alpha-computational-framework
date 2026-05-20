@@ -4579,6 +4579,46 @@ h1 {
   line-height: 1.5;
 }
 
+/* ── Kinematic evolution controls (page 4 motion simulation) ─────────────── */
+.csm3d-controls-row3,
+.csm3d-controls-row4 {
+  border-bottom: 1px solid rgba(0, 255, 140, 0.05);
+  padding-top: 6px;
+  padding-bottom: 6px;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.csm3d-evo-bar {
+  background: linear-gradient(
+    180deg,
+    rgba(1, 14, 22, 0.85) 0%,
+    rgba(1, 9, 18, 0.7) 100%
+  );
+}
+.csm3d-evo-bar .csm3d-pill {
+  border-color: rgba(0, 255, 140, 0.22);
+  color: #79f5b9;
+}
+.csm3d-evo-bar .csm3d-pill.on {
+  background: rgba(0, 255, 140, 0.16);
+  border-color: #00ff8c;
+  color: #00ff8c;
+  box-shadow: 0 0 10px rgba(0, 255, 140, 0.25);
+}
+.csm3d-time-display {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  color: #00ff8c;
+  background: rgba(0, 255, 140, 0.08);
+  border: 1px solid rgba(0, 255, 140, 0.28);
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.08em;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
 /* Safety with existing cockpit panels */
 .cockpit-constellation-panel .csm3d-shell {
   margin-top: 0;

@@ -1,6 +1,6 @@
 # Codex Alpha Computational Framework
 
-**Closed Beta Research Demonstrator for Gaia DR3 Candidate Prioritization, Astrometric Dynamics, Stellar Reconstruction and Exploratory Space-Data Intelligence**
+**Closed Beta Research Demonstrator for Gaia DR3 Candidate Prioritization, Astrometric Dynamics, Proper-Motion Evolution, Stellar Reconstruction and Exploratory Space-Data Intelligence**
 
 The **Codex Alpha Computational Framework** is an open-source research framework designed to support the exploratory analysis, prioritization and validation of candidate sources in large astronomical datasets, starting from **ESA Gaia DR3**.
 
@@ -10,6 +10,7 @@ The current closed-beta demonstrator combines:
 - anomaly ranking
 - graph-based structural analysis
 - astrometric dynamics
+- projected proper-motion evolution
 - possible binary / comoving-pair prioritization
 - candidate investigation workflows
 - synthetic stellar reconstruction
@@ -29,7 +30,9 @@ Closed Beta Research Demonstrator
 
 The framework is currently transitioning from an advanced alpha prototype to a closed beta demonstrator.
 
-The core workflow is already operational on a Gaia DR3 demo dataset. Current development is focused on documentation, hardening, reproducibility, larger dataset ingestion, AI-assisted scoring, improved candidate validation, CDS-oriented validation interoperability and future cloud scalability.
+The core workflow is already operational on a Gaia DR3 demo dataset of approximately 1000 sources. Current development is focused on documentation, hardening, reproducibility, larger dataset ingestion, AI-assisted scoring, improved candidate validation, CDS-oriented validation interoperability and future cloud scalability.
+
+The current demo dataset is intentionally limited and is used to demonstrate the framework workflow, not to claim complete catalogue coverage.
 
 ## Scientific Purpose
 
@@ -42,6 +45,7 @@ Gaia DR3 data
 → anomaly ranking
 → graph structure
 → astrometric dynamics
+→ projected proper-motion evolution
 → candidate investigation
 → stellar reconstruction
 → candidate dossier
@@ -54,6 +58,8 @@ The framework helps prioritize candidates by combining:
 - structural graph importance
 - astrometric quantities
 - kinematic proxies
+- projected proper-motion visualization
+- radial-velocity usage when available
 - hidden companion suspicion indicators
 - possible binary / comoving-pair involvement
 - crossmatch availability
@@ -128,11 +134,24 @@ All outputs are candidate-level indicators and require external astrophysical va
 
 ## 4. Candidate Investigation Cockpit
 
-The fourth interface is the investigation layer for the top-priority candidate pool.
+The fourth interface is the investigation layer for the top-priority candidate pool and for the local Gaia DR3 demo-source motion field.
 
 It includes:
 
 - Candidate Signal Map 3D
+- projected proper-motion evolution of up to approximately 1000 Gaia DR3 demo sources
+- local tangent-plane source projection
+- individual source motion based on proper motion
+- radial-velocity contribution when available
+- projected motion traces
+- adjustable time speed
+- adjustable motion scale
+- adjustable trace intensity and trace width
+- selected-source trajectory highlighting
+- top-anomaly trajectory highlighting
+- candidate cloud mode
+- kinematic field mode
+- signal-space mode
 - active candidate profile
 - hexagonal proxy chart
 - anomaly score
@@ -149,6 +168,10 @@ It includes:
 - evidence vector
 - validation queries
 - Gaia Archive / SIMBAD / VizieR / ESA Sky links
+
+The projected motion visualization is not an orbital simulation and is not an N-body gravitational simulation.
+
+It is a candidate-level kinematic visualization based on Gaia-derived observables and internal framework proxies. It is designed to show how selected sources and candidate groups evolve visually under proper-motion projection, not to confirm physical orbits, binarity, encounters or future dynamical states.
 
 This interface is designed to help a researcher move from candidate selection to validation planning.
 
@@ -177,6 +200,62 @@ The synthetic 3D stellar twin is not a direct observational image of the selecte
 
 The rendered surface, corona, flare layers, background field and visual morphology do not confirm stellar type, activity, companions, binarity, planets or exotic physical mechanisms.
 
+## Projected Proper-Motion Evolution
+
+The fourth interface includes a candidate-level projected motion layer for the Gaia DR3 demo dataset.
+
+This layer visualizes the approximate evolution of source positions by using:
+
+- initial source position
+- right ascension
+- declination
+- parallax or distance proxy where available
+- `pmra`
+- `pmdec`
+- `radial_velocity` when available
+- local tangent-plane projection
+- visual motion scaling
+- temperature or BP-RP based color proxy
+- visual size scaling
+
+The purpose of this module is to make Gaia-derived motion information understandable inside an interactive 3D environment.
+
+The motion traces are:
+
+```text
+projected motion traces
+```
+
+not:
+
+```text
+confirmed orbital paths
+```
+
+The visualization does not include:
+
+- N-body gravitational integration
+- stellar mutual attraction
+- acceleration modelling
+- galactic potential modelling
+- confirmed future close encounters
+- confirmed binary dynamics
+- confirmed orbital evolution
+
+The module should be interpreted as:
+
+```text
+candidate-level kinematic projection based on available Gaia observables
+```
+
+not as:
+
+```text
+a complete dynamical simulation of the local stellar environment
+```
+
+The visual motion scale is intentionally adjustable because real Gaia proper motions are often too small to be visually meaningful at short timescales inside a compact dashboard visualization.
+
 ## Candidate Dossier Generation
 
 For a selected source, the framework can support structured dossier generation including:
@@ -197,6 +276,7 @@ For a selected source, the framework can support structured dossier generation i
 - dynamics index
 - hidden companion suspicion index
 - possible binary / comoving-pair involvement
+- projected proper-motion context
 - synthetic stellar reconstruction parameters
 - proxy-based temperature estimate
 - proxy-based radius estimate
@@ -227,7 +307,11 @@ The framework does **not** confirm:
 - planets
 - binary systems
 - hidden companions
+- black holes
 - exotic objects
+- close encounters
+- orbital dynamics
+- future stellar configurations
 - new physical mechanisms
 - direct physical measurements of `∇𝒦`
 - direct images of stellar surfaces
@@ -247,6 +331,7 @@ proxy
 not confirmed
 requires external validation
 synthetic visualization
+projected motion trace
 candidate-level dossier
 ```
 
@@ -263,6 +348,8 @@ not:
 ```text
 This source is confirmed to be astrophysically unusual.
 ```
+
+The projected proper-motion evolution layer is intended for research communication, triage and visualization. It is not a substitute for orbital modelling, N-body simulation, catalogue validation, spectroscopic analysis, photometric modelling, expert review or independent astrophysical confirmation.
 
 The synthetic stellar reconstruction layer is intended for research communication, triage and documentation. It is not a substitute for catalogue validation, spectroscopic analysis, photometric modelling, expert review or independent astrophysical confirmation.
 
@@ -286,8 +373,9 @@ Typical validation steps include:
 3. Check Gaia NSS, RUWE, astrometric excess noise and radial velocity where available.
 4. Compare parallax and proper motion with nearby sources before any comoving-pair interpretation.
 5. Treat all internal scores as prioritization proxies, not final classifications.
-6. Use the exported dossier as a structured research note, not as a discovery claim.
-7. Validate any suspected binary, companion or unusual object interpretation through independent astrophysical methods.
+6. Treat projected motion traces as visualization aids, not confirmed orbital paths.
+7. Use the exported dossier as a structured research note, not as a discovery claim.
+8. Validate any suspected binary, companion or unusual object interpretation through independent astrophysical methods.
 
 ## CDS Validation Ecosystem Direction
 
@@ -314,6 +402,8 @@ dashboard/public/data/
 The current architecture is local-first and can run without external APIs for the core dashboard.
 
 External links are provided for validation and catalogue inspection.
+
+The current projected proper-motion evolution module is intentionally demonstrated on the same approximately 1000-source Gaia DR3 package used by the local demo. It is not intended to increase the dataset size during the current closed-beta demonstration.
 
 ## Installation
 
@@ -463,6 +553,10 @@ The framework currently combines:
 - Three.js / WebGL visualizations
 - interactive candidate inspection
 - astrometric dynamics analysis
+- projected proper-motion evolution
+- local tangent-plane source projection
+- proper-motion trace visualization
+- radial-velocity visual projection when available
 - possible binary / comoving-pair prioritization
 - optional crossmatch integration
 - validation-oriented external links
@@ -503,6 +597,7 @@ Focus:
 - add minimal automated testing
 - strengthen Gaia DR3 candidate validation workflow
 - improve binary / comoving-pair probability scoring
+- harden the fourth projected proper-motion evolution interface
 - harden the fifth stellar reconstruction and dossier interface
 - document CDS-oriented validation handoff workflows
 - prepare a technical whitepaper or preprint
@@ -591,6 +686,7 @@ Potential applications include:
 - space-data analytics
 - Gaia candidate prioritization
 - astrometric anomaly investigation
+- projected proper-motion visualization
 - binary / comoving-pair candidate screening
 - research workflow automation
 - AI-assisted catalogue exploration
@@ -650,7 +746,7 @@ This repository represents an active research and development project.
 
 The current framework is a closed-beta demonstrator and should be interpreted as an exploratory scientific tool.
 
-Outputs such as anomaly rankings, structural graph scores, hidden-companion indicators, possible pair involvement, synthetic stellar reconstruction and coherence-inspired proxies are not final astrophysical classifications.
+Outputs such as anomaly rankings, structural graph scores, hidden-companion indicators, possible pair involvement, projected proper-motion traces, synthetic stellar reconstruction and coherence-inspired proxies are not final astrophysical classifications.
 
 All candidate interpretations require independent validation through external catalogues, Gaia Archive, SIMBAD, VizieR, Gaia NSS where applicable, and expert scientific review.
 

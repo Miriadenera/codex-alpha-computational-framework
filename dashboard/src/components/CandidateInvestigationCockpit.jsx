@@ -1055,6 +1055,7 @@ export default function CandidateInvestigationCockpit({
       <div className="panel cockpit-constellation-panel">
         <CandidateSignalMap3D
           records={signalRecords}
+          allRecords={allSources}
           possiblePairs={pairCandidates}
           onCandidateSelect={handleSignalMapSelect}
           selectedSourceId={activeSourceId}
