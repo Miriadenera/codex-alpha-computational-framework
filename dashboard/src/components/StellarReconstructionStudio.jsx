@@ -150,6 +150,7 @@ function TopAnomalyQueue({
   possibleBinaryPairs = [],
   onSourceSelect = () => {},
 }) {
+  const [expanded, setExpanded] = useState(false);
   const selectedId = getSourceId(selectedSource);
 
   const topAnomalies = useMemo(() => {
@@ -205,16 +206,33 @@ function TopAnomalyQueue({
   }
 
   return (
-    <div className="stellar-top50-box">
-      <div className="panel-header">
-        <div>
-          <div className="eyebrow">Top-50 Anomaly Queue</div>
-          <h3>Ranked candidates</h3>
-        </div>
+    <div className="stellar-top50-box stellar-top50-collapsible">
+      <button
+        type="button"
+        className="stellar-top50-toggle"
+        aria-expanded={expanded}
+        onClick={() => setExpanded((v) => !v)}
+      >
+        <span className="stellar-top50-toggle-left">
+          <span className="eyebrow">Top-50 Anomaly Queue</span>
+          <strong>Ranked candidates</strong>
+        </span>
+        <span className="stellar-top50-toggle-right">
+          <small>{topAnomalies.length} sources</small>
+          <span className="stellar-top50-chevron" aria-hidden="true">
+            {expanded ? "▾" : "▸"}
+          </span>
+        </span>
+      </button>
 
-        <span>{topAnomalies.length} sources</span>
-      </div>
+      {!expanded && (
+        <p className="stellar-top50-hint">
+          Click to expand the ranked candidates list. Selecting a row will
+          update the synthetic stellar reconstruction.
+        </p>
+      )}
 
+      {expanded && (
       <div
         className="stellar-top50-list"
         style={{
@@ -296,19 +314,20 @@ function TopAnomalyQueue({
             </button>
           );
         })}
-      </div>
 
-      <p
-        style={{
-          margin: "10px 0 0",
-          color: "var(--muted)",
-          fontSize: "0.74rem",
-          lineHeight: 1.45,
-        }}
-      >
-        Ranked by internal anomaly score. Click a row to update the selected
-        stellar reconstruction.
-      </p>
+        <p
+          style={{
+            margin: "10px 0 0",
+            color: "var(--muted)",
+            fontSize: "0.74rem",
+            lineHeight: 1.45,
+          }}
+        >
+          Ranked by internal anomaly score. Click a row to update the selected
+          stellar reconstruction.
+        </p>
+      </div>
+      )}
     </div>
   );
 }
@@ -444,6 +463,9 @@ export default function StellarReconstructionStudio({
           <div className="stellar-studio-source-chip">
             <span>Selected SOURCE_ID</span>
             <strong>{sourceId || "N/A"}</strong>
+            <span className="stellar-candidate-level-badge" title="All outputs are candidate-level. External validation is required.">
+              candidate-level
+            </span>
           </div>
         </div>
 
@@ -464,78 +486,91 @@ export default function StellarReconstructionStudio({
             <span>{safeText(starModel.spectralProxyShortLabel)}</span>
           </div>
 
-          <div className="stellar-summary-grid">
-            <SummaryMetric
-              label="RA"
-              value={formatValue(fullRecord.ra, 10, "deg")}
-            />
+          <div className="stellar-summary-section">
+            <div className="stellar-summary-subheader">
+              <span>Gaia Observables</span>
+              <small>Direct Gaia DR3 quantities</small>
+            </div>
+            <div className="stellar-summary-grid">
+              <SummaryMetric
+                label="RA"
+                value={formatValue(fullRecord.ra, 10, "deg")}
+              />
+              <SummaryMetric
+                label="DEC"
+                value={formatValue(fullRecord.dec, 10, "deg")}
+              />
+              <SummaryMetric
+                label="Distance"
+                value={formatValue(fullRecord.distance_pc, 4, "pc")}
+                note="Parallax-derived if available"
+              />
+              <SummaryMetric
+                label="BP-RP"
+                value={formatValue(fullRecord.gaia_color_index, 4)}
+                note="Gaia color proxy"
+              />
+            </div>
+          </div>
 
-            <SummaryMetric
-              label="DEC"
-              value={formatValue(fullRecord.dec, 10, "deg")}
-            />
+          <div className="stellar-summary-section">
+            <div className="stellar-summary-subheader">
+              <span>Framework Proxies</span>
+              <small>Derived from Gaia observables — candidate-level only</small>
+            </div>
+            <div className="stellar-summary-grid">
+              <SummaryMetric
+                label="Temperature"
+                value={formatValue(starModel.effectiveTemperatureK, 0, "K")}
+                note="visual proxy"
+              />
+              <SummaryMetric
+                label="Radius"
+                value={formatValue(starModel.radiusRelative, 4, "R☉")}
+                note="derived proxy"
+              />
+              <SummaryMetric
+                label="Anomaly"
+                value={formatValue(fullRecord.anomaly_score, 4)}
+                note="internal proxy"
+              />
+              <SummaryMetric
+                label="Dynamics"
+                value={formatValue(fullRecord.dynamics_index, 4)}
+                note="candidate-level"
+              />
+              <SummaryMetric
+                label="Structural importance"
+                value={formatValue(fullRecord.structural_importance_score, 4)}
+              />
+            </div>
+          </div>
 
-            <SummaryMetric
-              label="Distance"
-              value={formatValue(fullRecord.distance_pc, 4, "pc")}
-              note="Parallax-derived if available"
-            />
-
-            <SummaryMetric
-              label="BP-RP"
-              value={formatValue(fullRecord.gaia_color_index, 4)}
-              note="Gaia color proxy"
-            />
-
-            <SummaryMetric
-              label="Temperature"
-              value={formatValue(starModel.effectiveTemperatureK, 0, "K")}
-              note="visual proxy"
-            />
-
-            <SummaryMetric
-              label="Radius"
-              value={formatValue(starModel.radiusRelative, 4, "R☉")}
-              note="derived proxy"
-            />
-
-            <SummaryMetric
-              label="Anomaly"
-              value={formatValue(fullRecord.anomaly_score, 4)}
-              note="internal proxy"
-            />
-
-            <SummaryMetric
-              label="Dynamics"
-              value={formatValue(fullRecord.dynamics_index, 4)}
-              note="candidate-level"
-            />
-
-            <SummaryMetric
-              label="Hidden companion"
-              value={formatValue(fullRecord.hidden_companion_index, 4)}
-              note={safeText(fullRecord.hidden_companion_classification)}
-            />
-
-            <SummaryMetric
-              label="Structural importance"
-              value={formatValue(fullRecord.structural_importance_score, 4)}
-            />
-
-            <SummaryMetric
-              label="Possible pairs"
-              value={
-                Array.isArray(fullRecord.possible_pairs)
-                  ? fullRecord.possible_pairs.length
-                  : 0
-              }
-              note="not confirmed"
-            />
-
-            <SummaryMetric
-              label="Crossmatch"
-              value={fullRecord.crossmatch ? "Attached" : "N/A"}
-            />
+          <div className="stellar-summary-section">
+            <div className="stellar-summary-subheader">
+              <span>Candidate-Level Context</span>
+              <small>Indicators that require external validation</small>
+            </div>
+            <div className="stellar-summary-grid">
+              <SummaryMetric
+                label="Hidden companion"
+                value={formatValue(fullRecord.hidden_companion_index, 4)}
+                note={safeText(fullRecord.hidden_companion_classification)}
+              />
+              <SummaryMetric
+                label="Possible pairs"
+                value={
+                  Array.isArray(fullRecord.possible_pairs)
+                    ? fullRecord.possible_pairs.length
+                    : 0
+                }
+                note="not confirmed"
+              />
+              <SummaryMetric
+                label="Crossmatch"
+                value={fullRecord.crossmatch ? "Attached" : "N/A"}
+              />
+            </div>
           </div>
 
           <div className="stellar-studio-tabs">

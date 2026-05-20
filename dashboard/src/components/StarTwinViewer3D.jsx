@@ -350,19 +350,20 @@ function createDeepSpaceField(sourceId) {
   const farColors = [];
   const farSizes = [];
 
-  const farCount = 1400;
+  // Background field: smaller, dimmer and slightly more numerous than v1
+  const farCount = 2200;
 
   for (let i = 0; i < farCount; i += 1) {
     const radius = 85 + seededUnit(sourceId, 1000 + i) * 45;
     const point = randomPointOnSphere(sourceId, 2000 + i * 3, radius);
     const color = chooseBackgroundStarColor(sourceId, 3000 + i);
 
-    // molto più deboli e meno "sparati"
-    color.multiplyScalar(0.14 + seededUnit(sourceId, 4000 + i) * 0.32);
+    // Dimmer and less saturated — closer to a real deep-sky field
+    color.multiplyScalar(0.10 + seededUnit(sourceId, 4000 + i) * 0.22);
 
     farPoints.push(point);
     farColors.push(color);
-    farSizes.push(0.12 + seededUnit(sourceId, 5000 + i) * 0.38);
+    farSizes.push(0.08 + seededUnit(sourceId, 5000 + i) * 0.18);
   }
 
   group.add(createPointCloud(farPoints, farColors, farSizes));
@@ -371,21 +372,37 @@ function createDeepSpaceField(sourceId) {
   const brightColors = [];
   const brightSizes = [];
 
-  const brightCount = 95;
+  const brightCount = 55;
 
   for (let i = 0; i < brightCount; i += 1) {
     const radius = 78 + seededUnit(sourceId, 6000 + i) * 40;
     const point = randomPointOnSphere(sourceId, 7000 + i * 3, radius);
     const color = chooseBackgroundStarColor(sourceId, 8000 + i);
 
-    color.multiplyScalar(0.28 + seededUnit(sourceId, 9000 + i) * 0.40);
+    color.multiplyScalar(0.22 + seededUnit(sourceId, 9000 + i) * 0.30);
 
     brightPoints.push(point);
     brightColors.push(color);
-    brightSizes.push(0.42 + seededUnit(sourceId, 10000 + i) * 0.90);
+    brightSizes.push(0.30 + seededUnit(sourceId, 10000 + i) * 0.55);
   }
 
   group.add(createPointCloud(brightPoints, brightColors, brightSizes));
+
+  // Micro-stars layer — adds depth without adding visual noise
+  const microPoints = [];
+  const microColors = [];
+  const microSizes  = [];
+  const microCount  = 2600;
+  for (let i = 0; i < microCount; i += 1) {
+    const radius = 92 + seededUnit(sourceId, 31000 + i) * 38;
+    const point = randomPointOnSphere(sourceId, 32000 + i * 3, radius);
+    const color = chooseBackgroundStarColor(sourceId, 33000 + i);
+    color.multiplyScalar(0.06 + seededUnit(sourceId, 34000 + i) * 0.10);
+    microPoints.push(point);
+    microColors.push(color);
+    microSizes.push(0.04 + seededUnit(sourceId, 35000 + i) * 0.08);
+  }
+  group.add(createPointCloud(microPoints, microColors, microSizes));
 
   // piccoli ammassi lontani ma delicati
   for (let c = 0; c < 10; c += 1) {
@@ -892,13 +909,13 @@ export default function StarTwinViewer3D({ starModel }) {
 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.setClearColor(0x000000, 1);
+    renderer.setClearColor(0x020410, 1);
 
     rendererRef.current = renderer;
     mount.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
+    scene.background = new THREE.Color(0x020410);
     sceneRef.current = scene;
 
     const camera = new THREE.PerspectiveCamera(42, 1.6, 0.01, 300);
@@ -997,15 +1014,16 @@ export default function StarTwinViewer3D({ starModel }) {
 
       if (glowSpriteRef.current) {
         glowSpriteRef.current.scale.setScalar(
-          (3.55 + coronaLevelRef.current * 1.25) * starScaleRef.current,
+          (2.85 + coronaLevelRef.current * 0.95) * starScaleRef.current,
         );
 
         glowSpriteRef.current.visible = showFlaresRef.current || coronaLevelRef.current > 0.001;
 
         if (glowSpriteRef.current.material) {
+          // Softer halo — caps the saturation in the centre of the card
           glowSpriteRef.current.material.opacity = showFlaresRef.current
-            ? clamp(0.10 + coronaLevelRef.current * 0.24, 0.06, 0.34)
-            : clamp(coronaLevelRef.current * 0.22, 0, 0.24);
+            ? clamp(0.07 + coronaLevelRef.current * 0.16, 0.04, 0.22)
+            : clamp(coronaLevelRef.current * 0.16, 0, 0.18);
         }
       }
 
@@ -1014,8 +1032,12 @@ export default function StarTwinViewer3D({ starModel }) {
 
         limbBurstsRef.current.children.forEach((child) => {
           if (child.material) {
+            // Two incommensurable sines → less mechanical pulsation
+            const ph = child.userData.phase ?? 0;
             const pulse =
-              0.86 + Math.sin(elapsed * 2.6 + (child.userData.phase ?? 0)) * 0.28;
+              0.82
+              + Math.sin(elapsed * 2.1 + ph) * 0.18
+              + Math.sin(elapsed * 0.77 + ph * 1.3) * 0.12;
 
             child.material.opacity = showFlaresRef.current
               ? (child.userData.baseOpacity ?? 0.12) * pulse
@@ -1029,13 +1051,13 @@ export default function StarTwinViewer3D({ starModel }) {
 
         outerFlaresRef.current.children.forEach((child) => {
           if (child.material) {
+            const ph = child.userData.phase ?? 0;
+            const pu = child.userData.pulse ?? 1.0;
+            // Softer, multi-frequency pulse — avoids "ticking" look
             const pulse =
-              0.72 +
-              Math.sin(
-                elapsed * (child.userData.pulse ?? 1.0) * 1.8 +
-                  (child.userData.phase ?? 0),
-              ) *
-                0.38;
+              0.72
+              + Math.sin(elapsed * pu * 1.5 + ph) * 0.22
+              + Math.sin(elapsed * 0.43 + ph * 1.7) * 0.14;
 
             child.material.opacity = showFlaresRef.current
               ? (child.userData.baseOpacity ?? 0.1) * pulse
@@ -1407,11 +1429,10 @@ export default function StarTwinViewer3D({ starModel }) {
       </div>
 
       <div className="star-twin-note">
-        Real Aladin tiles cannot be used directly here as a free rotatable 3D sky
-        background without introducing a flat-image effect and possible CORS
-        constraints. This version instead uses a darker, more distant and less
-        luminous procedural sky field designed to feel closer to a real deep-sky
-        background while preserving 3D navigation.
+        The background field is a procedurally generated deep-sky proxy and not
+        an observational image. The synthetic stellar twin remains candidate-level
+        and requires external validation through Gaia Archive, SIMBAD, VizieR,
+        Aladin or X-Match.
       </div>
     </div>
   );

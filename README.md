@@ -30,7 +30,7 @@ Closed Beta Research Demonstrator
 
 The framework is currently transitioning from an advanced alpha prototype to a closed beta demonstrator.
 
-The core workflow is already operational on a Gaia DR3 demo dataset of approximately 1000 sources. Current development is focused on documentation, hardening, reproducibility, larger dataset ingestion, AI-assisted scoring, improved candidate validation, CDS-oriented validation interoperability and future cloud scalability.
+The core workflow is already operational on a Gaia DR3 demo dataset of approximately 1000 sources. Current development is focused on documentation, hardening, reproducibility, larger dataset ingestion, AI-assisted scoring, improved candidate validation, validation-oriented interoperability direction with the CDS ecosystem and future cloud scalability.
 
 The current demo dataset is intentionally limited and is used to demonstrate the framework workflow, not to claim complete catalogue coverage.
 

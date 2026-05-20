@@ -270,7 +270,7 @@ ${sourceId}
 5. Gaia NSS / binary-system check
 - Run the Gaia NSS ADQL query.
 - Verify whether the source is listed as a non-single-star or binary-system solution.
-- If matched, treat the anomaly as potentially explainable by binarity or orbital motion.
+- If matched, treat the anomaly as potentially related to candidate-level binarity indicators or projected proper-motion signatures. External validation remains required.
 
 6. Known-object classification check
 - Compare Gaia, SIMBAD, VizieR and NSS evidence.

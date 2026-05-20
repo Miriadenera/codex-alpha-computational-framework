@@ -1746,10 +1746,10 @@ function HiddenCompanionPanel({ activeRecord }) {
 
           <p>
             This module can prioritize sources for follow-up, but it cannot
-            identify planets or determine orbital masses from the current data
-            alone. A strong claim would require time-series astrometry,
-            radial-velocity curves, Gaia NSS solutions or independent catalogue
-            confirmation.
+            identify planets, confirm binary systems or determine dynamical
+            masses from the current data alone. Such interpretation would require
+            time-series astrometry, radial-velocity curves, Gaia NSS solutions,
+            complete orbital modelling or independent catalogue validation.
           </p>
         </div>
       </div>
@@ -2012,10 +2012,10 @@ function AstrometricDynamicsLab({
 
         <div className="coherence-warning">
           <strong>Scientific note:</strong> this module does not infer confirmed
-          planets, binary systems or orbital masses. It computes conservative
-          diagnostics from available Gaia astrometry: distance, proper motion,
-          tangential velocity, approximate space velocity and comoving-pair
-          compatibility.
+          planets, confirmed binary systems or dynamical masses. It computes
+          conservative diagnostics from available Gaia astrometry: distance,
+          proper motion, tangential velocity, approximate space velocity and
+          candidate-level comoving-pair compatibility.
         </div>
 
         {activeRecord && (

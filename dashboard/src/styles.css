@@ -5860,3 +5860,178 @@ h1 {
   font-size: 0.86rem;
   line-height: 1.5;
 }
+
+/* ─── Hardening pre-call: Stellar Reconstruction page 5 additions ─────────────
+   These rules are additive only. They do not remove or override aggressively
+   any existing rule. They support: candidate-level badge, summary subheaders,
+   and the collapsible Top-50 queue.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+.stellar-candidate-level-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 9px;
+  font-size: 0.62rem;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2dff1a;
+  background: rgba(45, 255, 26, 0.08);
+  border: 1px solid rgba(45, 255, 26, 0.45);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.stellar-summary-section {
+  margin-bottom: 14px;
+}
+
+.stellar-summary-section:last-of-type {
+  margin-bottom: 0;
+}
+
+.stellar-summary-subheader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 4px 0 6px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(0, 211, 255, 0.12);
+}
+
+.stellar-summary-subheader span {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #00d2ff;
+}
+
+.stellar-summary-subheader small {
+  font-size: 0.62rem;
+  color: rgba(140, 180, 200, 0.6);
+  font-style: italic;
+}
+
+.stellar-top50-collapsible {
+  margin-top: 14px;
+}
+
+.stellar-top50-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(0, 211, 255, 0.05);
+  border: 1px solid rgba(0, 211, 255, 0.22);
+  border-radius: 10px;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.18s, border-color 0.18s;
+}
+
+.stellar-top50-toggle:hover {
+  background: rgba(0, 211, 255, 0.10);
+  border-color: rgba(0, 211, 255, 0.45);
+}
+
+.stellar-top50-toggle-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.stellar-top50-toggle-left .eyebrow {
+  font-size: 0.62rem;
+  color: rgba(140, 180, 200, 0.7);
+}
+
+.stellar-top50-toggle-left strong {
+  font-size: 0.82rem;
+  color: #d6eeff;
+}
+
+.stellar-top50-toggle-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.stellar-top50-toggle-right small {
+  font-size: 0.7rem;
+  color: rgba(0, 211, 255, 0.75);
+  font-family: 'Courier New', monospace;
+}
+
+.stellar-top50-chevron {
+  font-size: 0.95rem;
+  color: #00d2ff;
+}
+
+.stellar-top50-hint {
+  margin: 8px 2px 0;
+  font-size: 0.7rem;
+  color: rgba(140, 180, 200, 0.55);
+  font-style: italic;
+}
+  border-radius: 10px;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.18s, border-color 0.18s;
+}
+
+.stellar-top50-toggle:hover {
+  background: rgba(0, 211, 255, 0.10);
+  border-color: rgba(0, 211, 255, 0.45);
+}
+
+.stellar-top50-toggle-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.stellar-top50-toggle-left .eyebrow {
+  font-size: 0.62rem;
+  color: rgba(140, 180, 200, 0.7);
+}
+
+.stellar-top50-toggle-left strong {
+  font-size: 0.82rem;
+  color: #d6eeff;
+}
+
+.stellar-top50-toggle-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.stellar-top50-toggle-right small {
+  font-size: 0.7rem;
+  color: rgba(0, 211, 255, 0.75);
+  font-family: 'Courier New', monospace;
+}
+
+.stellar-top50-chevron {
+  font-size: 0.95rem;
+  color: #00d2ff;
+}
+
+.stellar-top50-hint {
+  margin: 8px 2px 0;
+  font-size: 0.7rem;
+  color: rgba(140, 180, 200, 0.55);
+  font-style: italic;
+}

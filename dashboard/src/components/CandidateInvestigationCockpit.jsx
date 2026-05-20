@@ -1024,22 +1024,9 @@ export default function CandidateInvestigationCockpit({
             interface.
           </p>
 
-          <div className="candidate-action-row">
-            <button
-              type="button"
-              className="dashboard-nav-button"
-              onClick={() => setCurrentPage("dashboard")}
-            >
-              Back to Framework Home
-            </button>
-
-            <button
-              type="button"
-              className="dashboard-nav-button"
-              onClick={() => setCurrentPage("dynamics")}
-            >
-              Back to Astrometric Dynamics Lab
-            </button>
+          <div className="navigation-notice">
+            To move through the framework, use only the Previous and Next
+            controls at the top of the page.
           </div>
         </div>
       </section>
@@ -1434,7 +1421,7 @@ export default function CandidateInvestigationCockpit({
           mechanisms. The ∇𝒦 notation is used only as Codex Alpha informational
           context and not as a direct physical measurement.
         </p>
-      </div>
+        </div>
     </section>
   );
 }
