@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the associated whitepaper."
+title: "Codex Alpha Computational Framework"
+abstract: "Closed-Beta Research Demonstrator for Gaia DR3 candidate prioritization, astrometric dynamics, projected proper-motion evolution, stellar reconstruction and validation-oriented space-data intelligence."
+authors:
+  - family-names: Cadelano
+    given-names: Davide
+    orcid: "https://orcid.org/0009-0008-2253-7008"
+version: "v0.1.0-closed-beta"
+date-released: 2026-05
+license: MIT
+repository-code: "https://github.com/Miriadenera/codex-alpha-computational-framework"
+url: "https://www.codexalpha.org/computational-framework"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.20335018
+    description: "Zenodo deposit of the technical whitepaper"
