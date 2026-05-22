@@ -22,6 +22,14 @@ The framework is not designed to claim direct astrophysical discoveries by itsel
 
 Its purpose is to help researchers identify **which sources deserve further investigation**.
 
+## Technical Whitepaper
+
+The technical whitepaper for the closed-beta release of the Codex Alpha Computational Framework is available on Zenodo:
+
+**Codex Alpha Computational Framework: Technical Whitepaper**  
+Version: v0.1.0 Closed Beta  
+Zenodo DOI: https://doi.org/10.5281/zenodo.20335018
+
 ## Current Status
 
 ```text
