@@ -4,40 +4,74 @@
 
 Operational architecture document for the Codex Alpha Computational Framework.
 
-This document describes the current software structure, computational workflow and long-term architectural direction of the framework.
+This document describes the current software structure, computational workflow, dashboard architecture and long-term architectural direction of the framework.
 
 ---
 
-# Architectural Philosophy
+## Architectural Philosophy
 
-The framework is designed as an exploratory computational infrastructure for the analysis of large-scale astrophysical and cosmological datasets.
+The Codex Alpha Computational Framework is designed as a candidate-level, validation-oriented computational infrastructure for the exploratory analysis of astronomical datasets, starting from Gaia DR3.
 
-The core objective is NOT to impose predefined cosmological models or target structures.
+The core objective is not to impose predefined astrophysical classifications or claim direct discoveries.
 
 Instead, the framework is designed to:
 
-- analyze multidimensional observational data,
-- identify statistically anomalous sources,
-- detect emergent correlations,
-- cluster non-trivial structures,
-- assist exploratory scientific analysis through AI-assisted computational pipelines.
+- analyze multidimensional astronomical data;
+- identify statistically unusual candidate sources;
+- rank candidate-level anomalies;
+- evaluate structural graph importance;
+- compute astrometric and kinematic proxy indicators;
+- visualize projected proper-motion evolution;
+- support synthetic stellar reconstruction;
+- generate exportable candidate dossiers;
+- prepare candidates for external astronomical validation.
 
 The architecture emphasizes:
 
-- modularity,
-- scalability,
-- interpretability,
-- reproducibility,
-- extensibility.
+- modularity;
+- reproducibility;
+- interpretability;
+- local-first operation;
+- candidate-level outputs;
+- scientific caution;
+- external validation readiness;
+- future scalability.
 
 ---
 
-# Current Operational Architecture
-
-The current prototype architecture is composed of multiple modular layers.
+## Current Operational Status
 
 ```text
-ESA Gaia DR3 Dataset
+Closed Beta Research Demonstrator
+```
+
+The framework is currently in closed beta.
+
+It provides a working end-to-end local-first workflow based on:
+
+- Python data-processing pipeline;
+- Gaia DR3 demo dataset ingestion;
+- anomaly detection and ranking;
+- feature contribution analysis;
+- graph construction and centrality analysis;
+- dashboard-ready data export;
+- React/Vite local dashboard;
+- Three.js/WebGL scientific visualization;
+- candidate investigation cockpit;
+- projected proper-motion evolution;
+- synthetic stellar reconstruction;
+- full candidate dossier generation.
+
+The current demonstrator operates on an approximately 1000-source Gaia DR3 demo package.
+
+The dataset size is intentionally limited for closed-beta demonstration, reproducibility and dashboard performance.
+
+---
+
+## High-Level Architecture
+
+```text
+Gaia DR3 demo dataset
         │
         ▼
 Dataset Loader Layer
@@ -46,60 +80,78 @@ Dataset Loader Layer
 Feature Extraction Layer
         │
         ▼
-AI Anomaly Detection Layer
+Anomaly Detection Layer
         │
         ▼
 Feature Contribution Analysis
         │
         ▼
-Anomaly Clustering Layer
+Graph Construction Layer
         │
         ▼
-Visualization Layer
+Graph Centrality Analysis
         │
         ▼
-Structured Results Generation
+Candidate-Level Export Layer
+        │
+        ▼
+dashboard/public/data/
+        │
+        ▼
+React/Vite Dashboard
+        │
+        ├── Operational Dashboard
+        ├── Advanced Analysis Layer
+        ├── Astrometric Dynamics Lab
+        ├── Candidate Investigation Cockpit
+        └── Stellar Reconstruction & Full Dossier Studio
 ```
 
 ---
 
-# Current Repository Architecture
+## Current Repository Architecture
 
 ```text
-ai/
-analysis/
-datasets/
-docs/
-examples/
-pipeline/
-prototypes/
-results/
-simulations/
-visualization/
+ai/              -> AI-assisted exploratory analysis modules
+analysis/        -> Statistical, clustering, centrality and structure analysis modules
+crossmatch/      -> Candidate crossmatch utilities
+dashboard/       -> Local interactive React/Vite dashboard
+datasets/        -> Gaia DR3 datasets and loaders
+docs/            -> Technical documentation and architecture notes
+examples/        -> End-to-end execution examples
+export/          -> Dashboard export and data-package utilities
+pipeline/        -> Automated analysis pipelines
+prototypes/      -> Experimental prototype modules
+reports/         -> Automatic report generation modules
+results/         -> Generated outputs, reports and visualizations
+simulations/     -> Future computational simulation modules
+structures/      -> Relational graph construction modules
+visualization/   -> Exploratory 2D and 3D visualization modules
 ```
 
 ---
 
-# Module Descriptions
+## Module Descriptions
 
 ## datasets/
 
-Handles astrophysical dataset integration and preprocessing.
+Handles astronomical dataset integration and preprocessing.
 
 Current capabilities:
 
-- ESA Gaia DR3 VOTable loading,
-- multidimensional feature parsing,
-- dataset summarization,
-- structured dataframe generation.
+- Gaia DR3 VOTable loading;
+- multidimensional feature parsing;
+- dataset summarization;
+- structured dataframe generation;
+- local Gaia DR3 demo package support.
 
 Future extensions may include:
 
-- Euclid datasets,
-- DESI datasets,
-- SDSS integration,
-- LSST support,
-- multi-survey federation systems.
+- larger Gaia-derived source packages;
+- Gaia DR4-compatible ingestion when applicable;
+- multi-catalogue validation packages;
+- survey-specific preprocessing modules;
+- crossmatch-ready source tables.
 
 ---
 
@@ -109,17 +161,19 @@ Contains AI-assisted analysis modules.
 
 Current operational modules:
 
-- unsupervised anomaly detection.
+- unsupervised anomaly detection through Isolation Forest.
 
-Planned modules:
+Future modules may include:
 
-- graph neural networks,
-- autonomous exploratory systems,
-- adaptive anomaly ranking,
-- deep learning cosmological analysis,
-- AI-assisted emergent pattern discovery.
+- explainable candidate scoring;
+- uncertainty-aware candidate triage;
+- AI-assisted validation planning;
+- graph-assisted candidate ranking;
+- human-in-the-loop candidate interpretation.
 
-The AI layer is intentionally designed to avoid enforcing predefined cosmological assumptions during exploratory analysis.
+The AI layer is designed to support candidate prioritization, not autonomous astrophysical discovery.
+
+All AI-assisted outputs must remain interpretable and externally validated.
 
 ---
 
@@ -127,19 +181,91 @@ The AI layer is intentionally designed to avoid enforcing predefined cosmologica
 
 Contains statistical and multidimensional analysis modules.
 
-Current implemented systems:
+Current implemented systems include:
 
-- feature contribution analysis,
-- anomaly clustering,
-- multidimensional statistical interpretation.
+- feature contribution analysis;
+- anomaly clustering;
+- graph centrality analysis;
+- multidimensional statistical interpretation;
+- candidate-level ranking support.
 
 Future development may include:
 
-- topological analysis,
-- manifold learning,
-- graph-based structure detection,
-- persistent homology analysis,
-- emergent correlation metrics.
+- uncertainty-aware scoring;
+- topological feature-space analysis;
+- graph-based candidate scoring;
+- explainable anomaly-family analysis.
+
+---
+
+## structures/
+
+Contains relational graph construction logic.
+
+Current role:
+
+- build graph node structures;
+- define graph edges from candidate-level relationships;
+- support graph-based structural interpretation;
+- prepare data for dashboard graph visualization.
+
+Graph relationships are prioritization aids.
+
+They do not confirm physical association, binarity, companionship, common origin or gravitational interaction.
+
+---
+
+## crossmatch/
+
+Contains utilities and data structures for candidate crossmatch support.
+
+Current role:
+
+- organize candidate-level crossmatch status;
+- support validation-oriented workflows;
+- prepare links or references toward external astronomical services.
+
+The framework does not claim official integration, endorsement or partnership with external catalogue infrastructures.
+
+---
+
+## export/
+
+Contains utilities for exporting pipeline outputs into dashboard-ready local data packages.
+
+Current export target:
+
+```text
+dashboard/public/data/
+```
+
+The export layer separates scientific computation from dashboard visualization.
+
+---
+
+## dashboard/
+
+Contains the local interactive React/Vite dashboard.
+
+Current dashboard stack:
+
+```text
+React
+Vite
+Three.js
+WebGL
+ForceGraph3D
+```
+
+The dashboard provides five connected analysis interfaces:
+
+1. Operational Dashboard
+2. Advanced Analysis Layer
+3. Astrometric Dynamics Lab
+4. Candidate Investigation Cockpit
+5. Stellar Reconstruction & Full Dossier Studio
+
+The dashboard is local-first and API-free by default for the core workflow.
 
 ---
 
@@ -147,18 +273,21 @@ Future development may include:
 
 Contains exploratory visualization systems.
 
-Current capabilities:
+Current and related capabilities include:
 
-- RA/DEC anomaly projection,
-- anomaly highlighting,
-- statistical visualization generation.
+- RA/DEC anomaly projection;
+- anomaly highlighting;
+- graph visualization support;
+- 3D relational visualization;
+- projected proper-motion visualization support;
+- candidate-level visual analysis.
 
-Future directions:
+Future directions may include:
 
-- interactive cosmological maps,
-- 3D visualization systems,
-- graph-based visualization,
-- real-time exploratory interfaces.
+- larger-scale 3D source fields;
+- improved uncertainty visualization;
+- multi-catalogue visual overlays;
+- cloud-ready visualization workflows.
 
 ---
 
@@ -166,7 +295,7 @@ Future directions:
 
 Contains automated end-to-end execution pipelines.
 
-Current pipeline:
+Current pipeline entry point:
 
 ```text
 run_full_pipeline.py
@@ -174,15 +303,33 @@ run_full_pipeline.py
 
 Current automated workflow:
 
-1. dataset loading
-2. feature extraction
-3. anomaly detection
-4. feature contribution analysis
-5. anomaly clustering
-6. visualization generation
-7. structured result export
+1. dataset loading;
+2. feature extraction;
+3. anomaly detection;
+4. feature contribution analysis;
+5. anomaly clustering;
+6. graph construction;
+7. graph centrality analysis;
+8. visualization generation;
+9. structured result export;
+10. dashboard data-package generation.
 
-The pipeline layer represents the first autonomous execution architecture of the framework.
+The pipeline represents the reproducible computation layer of the framework.
+
+It is not an autonomous discovery engine.
+
+---
+
+## reports/
+
+Contains automatic report generation modules.
+
+Current role:
+
+- generate pipeline summaries;
+- produce Markdown reports;
+- document anomaly and candidate-level outputs;
+- support reproducibility and review.
 
 ---
 
@@ -190,13 +337,16 @@ The pipeline layer represents the first autonomous execution architecture of the
 
 Contains generated outputs and analysis artifacts.
 
-Current outputs include:
+Current outputs may include:
 
-- anomaly rankings,
-- feature contribution reports,
-- anomaly clustering outputs,
-- exploratory plots,
-- statistical interpretation reports.
+- anomaly rankings;
+- feature contribution reports;
+- anomaly clustering outputs;
+- graph node and edge files;
+- graph centrality files;
+- exploratory plots;
+- Markdown pipeline reports;
+- dashboard-ready exported data.
 
 ---
 
@@ -206,9 +356,10 @@ Contains executable examples and reproducible workflows.
 
 Purpose:
 
-- demonstrate framework capabilities,
-- provide reproducible execution paths,
-- validate operational modules.
+- demonstrate framework capabilities;
+- provide reproducible execution paths;
+- validate operational modules;
+- help users run the local pipeline and dashboard.
 
 ---
 
@@ -216,21 +367,26 @@ Purpose:
 
 Reserved for future computational simulation systems.
 
-Potential future areas:
+No production-ready simulation component is currently implemented here.
 
-- cosmological evolution simulations,
-- graph-based universe models,
-- emergent structure simulations,
-- distributed HPC simulations.
+Potential future areas may include:
+
+- controlled candidate-level simulation tests;
+- synthetic benchmark datasets;
+- uncertainty propagation experiments;
+- visual simulation modules;
+- non-production exploratory modelling.
+
+This directory should not be interpreted as an active astrophysical simulation engine.
 
 ---
 
-# Current Computational Workflow
+## Current Computational Workflow
 
-The current prototype executes the following operational sequence:
+The current closed-beta pipeline executes the following operational sequence:
 
 ```text
-Real ESA Gaia DR3 data
+Local Gaia DR3 demo sample
         │
         ▼
 VOTable parsing
@@ -242,46 +398,193 @@ Multidimensional feature extraction
 Isolation Forest anomaly detection
         │
         ▼
-Anomaly ranking generation
+Anomaly score generation
+        │
+        ▼
+Anomaly ranking
         │
         ▼
 Feature contribution analysis
         │
         ▼
-Anomaly family clustering
+Candidate clustering
         │
         ▼
-RA/DEC visualization
+Graph construction
         │
         ▼
-CSV and graphical output generation
+Graph centrality analysis
+        │
+        ▼
+Structured output generation
+        │
+        ▼
+Dashboard data export
+        │
+        ▼
+Interactive local visualization
 ```
 
 ---
 
-# Current AI Workflow
+## Current Dashboard Workflow
+
+The dashboard uses the exported local data package and provides a five-stage interface:
+
+```text
+Operational Dashboard
+        │
+        ▼
+Advanced Analysis Layer
+        │
+        ▼
+Astrometric Dynamics Lab
+        │
+        ▼
+Candidate Investigation Cockpit
+        │
+        ▼
+Stellar Reconstruction & Full Dossier Studio
+```
+
+The selected source is synchronized across the framework where applicable.
+
+This allows the user to move from dataset-level overview to candidate-level investigation and dossier generation.
+
+---
+
+## Current AI Workflow
 
 The current AI workflow is based on unsupervised anomaly detection.
 
 The system:
 
-- analyzes multidimensional feature distributions,
-- identifies statistically unusual sources,
-- computes anomaly scores,
-- ranks detected anomalies,
-- generates exploratory statistical layers.
+- analyzes multidimensional feature distributions;
+- identifies statistically unusual candidate sources;
+- computes anomaly scores;
+- ranks candidate-level anomalies;
+- supports feature contribution analysis;
+- supports exploratory candidate prioritization.
 
 The framework currently avoids:
 
-- supervised labeling assumptions,
-- predefined anomaly classes,
-- model-constrained cosmological interpretations.
+- supervised labeling assumptions;
+- predefined astrophysical classes;
+- direct discovery claims;
+- autonomous physical interpretation;
+- confirmed object classification.
 
-This is a deliberate architectural choice intended to reduce interpretative bias and retroactive pattern selection.
+This is a deliberate architectural choice intended to reduce interpretative bias and avoid retroactive overclaiming.
 
 ---
 
-# Current Technology Stack
+## Projected Proper-Motion Architecture
+
+The Candidate Investigation Cockpit includes a projected proper-motion evolution layer.
+
+This module may use Gaia-derived quantities such as:
+
+- right ascension;
+- declination;
+- parallax or distance proxy;
+- `pmra`;
+- `pmdec`;
+- `radial_velocity` where available.
+
+The module produces:
+
+```text
+projected motion traces
+```
+
+not:
+
+```text
+confirmed orbital paths
+```
+
+The visualization is not an N-body gravitational simulation.
+
+It does not include:
+
+- mutual stellar attraction;
+- galactic potential modelling;
+- confirmed orbital dynamics;
+- confirmed future close encounters;
+- confirmed binary evolution.
+
+The motion scale is a visual amplification control and does not change the underlying Gaia-derived observables.
+
+---
+
+## Synthetic Stellar Reconstruction Architecture
+
+The Stellar Reconstruction & Full Dossier Studio provides a candidate-level synthetic stellar twin.
+
+This module may use:
+
+- Gaia photometric indicators;
+- BP-RP colour proxy where available;
+- temperature proxy;
+- radius proxy;
+- luminosity proxy;
+- procedural surface rendering;
+- visual size scaling;
+- visual colour scaling.
+
+The synthetic stellar twin is:
+
+```text
+a proxy-based procedural visualization
+```
+
+not:
+
+```text
+an observational image of the selected source
+```
+
+The rendered stellar object does not confirm:
+
+- stellar type;
+- stellar activity;
+- flare events;
+- companions;
+- binarity;
+- planets;
+- exotic physical mechanisms.
+
+---
+
+## External Validation Architecture
+
+The framework is designed as a pre-validation intelligence layer.
+
+Its role is to prepare and prioritize candidates before external validation.
+
+The framework may support links or workflow references to:
+
+- Gaia Archive;
+- Gaia NSS where applicable;
+- SIMBAD;
+- VizieR;
+- Aladin;
+- X-Match;
+- ESA Sky;
+- related catalogue infrastructures.
+
+Architectural rule:
+
+```text
+Codex Alpha prepares and prioritizes.
+External astronomical services validate and contextualize.
+```
+
+No official integration, endorsement or partnership with ESA, CDS, SIMBAD, VizieR, Aladin, X-Match or related infrastructures is claimed by this framework.
+
+---
+
+## Current Technology Stack
 
 Current framework technologies include:
 
@@ -292,6 +595,11 @@ Pandas
 Scikit-learn
 Astropy
 Matplotlib
+React
+Vite
+Three.js
+WebGL
+ForceGraph3D
 ```
 
 Current AI methodology:
@@ -303,43 +611,86 @@ Isolation Forest
 Current data format support:
 
 ```text
-ESA Gaia DR3 VOTable
+Gaia DR3 VOTable
 CSV
+JSON
+Markdown
+TXT
+LaTeX
 ```
 
 ---
 
-# Long-Term Architectural Direction
+## Local-First Architecture
 
-The long-term objective is to evolve the framework into a scalable AI-assisted cosmological analysis infrastructure.
+The current architecture is local-first.
 
-Future architectural expansion may include:
+Core principles:
 
-- distributed HPC computation,
-- GPU acceleration,
-- autonomous analysis agents,
-- graph-based cosmological inference,
-- topological structure analysis,
-- large-scale survey federation,
-- real-time exploratory analysis systems,
-- interactive scientific dashboards,
-- adaptive AI-driven anomaly exploration.
+- the Python pipeline processes local Gaia-derived data;
+- the dashboard reads local exported files;
+- the core workflow does not require external APIs;
+- external links are used for validation and catalogue inspection;
+- optional validation files may be absent;
+- the dashboard should degrade gracefully when optional data are unavailable.
+
+Local data flow:
+
+```text
+datasets/
+    -> pipeline/
+    -> results/
+    -> dashboard/public/data/
+    -> dashboard interface
+```
 
 ---
 
-# Design Principles
+## Long-Term Architectural Direction
+
+The long-term objective is to evolve the framework into a scalable space-data intelligence platform.
+
+Future architectural expansion may include:
+
+- larger Gaia-derived datasets;
+- Gaia DR4-compatible ingestion when applicable;
+- multi-catalogue workflows;
+- cloud-ready deployment;
+- API-based data ingestion;
+- collaborative candidate review;
+- explainable AI candidate scoring;
+- uncertainty-aware ranking;
+- validation-oriented dossier generation;
+- institutional deployment options;
+- hosted dashboard services;
+- premium analytics modules;
+- structured handoff toward established astronomical validation services.
+
+---
+
+## Design Principles
 
 The framework architecture follows several core principles.
 
 ## Modularity
 
-Each analysis layer is designed as an independent interchangeable module.
+Each analysis layer is designed as an independent and progressively replaceable module.
 
 ---
 
 ## Reproducibility
 
-All outputs are generated through deterministic computational workflows.
+Outputs should be generated through documented computational workflows.
+
+The v0.1.0 closed-beta state is documented by the public GitHub release and the Zenodo technical whitepaper.
+
+---
+
+## Scientific Caution
+
+All outputs are candidate-level unless externally validated.
+
+The framework does not claim direct astrophysical discovery by itself.
 
 ---
 
@@ -351,29 +702,66 @@ The framework attempts to minimize predefined interpretative assumptions during 
 
 ## Scalability
 
-The architecture is designed to progressively support larger astrophysical datasets and distributed computation.
+The architecture is designed to progressively support larger astronomical datasets and future cloud or institutional deployment.
 
 ---
 
 ## Interpretability
 
-AI-generated outputs must remain inspectable, explainable and statistically analyzable.
+AI-generated outputs should remain inspectable, explainable and statistically analyzable.
 
 ---
 
-# Current Development Status
+## Human-in-the-Loop Validation
+
+The framework is intended to assist researchers, not replace scientific validation.
+
+Human review and external catalogue validation remain mandatory for candidate interpretation.
+
+---
+
+## Related Documentation
+
+Technical whitepaper:
 
 ```text
-Operational Early Prototype Phase
+https://doi.org/10.5281/zenodo.20335018
+```
+
+GitHub release:
+
+```text
+v0.1.0-closed-beta
+```
+
+Live framework page:
+
+```text
+https://www.codexalpha.org/computational-framework
+```
+
+---
+
+## Current Development Status
+
+```text
+Closed Beta Research Demonstrator
 ```
 
 Current architecture status:
 
-- functional end-to-end execution,
-- real ESA Gaia DR3 integration,
-- operational anomaly detection,
-- operational clustering analysis,
-- operational visualization pipeline,
-- modular repository structure.
+- functional end-to-end Python pipeline;
+- Gaia DR3 demo dataset support;
+- operational anomaly detection;
+- operational feature contribution analysis;
+- operational graph construction and centrality analysis;
+- operational dashboard data export;
+- operational local React/Vite dashboard;
+- five connected analysis interfaces;
+- projected proper-motion evolution interface;
+- synthetic stellar reconstruction interface;
+- full candidate dossier generation;
+- GitHub release available;
+- Zenodo technical whitepaper available.
 
-The framework is currently transitioning from conceptual prototyping toward scalable computational infrastructure development.
+The framework is currently transitioning from closed-beta stabilization toward scientific hardening, improved reproducibility, larger dataset preparation, explainable AI scoring and future scalable deployment.

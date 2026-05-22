@@ -1,136 +1,208 @@
 # Prototypes
 
-This directory contains experimental computational modules, exploratory algorithms and early-stage prototype systems developed for the Codex Alpha Computational Framework.
+This directory is reserved for experimental computational modules, exploratory algorithms and early-stage prototype systems developed for the Codex Alpha Computational Framework.
 
-The purpose of this area is to isolate non-stable or experimental computational ideas before integration into the operational pipeline.
+No production-ready prototype component is currently implemented in this directory.
+
+The purpose of this area is to isolate non-stable or experimental ideas before any possible integration into the operational pipeline.
 
 ---
 
-# Purpose of the Prototype Layer
+## Purpose of the Prototype Layer
 
 The prototype layer is designed to support:
 
-- rapid experimentation,
-- exploratory computational research,
-- early AI model testing,
-- statistical method validation,
-- experimental anomaly detection approaches,
-- future cosmological analysis concepts.
+- rapid experimentation;
+- exploratory computational research;
+- early AI model testing;
+- statistical method validation;
+- experimental anomaly-ranking approaches;
+- candidate-level workflow experiments;
+- future validation-oriented analysis concepts.
 
-Modules placed in this directory are considered:
+Modules placed in this directory should be considered:
 
 ```text
 experimental
 non-production
 under evaluation
+not part of the stable closed-beta pipeline
 ```
 
 ---
 
-# Current Role Inside the Framework
+## Current Role Inside the Framework
 
-The operational pipeline currently uses validated modules located in:
+The operational pipeline currently relies on validated or semi-stable modules located in:
 
 ```text
 ai/
 analysis/
 pipeline/
+structures/
 visualization/
+dashboard/
 ```
 
-The `prototypes/` directory instead acts as a sandbox environment for:
+The `prototypes/` directory acts as a sandbox environment for future experiments such as:
 
-- testing new AI approaches,
-- validating alternative clustering methods,
-- experimenting with graph-based cosmological structures,
-- prototyping topological analysis systems,
-- developing autonomous exploratory agents,
-- evaluating computational performance strategies.
+- testing new AI-assisted candidate scoring approaches;
+- validating alternative clustering methods;
+- experimenting with graph-based candidate structures;
+- prototyping topological feature-space analysis;
+- evaluating uncertainty-aware ranking strategies;
+- testing performance and scalability ideas;
+- preparing future validation-oriented workflow modules.
+
+Prototype outputs should not be treated as validated scientific results.
 
 ---
 
-# Planned Prototype Categories
+## Planned Prototype Categories
 
-Future prototype systems may include:
+Future prototype systems may include the following areas.
 
-## Graph Cosmology Experiments
+---
 
-Exploration of graph-based representations of large-scale cosmological structures.
+## Graph-Based Candidate Experiments
+
+Exploration of graph-based representations of astronomical candidate sources.
 
 Potential topics:
 
-- node connectivity,
-- filament structures,
-- emergent spatial relationships,
-- graph anomaly propagation.
+- node connectivity;
+- candidate neighbourhood structure;
+- similarity-based edge definitions;
+- graph-assisted anomaly prioritization;
+- graph centrality comparison;
+- graph-based candidate-family grouping.
+
+Graph-based prototype outputs will not confirm physical association, common origin, binarity, companionship or gravitational interaction.
 
 ---
 
-## Topological Analysis Prototypes
+## Topological Feature-Space Prototypes
 
-Experimental topological analysis systems for multidimensional astrophysical datasets.
+Experimental topological or geometric analysis systems for multidimensional astronomical datasets.
 
 Potential techniques:
 
-- persistent homology,
-- manifold analysis,
-- topological persistence mapping,
-- geometric clustering.
+- manifold analysis;
+- persistent homology;
+- topological persistence mapping;
+- geometric clustering;
+- feature-space separation analysis;
+- candidate-family topology.
+
+These outputs would remain exploratory and candidate-level.
 
 ---
 
-## Autonomous Exploratory Agents
+## AI-Assisted Candidate Review Prototypes
 
-Experimental AI systems capable of:
+Experimental AI systems for supporting candidate review and validation planning.
 
-- autonomous anomaly investigation,
-- adaptive feature exploration,
-- iterative dataset analysis,
-- self-directed exploratory workflows.
+Potential capabilities:
+
+- candidate dossier interpretation;
+- validation-step suggestion;
+- uncertainty-aware summary generation;
+- human-in-the-loop review support;
+- candidate-level explanation generation;
+- automated preparation of research notes.
+
+These systems will not be treated as autonomous discovery agents.
 
 ---
 
 ## Experimental AI Models
 
-Prototype implementations for evaluating:
+Prototype implementations may be used to evaluate:
 
-- deep anomaly detection,
-- transformer-based astrophysical analysis,
-- graph neural networks,
-- unsupervised latent-space exploration.
+- deep anomaly detection;
+- graph neural networks;
+- latent-space anomaly ranking;
+- explainable candidate scoring;
+- transformer-assisted report generation;
+- multi-catalogue candidate triage.
 
----
-
-## HPC and Performance Experiments
-
-Early experiments related to:
-
-- distributed computation,
-- GPU acceleration,
-- large-scale dataset handling,
-- scalable cosmological analysis pipelines.
+All outputs from experimental AI models require independent validation and expert review.
 
 ---
 
-# Development Philosophy
+## Performance and Scalability Experiments
+
+Early experiments may explore:
+
+- larger Gaia-derived dataset handling;
+- memory-efficient dashboard data packages;
+- WebGL visualization performance;
+- batch processing strategies;
+- future cloud-ready architecture;
+- GPU acceleration where appropriate;
+- scalable candidate-prioritization workflows.
+
+These experiments are intended to inform future architecture decisions and are not part of the current stable workflow unless explicitly promoted.
+
+---
+
+## Development Philosophy
 
 The prototype layer intentionally encourages experimentation without requiring immediate integration into the operational framework.
 
-Only validated and reproducible modules are progressively promoted into the stable architecture.
+Only validated, reproducible and documented modules should be progressively promoted into the stable architecture.
 
 This separation helps maintain:
 
-- architectural stability,
-- reproducibility,
-- modular development,
-- computational transparency.
+- architectural stability;
+- reproducibility;
+- modular development;
+- computational transparency;
+- scientific caution;
+- clear separation between experimental and operational logic.
 
 ---
 
-# Current Status
+## Scientific Boundaries
+
+Prototype modules must preserve the framework's candidate-level interpretation discipline.
+
+Prototype outputs must not be described as confirmed discoveries.
+
+They must not confirm:
+
+- planets;
+- binary systems;
+- hidden companions;
+- black holes;
+- exotic objects;
+- physical orbits;
+- close encounters;
+- future stellar configurations;
+- direct physical measurements.
+
+Prototype results should be interpreted as:
 
 ```text
-Prototype exploration phase active
+experimental candidate-level indicators
 ```
 
-The directory is currently prepared for future experimental computational modules and advanced exploratory analysis systems.
+not as:
+
+```text
+validated astrophysical classifications
+```
+
+All candidate interpretations require external astronomical validation and expert review.
+
+---
+
+## Current Status
+
+```text
+Future-development sandbox
+```
+
+This directory is currently prepared for future experimental computational modules and advanced exploratory analysis systems.
+
+It should not be interpreted as part of the active v0.1.0 closed-beta analytical pipeline.
